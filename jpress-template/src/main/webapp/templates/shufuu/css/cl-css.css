@@ -9,7 +9,8 @@ a{
     color:#333;
 }
 a:hover{
-    color:#FF9400;
+    /*color:#FF9400;*/
+    color:#0094E8;
     text-decoration: none;
 }
 /*header*/
@@ -46,12 +47,22 @@ a:hover{
 .navbar{
     padding:0;
 }
+
+.navbar-light .navbar-nav .nav-item a{
+    color:#666;
+}
+
+.navbar-light .navbar-nav .nav-item a:hover{
+    color:#0094E8;
+    font-weight: bold;
+}
+
 .navbar-light .navbar-nav .active>.nav-link{
-    color: #FF9400;
+    color:#0094E8;
     font-weight: bold;
 }
 .nav .nav-item a.active{
-    color: #FF9400;
+    color:#0094E8;
     font-weight: bold;
 }
 
@@ -60,7 +71,7 @@ a:hover{
     max-height: 100%;
 }
 .recommend-index{
-    margin-bottom:20px;
+    margin: 0px 0px 20px 0px;
 }
 
 .carousel-inner{
@@ -91,26 +102,36 @@ a:hover{
 }
 /*left*/
 .cl-left{
-    margin:20px 0;
+    margin-top: 20px;
     padding:0;
 }
 .recommend-top{
-    margin-bottom:20px;
+    padding: 0px 0px 0px 1rem;
 }
 
 .recommend-bottom{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding-left: 0;
+    padding-right: 0;
 }
 .recommend-item{
-    width: 49%;
-    height: 170px;
+    width: 100%;
+    height: 150px;
+    padding-left: 0;
+    padding-right: 0;
     overflow: hidden;
     position: relative;
 }
+
+.recommend-item-marginTop-1rem{
+    margin-top: 20px;
+}
+
 .recommend-item-bottom{
     position: absolute;
-    top:130px;
+    top:110px;
     height: 40px;
     line-height: 40px;
     padding:0 10px;
@@ -157,7 +178,7 @@ a:hover{
 .cl-card-main-title{
     height: 1.6rem;
     overflow: hidden;
-    font-size:1.4rem;
+    font-size:1.2rem;
     font-weight: 500;
 
 
@@ -174,7 +195,8 @@ a.card-link{
 
 }
 a.card-link:hover{
-    background-color: #f6d392;
+    /*background-color: #f6d392;*/
+    background-color: #FCFCFC;
     color:#333;
 
 }
@@ -189,8 +211,8 @@ a.card-link:hover{
 }
 /*page*/
 .pagination .page-item.active .page-link{
-    background-color:#FF9400;
-    border-color:#FF9400;
+    color:#0094E8;
+    color:#0094E8;
     color:#fff;
 }
 .pagination .page-item .page-link{
@@ -273,8 +295,8 @@ a.card-link:hover{
     font-weight: 300;
 }
 .label li a:hover{
-    background-color: #FF9400;
-    border-color:#FF9400;
+    background-color: #0094E8;
+    border-color:#0094E8;
     color:#fff;
 }
 
@@ -521,6 +543,38 @@ a.card-link:hover{
     line-height: 1rem;
     margin-top:0.5rem;
 }
+
+.search_input{
+    width: 70%;
+    height: 45px;
+    border: 1px solid #E2E2E2;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    background-color: #F2F4F5;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.input-group{
+    height: 70px
+}
+.search_btn{
+    height: 45px;
+    width: 20%;
+    background-color: #1677D4;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    color: #FFF;
+    border:none
+}
+
+.search_tip{
+    background-color: #fff;
+    margin:0 0 10px 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
 /**/
 
 
