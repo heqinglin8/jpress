@@ -7,7 +7,7 @@
 
     <div class="row recommend-index">
 
-        <div class="col-md-3 recommend-bottom">
+        <div class="col-md-3 recommend-left">
 
             #articles(hasThumbnail=true,count=2)
             #for(article : articles)
@@ -22,7 +22,7 @@
         </div>
 
         #if(option('calmlog_slides'))
-        <div class="col-md-9 recommend-top">
+        <div class="col-md-9 recommend-right">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     #for(slide : linesOption('calmlog_slides'))
