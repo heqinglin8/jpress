@@ -418,6 +418,9 @@ a.card-link:hover{
     .ll-panel{
         max-width: 30%;
     }
+    .recommend-right{
+        padding: 0px 0px 0px 0rem;
+    }
 }
 
 
@@ -484,6 +487,10 @@ a.card-link:hover{
     .recommend-item-bottom{
         top:80px;
         font-size: 0.6rem;
+    }
+
+    .recommend-right{
+        padding: 0px 0px 0px 0rem;
     }
 
 }
