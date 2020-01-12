@@ -127,6 +127,7 @@ a:hover{
 
 .recommend-item-marginTop-1rem{
     margin-top: 20px;
+    margin-left: 0;
 }
 
 .recommend-item-bottom{
@@ -418,9 +419,6 @@ a.card-link:hover{
     .ll-panel{
         max-width: 30%;
     }
-    .recommend-right{
-        padding: 0px 0px 0px 0rem;
-    }
 }
 
 
@@ -487,10 +485,6 @@ a.card-link:hover{
     .recommend-item-bottom{
         top:80px;
         font-size: 0.6rem;
-    }
-
-    .recommend-right{
-        padding: 0px 0px 0px 0rem;
     }
 
 }
@@ -583,6 +577,24 @@ a.card-link:hover{
     margin:0 0 10px 0;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+}
+
+@media (max-width: 768px){
+    .recommend-right{
+        padding: 0px 0px 0px 0rem;
+    }
+    .recommend-left{
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .recommend-item-marginTop-1rem{
+        margin-left: 20px;
+        margin-top: 0;
+    }
 }
 
 /**/
