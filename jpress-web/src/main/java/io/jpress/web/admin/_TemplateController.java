@@ -379,9 +379,13 @@ public class _TemplateController extends AdminControllerBase {
 
     @AdminMenu(text = "菜单", groupId = JPressConsts.SYSTEM_MENU_TEMPLATE, order = 6)
     public void menu() {
-        List<Menu> menus = ms.findListByType(Menu.TYPE_MAIN);
+//        List<Menu> menus = ms.findListByType(Menu.TYPE_MAIN);
+//        SortKit.toLayer(menus);
+//        setAttr("menus", menus);
+
+        List<Menu> menus = ms.findAll();
         SortKit.toLayer(menus);
-        setAttr("menus", menus);
+        setAttr("all_menus", menus);
 
         int id = getParaToInt(0, 0);
         if (id > 0) {

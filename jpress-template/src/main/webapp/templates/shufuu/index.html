@@ -8,7 +8,15 @@
     <div class="row recommend-index">
 
         <div class="col-md-3 recommend-left">
-
+            <!--<div class="collapse navbar-collapse justify-content-end">-->
+                <ul class="navbar-nav justify-content-end">
+                    #for(menu : SECONDARY_MENUS)
+                    <li class="nav-item #(menu.isActive ? 'active' : '')">
+                        <a class="nav-link" href="#">#(menu.text) <span class="sr-only">(current)</span></a>
+                    </li>
+                    #end
+                </ul>
+            <!--</div>-->
             #articles(hasThumbnail=true,count=2)
             #for(article : articles)
             <div class="recommend-item #(for.index == 0 ? '':'recommend-item-marginTop-1rem')">

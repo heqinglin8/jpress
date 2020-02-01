@@ -89,9 +89,16 @@ public class TemplateInterceptor implements Interceptor, JPressOptions.OptionCha
         inv.getController().setAttr(CSRFInterceptor.CSRF_ATTR_KEY, uuid);
 
         MenuService menuService = Aop.get(MenuService.class);
+
         List<Menu> menus = menuService.findListByType(Menu.TYPE_MAIN);
         SortKit.toTree(menus);
         controller.setAttr(JPressConsts.ATTR_MENUS, menus);
+
+        //设置二级菜单
+        List<Menu> secondaryMenus = menuService.findListByType(Menu.TYPE_SECOND);
+        SortKit.toTree(menus);
+        controller.setAttr(JPressConsts.ATTR_SECONDARY_MENUS, secondaryMenus);
+        System.out.println("secondaryMenus:"+secondaryMenus.toString());
 
 
         Template template = TemplateManager.me().getCurrentTemplate();

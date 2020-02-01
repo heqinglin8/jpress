@@ -125,4 +125,6 @@ public class JPressConsts {
 
 
     public static final String DEFAULT_ADMIN_VIEW = "/WEB-INF/views/admin/";
+
+    public static final String ATTR_SECONDARY_MENUS = "SECONDARY_MENUS"; // 二级菜单
 }

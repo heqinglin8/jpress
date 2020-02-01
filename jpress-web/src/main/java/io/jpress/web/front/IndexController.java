@@ -37,7 +37,6 @@ public class IndexController extends TemplateControllerBase {
             forwardAction("/page");
             return;
         }
-
         //设置菜单高亮
         setMenuActive(menu -> "/".equals(menu.getUrl()));
 
@@ -45,7 +44,7 @@ public class IndexController extends TemplateControllerBase {
                 ? "index.html"
                 : "index_" + JPressOptions.getIndexStyle() + ".html";
 
-
+        setAttr("name","何清林");
         //渲染 模板下的 index.html
         render(indexView);
     }

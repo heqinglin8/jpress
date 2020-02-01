@@ -39,6 +39,7 @@ public class Menu extends BaseMenu<Menu> implements SortModel {
     public static final String TYPE_HEADER = "header"; //前台的头部菜单
     public static final String TYPE_MAIN = "main"; //前台的主菜单，一般用在左边导航或者右边导航，根据模板本身来决定的
     public static final String TYPE_FOOTER = "footer"; //前台的底部菜单
+    public static final String TYPE_SECOND = "second"; //前台的二级菜单
 
 
     private int layerNumber;
@@ -152,6 +153,5 @@ public class Menu extends BaseMenu<Menu> implements SortModel {
     public boolean isUrlEquals(String url){
         return getBaseUrl() != null && getBaseUrl().equals(cp+url);
     }
-
 
 }
