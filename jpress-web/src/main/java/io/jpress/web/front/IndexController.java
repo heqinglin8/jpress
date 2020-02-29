@@ -43,8 +43,6 @@ public class IndexController extends TemplateControllerBase {
         String indexView = StrUtil.isBlank(JPressOptions.getIndexStyle())
                 ? "index.html"
                 : "index_" + JPressOptions.getIndexStyle() + ".html";
-
-        setAttr("name","何清林");
         //渲染 模板下的 index.html
         render(indexView);
     }
