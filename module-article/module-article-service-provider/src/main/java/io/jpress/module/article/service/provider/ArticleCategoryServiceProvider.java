@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ public class ArticleCategoryServiceProvider extends JbootServiceBase<ArticleCate
     @Override
     @CachesEvict({
             @CacheEvict(name = "articleCategory", key = "*"),
-            @CacheEvict(name = "article-category", key = "(id)", unless = "id == null"),
+            @CacheEvict(name = "article-category", key = "*"),
     })
     public void shouldUpdateCache(int action, Model model, Object id) {
         super.shouldUpdateCache(action, model, id);
@@ -210,8 +210,9 @@ public class ArticleCategoryServiceProvider extends JbootServiceBase<ArticleCate
     @Override
     public Long[] findCategoryIdsByArticleId(long articleId) {
         List<Record> records = Db.find("select * from article_category_mapping where article_id = ?", articleId);
-        if (records == null || records.isEmpty())
+        if (records == null || records.isEmpty()) {
             return null;
+        }
 
         return ArrayUtils.toObject(records.stream().mapToLong(record -> record.get("category_id")).toArray());
     }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,13 +44,16 @@ public class OrderManager {
     private List<OrderItemStatusChangeListener> orderItemStatusChangeListeners;
     private List<OrderStatusChangeListener> orderStatusChangeListeners;
 
+
     public List<OrderItemStatusChangeListener> getOrderItemStatusChangeListeners() {
         return orderItemStatusChangeListeners;
     }
 
+
     public void setOrderItemStatusChangeListeners(List<OrderItemStatusChangeListener> orderItemStatusChangeListeners) {
         this.orderItemStatusChangeListeners = orderItemStatusChangeListeners;
     }
+
 
     public void addOrderItemStatusChangeListener(OrderItemStatusChangeListener listener) {
         if (orderItemStatusChangeListeners == null) {
@@ -61,13 +64,16 @@ public class OrderManager {
         orderItemStatusChangeListeners.add(Aop.inject(listener));
     }
 
+
     public List<OrderStatusChangeListener> getOrderStatusChangeListeners() {
         return orderStatusChangeListeners;
     }
 
+
     public void setOrderStatusChangeListeners(List<OrderStatusChangeListener> orderItemStatusChangeListeners) {
         this.orderStatusChangeListeners = orderItemStatusChangeListeners;
     }
+
 
     public void addOrderStatusChangeListener(OrderStatusChangeListener listener) {
         if (orderStatusChangeListeners == null) {
@@ -77,6 +83,7 @@ public class OrderManager {
         }
         orderStatusChangeListeners.add(Aop.inject(listener));
     }
+
 
     public void notifyItemStatusChanged(UserOrderItem userOrderItem) {
         if (orderItemStatusChangeListeners != null && userOrderItem != null) {
@@ -101,4 +108,5 @@ public class OrderManager {
             }
         }
     }
+
 }

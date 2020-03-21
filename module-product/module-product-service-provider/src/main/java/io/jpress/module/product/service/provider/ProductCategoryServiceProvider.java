@@ -33,8 +33,6 @@ public class ProductCategoryServiceProvider extends JbootServiceBase<ProductCate
     }
 
     /**
-     * 文章在更新的时候，需要清除这个缓存
-     *
      * @param productId
      * @return
      */
@@ -77,7 +75,7 @@ public class ProductCategoryServiceProvider extends JbootServiceBase<ProductCate
 
     @Override
     @Cacheable(name = "productCategory", key = "type:#(type)", returnCopyEnable = true)
-    public List<ProductCategory> _findListByType(String type) {
+    public List<ProductCategory> findListByType(String type) {
         return DAO.findListByColumns(Columns.create("type", type), "order_number asc,id desc");
     }
 
@@ -139,8 +137,8 @@ public class ProductCategoryServiceProvider extends JbootServiceBase<ProductCate
     }
 
     @Override
-    public Long[] findCategoryIdsByProductId(long articleId) {
-        List<Record> records = Db.find("select * from product_category_mapping where product_id = ?", articleId);
+    public Long[] findCategoryIdsByProductId(long productId) {
+        List<Record> records = Db.find("select * from product_category_mapping where product_id = ?", productId);
         if (records == null || records.isEmpty()) {
             return null;
         }
@@ -150,11 +148,11 @@ public class ProductCategoryServiceProvider extends JbootServiceBase<ProductCate
 
     @Override
     public void doUpdateProductCount(long categoryId) {
-        long articleCount = Db.queryLong("select count(*) from product_category_mapping where category_id = ? ", categoryId);
+        long productCount = Db.queryLong("select count(*) from product_category_mapping where category_id = ? ", categoryId);
         ProductCategory category = findById(categoryId);
         if (category != null) {
-            category.setCount(articleCount);
-            category.update();
+            category.setCount(productCount);
+            update(category);
         }
     }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -138,7 +138,9 @@ public class Article extends BaseArticle<Article> {
         }
 
         List<String> newList = new ArrayList<>();
-        for (int i = 0; 0 < count; i++) newList.add(list.get(i));
+        for (int i = 0; 0 < count; i++) {
+            newList.add(list.get(i));
+        }
         return newList;
     }
 

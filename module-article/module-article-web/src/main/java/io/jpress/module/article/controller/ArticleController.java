@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import com.jfinal.kit.Ret;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
 import io.jpress.JPressOptions;
+import io.jpress.commons.dfa.DFAUtil;
 import io.jpress.commons.utils.CommonsUtils;
 import io.jpress.model.User;
 import io.jpress.module.article.kit.ArticleNotifyKit;
@@ -162,9 +163,14 @@ public class ArticleController extends TemplateControllerBase {
         Boolean vCodeEnable = JPressOptions.isTrueOrEmpty("article_comment_vcode_enable");
         if (vCodeEnable != null && vCodeEnable == true) {
             if (validateCaptcha("captcha") == false) {
-                renderJson(Ret.fail().set("message", "验证码错误").set("errorCode",2));
+                renderJson(Ret.fail().set("message", "验证码错误").set("errorCode", 2));
                 return;
             }
+        }
+
+        if (DFAUtil.isContainsSensitiveWords(content)) {
+            renderJson(Ret.fail().set("message", "非法内容，无法发布评论信息"));
+            return;
         }
 
 
@@ -235,12 +241,12 @@ public class ArticleController extends TemplateControllerBase {
             commentService.doIncCommentReplyCount(pid);
 
             ArticleComment parent = commentService.findById(pid);
-            if (parent != null && parent.isNormal()){
-                comment.put("parent",parent);
+            if (parent != null && parent.isNormal()) {
+                comment.put("parent", parent);
             }
         }
 
-        Ret ret = Ret.ok().set("code",0);
+        Ret ret = Ret.ok().set("code", 0);
 
 
         Map<String, Object> paras = new HashMap<>();
@@ -250,7 +256,7 @@ public class ArticleController extends TemplateControllerBase {
             paras.put("user", user.keepSafe());
         }
 
-        setRetHtml(ret,paras,"/WEB-INF/views/commons/article/defaultArticleCommentItem.html");
+        renderHtmltoRet("/WEB-INF/views/commons/article/defaultArticleCommentItem.html", paras, ret);
 
         ArticleNotifyKit.notify(article, comment, user);
 

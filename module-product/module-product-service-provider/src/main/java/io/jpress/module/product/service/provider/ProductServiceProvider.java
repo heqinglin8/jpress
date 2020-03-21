@@ -1,6 +1,7 @@
 package io.jpress.module.product.service.provider;
 
 import com.jfinal.aop.Inject;
+import com.jfinal.kit.LogKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
@@ -13,15 +14,17 @@ import io.jboot.db.model.Column;
 import io.jboot.db.model.Columns;
 import io.jboot.service.JbootServiceBase;
 import io.jboot.utils.StrUtil;
-import io.jpress.commons.utils.SqlUtils;
 import io.jpress.module.product.model.Product;
 import io.jpress.module.product.model.ProductCategory;
 import io.jpress.module.product.service.ProductCategoryService;
 import io.jpress.module.product.service.ProductCommentService;
 import io.jpress.module.product.service.ProductService;
+import io.jpress.module.product.service.provider.search.ProductSearcherFactory;
 import io.jpress.module.product.service.provider.task.ProductCommentsCountUpdateTask;
 import io.jpress.module.product.service.provider.task.ProductViewsCountUpdateTask;
+import io.jpress.module.product.service.search.ProductSearcher;
 import io.jpress.service.UserService;
+import io.jpress.web.seoping.SeoManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +93,7 @@ public class ProductServiceProvider extends JbootServiceBase<Product> implements
 
         return _paginateByBaseColumns(page
                 , pagesize
-                , Columns.create("p.status", status).likeAppendPercent("p.title", title)
+                , Columns.create("product.status", status).likeAppendPercent("product.title", title)
                 , categoryId
                 , null);
     }
@@ -100,7 +103,7 @@ public class ProductServiceProvider extends JbootServiceBase<Product> implements
 
         return _paginateByBaseColumns(page
                 , pagesize
-                , Columns.create().ne("p.status", Product.STATUS_TRASH).likeAppendPercent("p.title", title)
+                , Columns.create().ne("product.status", Product.STATUS_TRASH).likeAppendPercent("product.title", title)
                 , categoryId
                 , null);
     }
@@ -130,7 +133,7 @@ public class ProductServiceProvider extends JbootServiceBase<Product> implements
 
         Columns columns = new Columns();
         columns.add("m.category_id", categoryId);
-        columns.add("p.status", Product.STATUS_NORMAL);
+        columns.add("product.status", Product.STATUS_NORMAL);
 
         return _paginateByBaseColumns(page, pagesize, columns, categoryId, orderBy);
     }
@@ -138,22 +141,13 @@ public class ProductServiceProvider extends JbootServiceBase<Product> implements
 
     public Page<Product> _paginateByBaseColumns(int page, int pagesize, Columns baseColumns, Long categoryId, String orderBy) {
 
-        StringBuilder sqlBuilder = new StringBuilder("from product p ");
-        if (categoryId != null) {
-            sqlBuilder.append(" left join product_category_mapping m on p.id = m.`product_id` ");
-        }
-
-
         Columns columns = baseColumns;
         columns.add("m.category_id", categoryId);
 
-        sqlBuilder.append(SqlUtils.toWhereSql(columns));
+        Page<Product> dataPage = DAO.leftJoinIf("product_category_mapping",categoryId != null).as("m")
+                .on("product.id = m.`product_id`")
+                .paginateByColumns(page,pagesize,columns,StrUtil.obtainDefaultIfBlank(orderBy, DEFAULT_ORDER_BY));
 
-        // 前台走默认排序，但是后台必须走 id 排序，
-        // 否当有默认排序的文章很多的时候,发布的新文章可能在后几页
-        sqlBuilder.append(" ORDER BY " + StrUtil.obtainDefaultIfBlank(orderBy, DEFAULT_ORDER_BY));
-
-        Page<Product> dataPage = DAO.paginate(page, pagesize, "select * ", sqlBuilder.toString(), columns.getValueArray());
         return joinUserInfo(dataPage);
     }
 
@@ -181,7 +175,7 @@ public class ProductServiceProvider extends JbootServiceBase<Product> implements
     }
 
     @Override
-    public boolean deleteByIds(Object... ids) {
+    public boolean batchDeleteByIds(Object... ids) {
         for (Object id : ids) {
             deleteById(id);
         }
@@ -195,13 +189,63 @@ public class ProductServiceProvider extends JbootServiceBase<Product> implements
             @CacheEvict(name = "products", key = "*")
     })
     public boolean deleteById(Object id) {
-        return super.deleteById(id);
+
+        //搜索搜索引擎的内容
+        ProductSearcherFactory.getSearcher().deleteProduct(id);
+
+        return Db.tx(() -> {
+            boolean delOk = ProductServiceProvider.super.deleteById(id);
+            if (delOk == false) {
+                return false;
+            }
+
+            //删除文章的管理分类
+            List<Record> records = Db.find("select * from product_category_mapping where product_id = ? ", id);
+            if (records != null && !records.isEmpty()) {
+                //更新文章数量
+                Db.update("delete from product_category_mapping where product_id = ?", id);
+                records.forEach(record -> categoryService.doUpdateProductCount(record.get("category_id")));
+            }
+
+
+            //删除产品的所有评论
+            commentService.deleteByProductId(id);
+            return true;
+        });
     }
+
+
+
+    @Override
+    public Object save(Product model) {
+        Object id = super.save(model);
+        if (id != null && model.isNormal()) {
+            ProductSearcherFactory.getSearcher().addProduct(model);
+        }
+        return id;
+    }
+
+
+
+    @Override
+    public boolean update(Product model) {
+        boolean success = super.update(model);
+        if (success) {
+            if (model.isNormal()) {
+                ProductSearcherFactory.getSearcher().updateProduct(model);
+                SeoManager.me().baiduUpdate(model.getUrl());
+            } else {
+                ProductSearcherFactory.getSearcher().deleteProduct(model.getId());
+            }
+        }
+        return success;
+    }
+
 
     @Override
     @CachesEvict({
             @CacheEvict(name = "products", key = "*"),
-            @CacheEvict(name = "product-category", key = "(id)", unless = "id == null"),
+            @CacheEvict(name = "product-category", key = "#(id)", unless = "id == null"),
     })
     public void shouldUpdateCache(int action, Model model, Object id) {
         super.shouldUpdateCache(action, model, id);
@@ -229,49 +273,31 @@ public class ProductServiceProvider extends JbootServiceBase<Product> implements
 
         Columns columns = Columns.create();
         columns.in("m.category_id", tagIds.toArray());
-        columns.ne("p.id", productId);
-        columns.eq("p.status", status);
+        columns.ne("product.id", productId);
+        columns.eq("product.status", status);
 
-        StringBuilder from = new StringBuilder("select * from product p ");
-        from.append(" left join product_category_mapping m on p.id = m.`product_id` ");
-        from.append(SqlUtils.toWhereSql(columns));
+        List<Product> list = DAO.leftJoin("product_category_mapping").as("m")
+                .on("product.id = m.`product_id`")
+                .findListByColumns(columns,count);
 
-        if (count != null) {
-            from.append(" limit " + count);
-        }
-
-        return joinUserInfo(DAO.find(from.toString(), columns.getValueArray()));
+        return joinUserInfo(list);
     }
 
     @Override
     @Cacheable(name = "products", liveSeconds = 60 * 60)
     public List<Product> findListByCategoryId(long categoryId, Boolean hasThumbnail, String orderBy, Integer count) {
 
-        StringBuilder from = new StringBuilder("select * from product p ");
-        from.append(" left join product_category_mapping m on p.id = m.`product_id` ");
-        from.append(" where m.category_id = ? ");
-        from.append(" and p.status = ? ");
+        Columns columns = Columns.create()
+                .eq("m.category_id",categoryId)
+                .eq("product.status",Product.STATUS_NORMAL)
+                .isNotNullIf("product.thumbnail",hasThumbnail != null && hasThumbnail)
+                .isNullIf("product.thumbnail",hasThumbnail != null && !hasThumbnail);
 
+        List<Product> list = DAO.leftJoin("product_category_mapping").as("m")
+                .on("product.id = m.`product_id`")
+                .findListByColumns(columns,orderBy,count);
 
-        if (hasThumbnail != null) {
-            if (hasThumbnail == true) {
-                from.append(" and p.thumbnail is not null");
-            } else {
-                from.append(" and p.thumbnail is null");
-            }
-        }
-
-        from.append(" group by p.id ");
-
-        if (orderBy != null) {
-            from.append(" order by " + orderBy);
-        }
-
-        if (count != null) {
-            from.append(" limit " + count);
-        }
-
-        return joinUserInfo(DAO.find(from.toString(), categoryId, Product.STATUS_NORMAL));
+        return joinUserInfo(list);
     }
 
 
@@ -305,5 +331,29 @@ public class ProductServiceProvider extends JbootServiceBase<Product> implements
     private Product joinUserInfo(Product product) {
         userService.join(product, "user_id");
         return product;
+    }
+
+
+
+    @Override
+    public Page<Product> search(String queryString, int pageNum, int pageSize) {
+        try {
+            ProductSearcher searcher = ProductSearcherFactory.getSearcher();
+            Page<Product> page = searcher.search(queryString, pageNum, pageSize);
+            if (page != null) {
+                return page;
+            }
+        } catch (Exception ex) {
+            LogKit.error(ex.toString(), ex);
+        }
+        return new Page<>(new ArrayList<>(), pageNum, pageSize, 0, 0);
+    }
+
+    @Override
+    @Cacheable(name = "products")
+    public Page<Product> searchIndb(String queryString, int pageNum, int pageSize) {
+        Columns columns = Columns.create("status", Product.STATUS_NORMAL)
+                .likeAppendPercent("title", queryString);
+        return joinUserInfo(paginateByColumns(pageNum, pageSize, columns, "order_number desc,id desc"));
     }
 }

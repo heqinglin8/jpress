@@ -32,11 +32,11 @@ public class UserCartServiceProvider extends JbootServiceBase<UserCart> implemen
 
     @Override
     public Object save(UserCart model) {
-        UserCart userCart = findByProductTablendProductId(model.getProductType(), model.getProductId());
+        UserCart userCart = findByProductInfo(model.getUserId(), model.getProductType(), model.getProductId(), model.getProductSpec());
         if (userCart == null) {
             return super.save(model);
         } else {
-            userCart.setProductCount(userCart.getProductCount() + 1);
+            userCart.setProductCount(userCart.getProductCount() + model.getProductCount());
         }
         update(userCart);
         return userCart.getId();
@@ -62,8 +62,13 @@ public class UserCartServiceProvider extends JbootServiceBase<UserCart> implemen
     }
 
     @Override
-    public UserCart findByProductTablendProductId(String productType, long productId) {
-        UserCart userCart = DAO.findFirstByColumns(Columns.create("product_type", productType).eq("product_id", productId));
+    public UserCart findByProductInfo(long userId, String productType, long productId, String productSpec) {
+        Columns columns = Columns.create("user_id", userId)
+                .eq("product_type", productType)
+                .eq("product_id", productId)
+                .eq("product_spec", productSpec);
+
+        UserCart userCart = DAO.findFirstByColumns(columns);
         return joinMemberPrice(userCart);
     }
 
@@ -99,7 +104,12 @@ public class UserCartServiceProvider extends JbootServiceBase<UserCart> implemen
         }
 
         // 产品的最新价格 （用户添加商品到购物车后，商品的价格可能会发生变化）
-        BigDecimal newestSalePrice = ProductManager.me().querySalePrice(userCart.getProductType(), userCart.getProductId(), userCart.getUserId(), userCart.getDistUserId());
+        BigDecimal newestSalePrice = ProductManager.me().querySalePrice(
+                userCart
+                , userCart.getProductId()
+                , userCart.getProductSpec()
+                , userCart.getUserId());
+
         if (newestSalePrice != null) {
             userCart.put("newestSalePrice", newestSalePrice);
         }

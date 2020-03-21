@@ -104,7 +104,7 @@
             <input type="hidden" id="articleId" name="article.id" value="#(article.id ??)">
             <input type="hidden" id="editModeId" name="article.edit_mode" value="#(editMode ??)">
             <div class="row">
-                <div class="col-xs-9">
+                <div class="col-lg-9">
 
                     <!-- /.box-header -->
                     <!-- form start -->
@@ -185,7 +185,7 @@
 
                 </div>
 
-                <div class="col-xs-3">
+                <div class="col-lg-3">
                     <div class="box box-solid">
                         <div class="box-body ">
                             <button type="button" id="submit" class="btn btn-primary btn-sm ">保存并投稿</button>
@@ -229,6 +229,14 @@
                                 #end
                             </select>
                             <p class="help-block">多个标签请用 “回车键” 或英文逗号（,）隔开。</p>
+                            
+                            <div class="tags">
+                                #tags(count = 20)
+                                #for(tag : tags)
+                                <a href="javascript:;" class="newTag">#(tag.title)</a>
+                                #end
+                                #end
+                            </div>
                         </div>
                     </div>
                     <div class="box box-solid">

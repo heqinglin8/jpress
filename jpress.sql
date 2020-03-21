@@ -785,7 +785,7 @@ CREATE TABLE `user_cart` (
   `product_id` int(11) unsigned DEFAULT NULL,
   `product_title` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '商品标题',
   `product_summary` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_spec` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品规格',
+  `product_spec` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品规格',
   `product_thumbnail` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '商品缩略图',
   `product_link` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品详情页',
   `product_price` decimal(10,2) NOT NULL COMMENT '商品加入购物车时的价格',
@@ -801,8 +801,8 @@ CREATE TABLE `user_cart` (
   `modified` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `product_type` (`product_type`,`product_id`,`product_spec`),
   KEY `user_id` (`user_id`),
-  KEY `pinfo` (`product_type`,`product_id`),
   KEY `userselected` (`user_id`,`selected`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='购物车';
 
@@ -885,7 +885,7 @@ CREATE TABLE `user_order` (
   `delivery_addr_district` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '收件人的区（县）',
   `delivery_addr_detail` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '收件人的详细地址',
   `delivery_addr_zipcode` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '收件人地址邮政编码',
-  `invoice_id` int(11) DEFAULT NULL COMMENT '发票',
+  `invoice_id` int(11) unsigned DEFAULT NULL COMMENT '发票',
   `invoice_status` tinyint(2) DEFAULT NULL COMMENT '发票开具状态：1 未申请发票、 2 发票申请中、 3 发票开具中、 8 无需开具发票、 9发票已经开具',
   `remarks` text COLLATE utf8mb4_unicode_ci COMMENT '管理员后台憋住',
   `options` text COLLATE utf8mb4_unicode_ci COMMENT 'json字段扩展',
@@ -983,7 +983,7 @@ CREATE TABLE `user_order_item` (
   `view_text` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '查看的文章内容，比如：查看、下载',
   `view_effective_time` int(11) unsigned DEFAULT NULL COMMENT '可访问的有效时间，单位秒',
   `comment_path` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '评论的路径',
-  `invoice_id` int(11) unsigned DEFAULT NULL,
+  `invoice_id` int(11) unsigned DEFAULT NULL COMMENT '发票',
   `invoice_status` tinyint(2) DEFAULT NULL,
   `status` tinyint(2) DEFAULT NULL COMMENT '状态：1交易中、 2交易完成（但是可以申请退款） 、3取消交易 、4申请退款、 5拒绝退款、 6退款中、 7退款完成、 9交易结束',
   `refund_no` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '退款订单号',

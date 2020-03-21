@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,6 +75,8 @@ public class CheckoutController extends UcenterControllerBase {
      */
     public void index() {
         List<UserCart> userCarts = new ArrayList<>();
+
+        //cid 某个单独的购物车id，此时只对单一产品下单。
         Long cid = getParaToLong();
         if (cid != null) {
             UserCart userCart = cartService.findById(cid);
@@ -85,6 +87,9 @@ public class CheckoutController extends UcenterControllerBase {
             userCarts.addAll(cartService.findSelectedListByUserId(getLoginedUser().getId()));
         }
 
+        //移除不是自己订单的产品，这种情况可能是别人发了链接给自己
+        userCarts.removeIf(this::notLoginedUserModel);
+
 
         if (userCarts.isEmpty()) {
             /**
@@ -92,6 +97,10 @@ public class CheckoutController extends UcenterControllerBase {
              */
             redirect("/ucenter/order");
             return;
+        }
+
+        for (UserCart userCart : userCarts) {
+            userCart.put("optionsMap", ProductManager.me().renderProductOptions(userCart));
         }
 
 
@@ -108,10 +117,22 @@ public class CheckoutController extends UcenterControllerBase {
         UserOrder order = userOrderService.findById(getPara());
         render404If(notLoginedUserModel(order, "buyer_id"));
 
+        //无法对已经关闭的订单进行再次支付
+        render404If(order.isClosed());
+
         PayConfigUtil.setConfigAttrs(this);
 
+        List<UserOrderItem> orderItems = userOrderItemService.findListByOrderId(order.getId());
+
+        if (orderItems != null) {
+            for (UserOrderItem item : orderItems) {
+                item.put("optionsMap", ProductManager.me().renderProductOptions(item));
+            }
+        }
+
+
         setAttr("order", order);
-        setAttr("orderItems", userOrderItemService.findListByOrderId(order.getId()));
+        setAttr("orderItems", orderItems);
         setAttr("defaultAddress", addressService.findDefaultAddress(getLoginedUser().getId()));
         render("order.html");
     }
@@ -135,14 +156,31 @@ public class CheckoutController extends UcenterControllerBase {
         for (String cid : cids) {
             UserCart userCart = cartService.findById(cid);
 
-            boolean productNormal = ProductManager.me().queryStatusNormal(userCart.getProductType(), userCart.getProductId(), userCart.getUserId());
+            //用户返回重新提交
+            if (userCart == null) {
+                renderFailJson("该购物车信息已经提交，若需再次支付，请进入订单页面进行支付，或者重新下单。");
+                return;
+            }
+
+            //有人去支付别人的产品？
+            if (notLoginedUserModel(userCart)){
+                renderFailJson("发生错误，无法正确生成订单。");
+                return;
+            }
+
+
+            boolean productNormal = ProductManager.me().queryStatusNormal(userCart
+                    , userCart.getProductId()
+                    , userCart.getProductSpec()
+                    , getLoginedUser().getId());
+
             if (!productNormal) {
                 renderFailJson("商品 " + userCart.getProductTitle() + " 已经下架。");
                 return;
             }
 
             // 如果查询出来的 stock == null，表示 可以购买任意件商品
-            Long stock = ProductManager.me().queryStockAmount(userCart.getProductType(), userCart.getProductId());
+            Long stock = ProductManager.me().queryStockAmount(userCart, userCart.getProductId(), userCart.getProductSpec());
             if (stock != null && stock <= 0) {
                 renderFailJson("商品 " + userCart.getProductTitle() + " 已经库存不足。");
                 return;
@@ -159,6 +197,7 @@ public class CheckoutController extends UcenterControllerBase {
             item.setSellerId(userCart.getSellerId());
 
             item.setProductId(userCart.getProductId());
+            item.setProductType(userCart.getProductType());
             item.setProductTypeText(userCart.getProductType());
             item.setProductTypeText(userCart.getProductTypeText());
             item.setProductSummary(userCart.getProductSummary());
@@ -173,10 +212,11 @@ public class CheckoutController extends UcenterControllerBase {
 
             //分销的相关信息
             item.setDistUserId(userCart.getDistUserId());
-            item.setDistAmount(ProductManager.me().queryDistAmount(userCart.getProductType(),
-                    userCart.getProductId(),
-                    getLoginedUser().getId(),
-                    userCart.getDistUserId()));
+            item.setDistAmount(ProductManager.me().queryDistAmount(userCart
+                    , userCart.getProductId()
+                    , userCart.getProductSpec()
+                    , getLoginedUser().getId()
+                    , userCart.getDistUserId()));
 
 
             item.setDeliveryCost(BigDecimal.ZERO);//运费，后台设置
@@ -252,7 +292,7 @@ public class CheckoutController extends UcenterControllerBase {
             }
 
             Ret ret = couponCodeService.valid(couponCode, orderTotalAmount, userOrder.getBuyerId());
-            if (ret.isFail()){
+            if (ret.isFail()) {
                 renderJson(ret);
                 return;
             }
@@ -266,7 +306,12 @@ public class CheckoutController extends UcenterControllerBase {
 
 
         if (userOrder.getCouponAmount() != null) {
-            orderTotalAmount = orderTotalAmount.subtract(userOrder.getCouponAmount());
+            //优惠劵大于 订单金额会导致 负数
+            if (orderTotalAmount.compareTo(userOrder.getCouponAmount()) < 0) {
+                orderTotalAmount = new BigDecimal(0);
+            } else {
+                orderTotalAmount = orderTotalAmount.subtract(userOrder.getCouponAmount());
+            }
         }
 
 
@@ -315,6 +360,9 @@ public class CheckoutController extends UcenterControllerBase {
     public void payorder() {
         UserOrder userOrder = userOrderService.findById(getPara());
         render404If(notLoginedUserModel(userOrder, "buyer_id"));
+
+        //无法对已经关闭的订单进行支付
+        render404If(userOrder.isClosed());
 
         PaymentRecord payment = paymentService.findById(userOrder.getPaymentId());
         if (payment == null) {

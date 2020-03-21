@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ public class _CouponController extends AdminControllerBase {
 
     @AdminMenu(text = "优惠券", groupId = JPressConsts.SYSTEM_MENU_ORDER, order = 8)
     public void index() {
-        Page<Coupon> page = couponService.paginate(getPagePara(), 10);
+        Page<Coupon> page = couponService.paginateByColumns(getPagePara(), 10,Columns.create(),"id desc");
         setAttr("page", page);
         render("finance/coupon.html");
     }
@@ -112,7 +112,13 @@ public class _CouponController extends AdminControllerBase {
         render("finance/coupon_take_edit.html");
     }
 
+    public void layer(){
+        Page<Coupon> page = couponService.paginateByColumns(getPagePara(), 10,Columns.create(),"id desc");
+        setAttr("page", page);
+        render("finance/layer_coupon.html");
+    }
 
+    @EmptyValidate({@Form(name = "userId",message = "用户ID不能为空")})
     public void doCodeSave() {
         Coupon coupon = couponService.findById(getPara("couponId"));
         if (coupon == null) {
@@ -138,7 +144,7 @@ public class _CouponController extends AdminControllerBase {
     }
 
     public void doCodeDel() {
-        CouponCode code = couponCodeService.findByCode(getPara());
+        CouponCode code = couponCodeService.findById(getPara());
         if (code != null){
             couponCodeService.deleteById(getPara());
             couponService.doSyncTakeCount(code.getCouponId());

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import com.jfinal.upload.UploadFile;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
 import io.jpress.JPressConsts;
+import io.jpress.commons.utils.AliyunOssUtils;
 import io.jpress.commons.utils.AttachmentUtils;
 import io.jpress.commons.utils.ImageUtils;
 import io.jpress.core.menu.annotation.AdminMenu;
@@ -191,9 +192,11 @@ public class _AttachmentController extends AdminControllerBase {
         public String getOwner() {
             try {
                 FileOwnerAttributeView foav = Files.getFileAttributeView(Paths.get(file.toURI()), FileOwnerAttributeView.class);
-                UserPrincipal owner = foav.getOwner();
-                if (owner != null) {
-                    return owner.getName();
+                if (foav != null) {
+                    UserPrincipal owner = foav.getOwner();
+                    if (owner != null) {
+                        return owner.getName();
+                    }
                 }
             } catch (Exception e) {
                 LogKit.error(e.toString(), e);
@@ -205,8 +208,12 @@ public class _AttachmentController extends AdminControllerBase {
         public String getPermission() {
             try {
                 PosixFileAttributeView posixView = Files.getFileAttributeView(Paths.get(file.toURI()), PosixFileAttributeView.class);
-                PosixFileAttributes attrs = posixView.readAttributes();
-                if (attrs != null) return PosixFilePermissions.toString(attrs.permissions());
+                if (posixView != null) {
+                    PosixFileAttributes attrs = posixView.readAttributes();
+                    if (attrs != null) {
+                        return PosixFilePermissions.toString(attrs.permissions());
+                    }
+                }
             } catch (Exception e) {
                 LogKit.error(e.toString(), e);
             }
@@ -275,15 +282,16 @@ public class _AttachmentController extends AdminControllerBase {
         }
 
         Attachment attachment = service.findById(id);
-        if (attachment == null){
+        if (attachment == null) {
             renderError(404);
             return;
         }
 
-        if (service.delete(attachment)){
+        if (service.delete(attachment)) {
             File attachmentFile = AttachmentUtils.file(attachment.getPath());
-            if (attachmentFile.exists() && attachmentFile.isFile() ){
+            if (attachmentFile.exists() && attachmentFile.isFile()) {
                 attachmentFile.delete();
+                AliyunOssUtils.delete(new StringBuilder(attachment.getPath()).delete(0, 1).toString());
             }
         }
 

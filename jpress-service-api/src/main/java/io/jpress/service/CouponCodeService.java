@@ -91,4 +91,10 @@ public interface CouponCodeService extends JbootServiceJoiner {
 
 
     public long queryCountByCouponId(long couponId);
+
+
+    public List<CouponCode> findAvailableByUserId(long userid, BigDecimal orderTotalAmount);
+
+    public List<CouponCode> findAvailableByUserId(long userid);
+
 }

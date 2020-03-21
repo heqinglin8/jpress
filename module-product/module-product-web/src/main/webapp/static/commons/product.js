@@ -51,7 +51,11 @@ function buyProduct(productId, ok, fail) {
         },
         ok ? ok : function (data) {
             if (data.gotoUrl) {
-                window.open(data.gotoUrl, '_blank')
+                if (isMobileBrowser()) {
+                    location.href = data.gotoUrl;
+                } else {
+                    window.open(data.gotoUrl, '_blank')
+                }
             }
         },
         fail ? fail : function (data) {
@@ -60,6 +64,14 @@ function buyProduct(productId, ok, fail) {
                 location.href = data.gotoUrl;
             }
         })
+}
+
+function isMobileBrowser(){
+    if(window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+        return true; // 移动端
+    }else{
+        return false; // PC端
+    }
 }
 
 
@@ -84,6 +96,10 @@ function setProductSpec(spec) {
 }
 
 function initSwiperComponent() {
+
+    if (typeof Swiper == "undefined") {
+        return;
+    }
 
     var galleryThumbs = new Swiper('.gallery-thumbs', {
         spaceBetween: 10,
@@ -137,14 +153,17 @@ function initCommentComponent() {
                         location.href = data.gotoUrl;
                     }
                     //验证码错误
-                    else if (data.errorCode == 2){
+                    else if (data.errorCode == 2) {
                         $('#comment-vcode').click();
                         $('#comment-captcha').val("");
                         $('#comment-captcha').focus();
                     }
                     //其他
                     else {
+                        $('#comment-vcode').click();
+                        $('#comment-captcha').val("");
                         $('.comment-textarea textarea').val('');
+                        $('.comment-textarea textarea').focus();
                     }
                 }
             },
@@ -165,6 +184,15 @@ function initCommentComponent() {
 }
 
 
+function initClipboardJSComponent(){
+    if (typeof ClipboardJS != "undefined") {
+        var clipboard = new ClipboardJS('.copy');
+        clipboard.on('success', function(e) {
+            alert("复制成功，可以去分享给您的朋友啦~~");
+        });
+    }
+}
+
 $(document).ready(function () {
 
     $(".product-specs li").click(function () {
@@ -178,5 +206,7 @@ $(document).ready(function () {
 
     initSwiperComponent();
     initCommentComponent();
+    initClipboardJSComponent()
+
 
 });

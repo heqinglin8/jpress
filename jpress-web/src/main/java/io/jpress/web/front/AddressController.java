@@ -3,17 +3,13 @@ package io.jpress.web.front;
 import com.jfinal.aop.Inject;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Page;
-import io.jboot.db.model.Columns;
 import io.jboot.web.controller.annotation.RequestMapping;
 import io.jboot.web.validate.EmptyValidate;
 import io.jboot.web.validate.Form;
-import io.jpress.model.User;
 import io.jpress.model.UserAddress;
 import io.jpress.service.UserAddressService;
 import io.jpress.web.base.UcenterControllerBase;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 
@@ -41,7 +37,7 @@ public class AddressController extends UcenterControllerBase {
         if (id != null) {
             UserAddress data = userAddressService.findById(id);
             render404If(notLoginedUserModel(data));
-            setAttr("data", data);
+            setAttr("address", data);
         }
         render("address_edit.html");
     }
@@ -87,34 +83,14 @@ public class AddressController extends UcenterControllerBase {
     /**
      * 新增/编辑地址
      */
+    @EmptyValidate({
+            @Form(name = "address.username",message = "请填写联系人"),
+            @Form(name = "address.mobile",message = "请填写联系方式"),
+            @Form(name = "address.detail",message = "请填写联系地址"),
+    })
     public void doAdd() {
-
         UserAddress address = getBean(UserAddress.class, "address");
-
-        User user = getLoginedUser();
-        address.setUserId(user.getId());
-        address.setCreated(new Date());
-
-        if (address.getId() != null) {
-            address.setModified(new Date());
-        }
-
-        //新设置了默认，那么其他地址改为非默认
-        if (address.isDefault()) {
-            Columns columns = Columns.create();
-            columns.add("user_id", user.getId());
-            columns.eq("is_default", true);
-            List<UserAddress> list = userAddressService.findListByColumns(columns);
-            if (list != null && list.size() > 0) {
-                for (UserAddress userAddress : list) {
-                    userAddress.setWidthDefault(false);
-                    userAddress.update();
-                }
-            }
-        }
-
-        userAddressService.saveOrUpdate(address);
-
+        userAddressService.addUserAddress(address,getLoginedUser().getId());
         renderJson(Ret.ok());
     }
 

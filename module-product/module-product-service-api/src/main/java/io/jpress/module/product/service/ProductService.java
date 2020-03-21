@@ -197,8 +197,6 @@ public interface ProductService extends JbootServiceJoiner {
 
     public long findCountByStatus(int status);
 
-    public boolean deleteByIds(Object... ids);
-
     public void doIncProductViewCount(long productId);
 
     public void doIncProductCommentCount(long productId);
@@ -210,4 +208,8 @@ public interface ProductService extends JbootServiceJoiner {
     public Product findNextById(long id);
 
     public Product findPreviousById(long id);
+
+    public Page<Product> search(String queryString, int pageNum, int pageSize);
+
+    public Page<Product> searchIndb(String queryString, int pageNum, int pageSize);
 }

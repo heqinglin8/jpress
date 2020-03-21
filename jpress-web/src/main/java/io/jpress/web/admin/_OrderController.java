@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,9 @@ import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
 import io.jpress.JPressConsts;
 import io.jpress.core.finance.OrderManager;
+import io.jpress.core.finance.ProductManager;
 import io.jpress.core.menu.annotation.AdminMenu;
-import io.jpress.model.CouponCode;
-import io.jpress.model.UserOrder;
-import io.jpress.model.UserOrderDelivery;
-import io.jpress.model.UserOrderItem;
+import io.jpress.model.*;
 import io.jpress.service.*;
 import io.jpress.web.base.AdminControllerBase;
 import io.jpress.web.commons.express.ExpressCompany;
@@ -65,6 +63,9 @@ public class _OrderController extends AdminControllerBase {
     @Inject
     private CouponCodeService couponCodeService;
 
+    @Inject
+    private UserOrderInvoiceService invoiceService;
+
 
     @AdminMenu(text = "订单管理", groupId = JPressConsts.SYSTEM_MENU_ORDER, order = 1)
     public void index() {
@@ -80,7 +81,9 @@ public class _OrderController extends AdminControllerBase {
         setAttr("mountOrderUserCount", mountOrderUserCount);
 
         keepPara();
-        Page<UserOrder> userOrderPage = orderService.paginate(getPagePara(), 10, getPara("productTitle"), getPara("ns"));
+
+        Page<UserOrder> userOrderPage = orderService.paginate(getPagePara(), 10,
+                getTrimPara("productTitle"), getTrimPara("ns"));
         setAttr("page", userOrderPage);
         render("order/order_list.html");
     }
@@ -94,11 +97,19 @@ public class _OrderController extends AdminControllerBase {
         setAttr("order", order);
         setAttr("orderItems", orderItems);
         setAttr("orderUser", userService.findById(order.getBuyerId()));
+        setAttr("invoice", invoiceService.findById(order.getInvoiceId()));
+        setAttr("delivery", deliveryService.findById(order.getDeliveryId()));
 
         if (orderItems != null) {
             for (UserOrderItem item : orderItems) {
-                item.put("distUser", userService.findById(item.getId()));
-                item.put("totalDistAmount", item.getDistAmount() == null ? 0 : item.getDistAmount().multiply(BigDecimal.valueOf(item.getProductCount())));
+                item.put("distUser", userService.findById(item.getDistUserId()));
+                item.put("totalDistAmount", item.getDistAmount() == null || item.getDistAmount().compareTo(BigDecimal.ZERO) <= 0
+                        ? null
+                        : item.getDistAmount().multiply(BigDecimal.valueOf(item.getProductCount())));
+            }
+
+            for (UserOrderItem item : orderItems) {
+                item.put("optionsMap", ProductManager.me().renderProductOptions(item));
             }
         }
 
@@ -106,10 +117,13 @@ public class _OrderController extends AdminControllerBase {
         //如果快递已经发货
         if (order.isDeliveried()) {
             UserOrderDelivery delivery = deliveryService.findById(order.getDeliveryId());
-            List<ExpressInfo> expressInfos = ExpressUtil.queryExpress(delivery.getCompany(), delivery.getNumber());
-            setAttr("expressInfos", expressInfos);
+            if (delivery != null) {
+                List<ExpressInfo> expressInfos = ExpressUtil.queryExpress(delivery.getCompany(), delivery.getNumber());
+                setAttr("expressInfos", expressInfos);
+            }
         }
 
+        //如果有优惠码的情况
         if (StrUtil.isNotBlank(order.getCouponCode())) {
             CouponCode orderCoupon = couponCodeService.findByCode(order.getCouponCode());
             if (orderCoupon != null) {
@@ -119,6 +133,7 @@ public class _OrderController extends AdminControllerBase {
         }
 
         render("order/order_detail.html");
+
     }
 
     /**
@@ -213,7 +228,9 @@ public class _OrderController extends AdminControllerBase {
      * 发票设置
      */
     public void invoice() {
-        setAttr("order", orderService.findById(getPara()));
+        UserOrder order = orderService.findById(getPara());
+        setAttr("order", order);
+        setAttr("invoice", invoiceService.findById(order.getInvoiceId()));
         render("order/order_layer_invoice.html");
     }
 
@@ -221,11 +238,19 @@ public class _OrderController extends AdminControllerBase {
         UserOrder order = orderService.findById(getPara("orderId"));
         if (order == null) {
             renderFailJson();
-        } else {
-            order.setInvoiceStatus(getParaToInt("invoiceStatus"));
-            orderService.update(order);
-            renderOkJson();
+            return;
         }
+        order.setInvoiceStatus(getParaToInt("invoiceStatus"));
+
+        UserOrderInvoice invoice = invoiceService.findById(getPara("invoiceId"));
+        invoice.setStatus(getParaToInt("invoiceStatus"));
+        invoice.setContent(getPara("invoiceContent"));
+
+        orderService.update(order);
+        invoiceService.update(invoice);
+
+        renderOkJson();
+
     }
 
     /**

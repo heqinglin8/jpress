@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,18 +73,24 @@ public class JPressOptions {
     }
 
     public static boolean getAsBool(String key) {
-        return Boolean.parseBoolean(store.get(key));
+        return getAsBool(key,false);
+    }
+
+    public static boolean getAsBool(String key, boolean defaultValue) {
+        String value = get(key);
+        return StrUtil.isBlank(value) ? defaultValue : Boolean.parseBoolean(value);
     }
 
     @Deprecated
-    public static boolean isTrueOrNull(String key) {
-        return isTrueOrEmpty(key);
+    public static boolean isTrueOrEmpty(String key) {
+        return getAsBool(key, true);
     }
 
-    public static boolean isTrueOrEmpty(String key) {
+    public static Integer getAsInt(String key) {
         String value = get(key);
-        return StrUtil.isBlank(value) || "true".equals(value);
+        return StrUtil.isBlank(value) ? null : Integer.parseInt(value);
     }
+
 
     public static int getAsInt(String key, int defaultValue) {
         String value = get(key);
@@ -97,6 +103,12 @@ public class JPressOptions {
             LOG.warn(ex.toString(), ex);
             return defaultValue;
         }
+    }
+
+
+    public static Float getAsFloat(String key) {
+        String value = get(key);
+        return StrUtil.isBlank(value) ? null : Float.parseFloat(value);
     }
 
     public static float getAsFloat(String key, float defaultValue) {

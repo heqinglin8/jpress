@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package io.jpress.web.admin;
 import com.jfinal.aop.Inject;
 import com.jfinal.kit.PathKit;
 import com.jfinal.kit.Ret;
-import com.jfinal.render.RenderManager;
 import com.jfinal.upload.UploadFile;
 import io.jboot.utils.ArrayUtil;
 import io.jboot.utils.FileUtil;
@@ -37,8 +36,9 @@ import io.jpress.service.MenuService;
 import io.jpress.service.OptionService;
 import io.jpress.service.RoleService;
 import io.jpress.service.UserService;
-import io.jpress.web.JPressShareFunctions;
 import io.jpress.web.base.AdminControllerBase;
+import io.jpress.web.functions.JPressCoreFunctions;
+import io.jpress.web.render.TemplateRender;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -177,8 +177,9 @@ public class _TemplateController extends AdminControllerBase {
 
         JPressOptions.set("web_template", template.getId());
         optionService.saveOrUpdate("web_template", template.getId());
-        TemplateManager.me().setCurrentTemplate(template);
-        RenderManager.me().getEngine().removeAllTemplateCache();
+
+        TemplateManager.me().setCurrentTemplate(template.getId());
+        TemplateManager.me().clearCache();
 
         renderOkJson();
     }
@@ -207,13 +208,13 @@ public class _TemplateController extends AdminControllerBase {
         }
         setAttr("template", template);
 
-        String view = template.matchTemplateFile("setting.html", false);
+        String view = template.matchView("setting.html", false);
         if (view == null) {
             render("template/setting.html");
             return;
         }
 
-        render(template.getRelativePath() + "/setting.html");
+        render(new TemplateRender(template.buildRelativePath("setting.html"), false));
     }
 
     @AdminMenu(text = "编辑", groupId = JPressConsts.SYSTEM_MENU_TEMPLATE, order = 99)
@@ -245,7 +246,7 @@ public class _TemplateController extends AdminControllerBase {
         File[] files = basePath.listFiles((file) -> file.getName().endsWith(".html")
                 || file.getName().endsWith(".css")
                 || file.getName().endsWith(".js")
-                || JPressShareFunctions.isImage(file.getName())
+                || JPressCoreFunctions.isImage(file.getName())
                 || file.isDirectory());
 
         List srcFiles = new ArrayList<String>();
@@ -299,7 +300,7 @@ public class _TemplateController extends AdminControllerBase {
         }
 
         fileInfoList.sort((o1, o2) -> {
-            if (o1.isDir() && o2.isDir()){
+            if (o1.isDir() && o2.isDir()) {
                 return o1.getName().compareTo(o2.getName());
             }
 
@@ -314,7 +315,7 @@ public class _TemplateController extends AdminControllerBase {
                 return 1;
             }
 
-            if (!o2.getName().endsWith(".html")){
+            if (!o2.getName().endsWith(".html")) {
                 return -1;
             }
 
@@ -371,7 +372,8 @@ public class _TemplateController extends AdminControllerBase {
         }
 
         FileUtil.writeString(file, fileContent);
-        RenderManager.me().getEngine().removeAllTemplateCache();
+
+        TemplateManager.me().clearCache();
 
         renderOkJson();
     }
@@ -416,7 +418,7 @@ public class _TemplateController extends AdminControllerBase {
         List<Menu> childMenus = ms.findListByParentId(id);
         if (childMenus != null) {
             for (Menu menu : childMenus) {
-                menu.setPid(0l);
+                menu.setPid(0L);
                 ms.update(menu);
             }
         }
@@ -467,7 +469,7 @@ public class _TemplateController extends AdminControllerBase {
 
         if (fileName.toLowerCase().endsWith(".html")) {
             template.addNewHtml(fileName);
-            RenderManager.me().getEngine().removeAllTemplateCache();
+            TemplateManager.me().clearCache();
         }
 
         renderOkJson();
@@ -490,7 +492,7 @@ public class _TemplateController extends AdminControllerBase {
         } else {
             if (delFileName.toLowerCase().endsWith(".html")) {
                 template.deleteHtml(delFileName);
-                RenderManager.me().getEngine().removeAllTemplateCache();
+                TemplateManager.me().clearCache();
             }
             renderOkJson();
         }

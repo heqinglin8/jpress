@@ -128,13 +128,18 @@ public class ProductCommentServiceProvider extends JbootServiceBase<ProductComme
         return update(comment);
     }
 
+    @Override
+    public boolean deleteByProductId(Object productId) {
+        return DAO.deleteByColumn(Column.create("product_id",productId));
+    }
+
     private void joinParentUser(Page<ProductComment> p) {
         if (p == null || p.getList().isEmpty()) {
             return;
         }
 
-        for (ProductComment articleComment : p.getList()) {
-            userService.join((ProductComment) articleComment.get("parent"), "user_id");
+        for (ProductComment comment : p.getList()) {
+            userService.join((ProductComment) comment.get("parent"), "user_id");
         }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -164,7 +164,9 @@ public class ProductFields {
     }
 
     public void removeField(String id) {
-        if (StrUtil.isBlank(id)) return;
+        if (StrUtil.isBlank(id)) {
+            return;
+        }
         fields.removeIf(field -> id.equals(field.getId()));
         fields.sort(Comparator.comparingInt(SmartField::getOrderNo));
     }
@@ -177,7 +179,9 @@ public class ProductFields {
         StringBuilder s = new StringBuilder();
         for (SmartField field : fields) {
             String html = field.render();
-            if (html != null) s.append(html);
+            if (html != null) {
+                s.append(html);
+            }
         }
         return s.toString();
     }

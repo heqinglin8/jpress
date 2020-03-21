@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,11 @@ import com.jfinal.aop.Inject;
 import com.jfinal.core.JFinal;
 import com.jfinal.kit.Ret;
 import io.jboot.utils.CookieUtil;
+import io.jboot.utils.RequestUtil;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
 import io.jpress.JPressOptions;
+import io.jpress.commons.dfa.DFAUtil;
 import io.jpress.commons.utils.CommonsUtils;
 import io.jpress.model.User;
 import io.jpress.model.UserCart;
@@ -49,7 +51,7 @@ import java.util.Map;
 /**
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
  * @version V1.0
- * @Title: 文章前台页面Controller
+ * @Title: 产品前台页面Controller
  * @Package io.jpress.module.product.controller
  */
 @RequestMapping("/product")
@@ -83,8 +85,14 @@ public class ProductController extends TemplateControllerBase {
     public void index() {
         Product product = getProduct();
 
-        //当文章处于审核中、草稿等的时候，显示404
+        //当产品处于下架等的时候，显示404
         render404If(product == null || !product.isNormal());
+
+        if (getLoginedUser() == null) {
+            setAttr("productShareUrl", RequestUtil.getBaseUrl() + product.getUrl());
+        }else {
+            setAttr("productShareUrl", RequestUtil.getBaseUrl() + product.getUrl() + "?did=" + getLoginedUser().getId());
+        }
 
         //设置页面的seo信息
         setSeoInfos(product);
@@ -189,6 +197,11 @@ public class ProductController extends TemplateControllerBase {
             }
         }
 
+        if (DFAUtil.isContainsSensitiveWords(content)) {
+            renderJson(Ret.fail().set("message", "非法内容，无法发布评论信息"));
+            return;
+        }
+
 
         Product product = productService.findById(productId);
         if (product == null) {
@@ -196,7 +209,7 @@ public class ProductController extends TemplateControllerBase {
             return;
         }
 
-        // 文章关闭了评论的功能
+        // 关闭了评论的功能
         if (!product.isCommentEnable()) {
             renderJson(Ret.fail().set("message", "该产品的评论功能已关闭"));
             return;
@@ -244,7 +257,7 @@ public class ProductController extends TemplateControllerBase {
             comment.setStatus(ProductComment.STATUS_NORMAL);
         }
 
-        //记录文章的评论量
+        //记录产品的评论量
         productService.doIncProductCommentCount(productId);
 
         commentService.saveOrUpdate(comment);
@@ -270,7 +283,7 @@ public class ProductController extends TemplateControllerBase {
         }
 
 
-        setRetHtml(ret, paras, "/WEB-INF/views/commons/product/defaultProductCommentItem.html");
+        renderHtmltoRet("/WEB-INF/views/commons/product/defaultProductCommentItem.html", paras, ret);
         renderJson(ret);
 
         ProductNotifyKit.doNotifyAdministrator(product, comment, user);
@@ -286,12 +299,11 @@ public class ProductController extends TemplateControllerBase {
 
         Product product = ProductValidate.getThreadLocalProduct();
         User user = getLoginedUser();
-        String distUserId = CookieUtil.get(this, buildDistUserCookieName(product.getId()));
-        Long duid = StrUtil.isNotBlank(distUserId) ? Long.valueOf(distUserId) : null;
-        UserCart userCart = product.toUserCartItem(user.getId(), duid, getPara("spec"));
+        Long distUserId = CookieUtil.getLong(this, buildDistUserCookieName(product.getId()));
+        UserCart userCart = product.toUserCartItem(user.getId(), distUserId, getPara("spec"));
 
-        cartService.save(userCart);
-        renderOkJson();
+        Object cartId = cartService.save(userCart);
+        renderJson(Ret.ok().set("cartId",cartId));
     }
 
 
@@ -299,9 +311,11 @@ public class ProductController extends TemplateControllerBase {
     public void doAddFavorite() {
         Product product = ProductValidate.getThreadLocalProduct();
         User user = getLoginedUser();
-        favoriteService.save(product.toFavorite(user.getId()));
-
-        renderOkJson();
+        if (favoriteService.doAddToFavorite(product.toFavorite(user.getId()))) {
+            renderOkJson();
+        } else {
+            renderFailJson("已经收藏过了!");
+        }
     }
 
     /**
@@ -311,7 +325,11 @@ public class ProductController extends TemplateControllerBase {
     public void doBuy() {
         Product product = ProductValidate.getThreadLocalProduct();
         User user = getLoginedUser();
-        Object cartId = cartService.save(product.toUserCartItem(user.getId(), null, getPara("spec")));
+        Long distUserId = CookieUtil.getLong(this, buildDistUserCookieName(product.getId()));
+        UserCart userCart = product.toUserCartItem(user.getId(), distUserId, getPara("spec"));
+
+        Object cartId = cartService.save(userCart);
+
         if (isAjaxRequest()) {
             renderJson(Ret.ok().set("gotoUrl", JFinal.me().getContextPath() + "/ucenter/checkout/" + cartId));
         } else {

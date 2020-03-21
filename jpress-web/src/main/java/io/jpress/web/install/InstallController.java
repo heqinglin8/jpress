@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -121,7 +121,7 @@ public class InstallController extends ControllerBase {
 
     public void step3() {
 
-        if (!InstallManager.me().isInited()){
+        if (!InstallManager.me().isInited()) {
             redirect("/install");
             return;
         }
@@ -218,7 +218,8 @@ public class InstallController extends ControllerBase {
         }
 
         // 设置 JPress 的版本
-        if (ret.isOk()){
+        if (ret.isOk()) {
+
             OptionService optionService = Aop.get(OptionService.class);
             optionService.saveOrUpdate("jpress_version", JPressConsts.VERSION);
             optionService.saveOrUpdate("jpress_version_code", JPressConsts.VERSION_CODE);
@@ -247,24 +248,19 @@ public class InstallController extends ControllerBase {
             if (pwd.equals(confirmPwd) == false) {
                 return Ret.fail().set("message", "两次输入密码不一致").set("errorCode", 5);
             }
-
-
-            try {
-                InstallManager.me().doUpgradeDatabase();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return Ret.fail().set("message", e.getMessage());
-            }
-
-
-            initActiveRecordPlugin();
-
-            initFirstUser();
-
-        } else {
-            initActiveRecordPlugin();
         }
 
+        try {
+            InstallManager.me().doUpgradeDatabase();
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Ret.fail().set("message", e.getMessage());
+        }
+
+        initActiveRecordPlugin();
+
+        initFirstUser(username, pwd);
 
         if (doFinishedInstall()) {
             return Ret.ok();
@@ -293,14 +289,12 @@ public class InstallController extends ControllerBase {
             if (pwd.equals(confirmPwd) == false) {
                 return Ret.fail().set("message", "两次输入密码不一致").set("errorCode", 5);
             }
-
-            initActiveRecordPlugin();
-
-            initFirstUser();
-
-        } else {
-            initActiveRecordPlugin();
         }
+
+
+        initActiveRecordPlugin();
+
+        initFirstUser(username, pwd);
 
 
         if (doFinishedInstall()) {
@@ -350,7 +344,8 @@ public class InstallController extends ControllerBase {
 
         try {
             InstallManager.me().doInitDatabase();
-        } catch (SQLException e) {
+            Thread.sleep(2000);
+        } catch (Exception e) {
             e.printStackTrace();
             return Ret.fail().set("message", e.getMessage());
         }
@@ -366,7 +361,7 @@ public class InstallController extends ControllerBase {
         JPressOptions.set("web_title", webTitle);
         JPressOptions.set("web_subtitle", webSubtitle);
 
-        initFirstUser();
+        initFirstUser(username, pwd);
 
         if (doFinishedInstall()) {
             return Ret.ok();
@@ -376,14 +371,21 @@ public class InstallController extends ControllerBase {
 
     }
 
-    private void initFirstUser() {
+    /**
+     * 初始化第一个用户
+     *
+     * @param username
+     * @param pwd
+     */
+    private void initFirstUser(String username, String pwd) {
 
-        String username = getPara("username");
-        String pwd = getPara("pwd");
-
+        if (StrUtil.isBlank(username) || StrUtil.isBlank(pwd)) {
+            return;
+        }
 
         UserService userService = Aop.get(UserService.class);
         User user = userService.findById(1L);
+
         if (user == null) {
             user = new User();
             user.setNickname(username);
@@ -411,11 +413,12 @@ public class InstallController extends ControllerBase {
 
         RoleService roleService = Aop.get(RoleService.class);
 
-        Role role = roleService.findById(1);
-        if (role == null){
+        Role role = roleService.findById(1L);
+        if (role == null) {
             role = new Role();
             role.setCreated(new Date());
         }
+
         role.setName("默认角色");
         role.setDescription("这个是系统自动创建的默认角色");
         role.setFlag(Role.ADMIN_FLAG);
@@ -424,7 +427,7 @@ public class InstallController extends ControllerBase {
         roleService.saveOrUpdate(role);
 
         Db.update("DELETE FROM `user_role_mapping` WHERE `user_id` = 1");
-        Db.update("INSERT INTO `user_role_mapping` (`user_id`, `role_id`) VALUES (1, 1);");
+        Db.update("INSERT INTO `user_role_mapping` (`user_id`, `role_id`) VALUES (1, 1)");
     }
 
 
@@ -434,8 +437,8 @@ public class InstallController extends ControllerBase {
         DataSourceConfig config = InstallManager.me().getDataSourceConfig();
 
         // 在只有 jboot.properties 但是没有 install.lock 的情况下
-        // jboot启动的时候会出初始化 jboot.properties 里配置的插件
-        // 此时，会出现 Config already exist 的异常
+        // jboot 启动的时候会出初始化 jboot.properties 里配置的插件
+        // 此时，会出现 config already exist 的异常
         if (DbKit.getConfig(DataSourceConfig.NAME_DEFAULT) == null) {
             config.setName(DataSourceConfig.NAME_DEFAULT);
         } else {
@@ -444,8 +447,8 @@ public class InstallController extends ControllerBase {
 
         DataSourceConfigManager.me().addConfig(config);
 
-        ActiveRecordPlugin activeRecordPlugin = ArpManager.me().createRecordPlugin(config);
-        activeRecordPlugin.start();
+        ActiveRecordPlugin arPlugin = ArpManager.me().createRecordPlugin(config);
+        arPlugin.start();
     }
 
 

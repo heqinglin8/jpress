@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019, Michael Yang 杨福海 (fuhai999@gmail.com).
+ * Copyright (c) 2016-2020, Michael Yang 杨福海 (fuhai999@gmail.com).
  * <p>
  * Licensed under the GNU Lesser General Public License (LGPL) ,Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,11 @@ package io.jpress.web;
 
 import com.jfinal.template.Engine;
 import io.jboot.core.listener.JbootAppListenerBase;
+import io.jpress.commons.dfa.DFAUtil;
 import io.jpress.core.finance.OrderManager;
 import io.jpress.core.finance.PaymentManager;
 import io.jpress.web.commons.finance.*;
-import io.jpress.web.sharekit.PermissionKits;
+import io.jpress.web.functions.PermissionFunctions;
 
 /**
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
@@ -41,7 +42,7 @@ public class WebInitializer extends JbootAppListenerBase {
         engine.addSharedFunction("/WEB-INF/views/ucenter/_layout/_layout.html");
         engine.addSharedFunction("/WEB-INF/views/ucenter/_layout/_layout_noleft.html");
 
-        engine.addSharedStaticMethod(PermissionKits.class);
+        engine.addSharedStaticMethod(PermissionFunctions.class);
     }
 
 
@@ -61,5 +62,7 @@ public class WebInitializer extends JbootAppListenerBase {
         OrderManager.me().addOrderItemStatusChangeListener(new OrderFinishedFlagProcesser());
 
         OrderManager.me().addOrderStatusChangeListener(new CouponAwardProcesser());
+
+        DFAUtil.init();
     }
 }
