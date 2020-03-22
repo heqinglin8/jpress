@@ -47,7 +47,11 @@
     window.doSubmit = function () {
         ajaxSubmit("#form", function (data) {
             $("#productId").attr("value", data.id);
-            toastr.success('产品保存成功。');
+            if(data.message){
+                toastr.success(data.message);
+            }else{
+                toastr.success('产品保存成功。');
+            }
         });
     }
 

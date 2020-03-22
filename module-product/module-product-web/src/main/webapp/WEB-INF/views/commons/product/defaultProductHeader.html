@@ -39,9 +39,11 @@
             </div>
         </div>
 
-        <div class="product-price">
-            <span>¥ #number(product.price ?? 0 , '0.00')</span>
-        </div>
+        #if(product.price!=null)
+            <div class="product-price">
+                <span>¥ #number(product.price ?? 0 , '0.00')</span>
+            </div>
+        #end
         <div class="product-usp">
             #(product.usp ??)
         </div>
@@ -58,10 +60,13 @@
         </div>
         #end
 
-        <div class="product-btn">
-            <a class="product-btn-buy" href="javascript:;" onclick="addProductToCart('#(product.id ??)')"> <i class="fa fa-shopping-cart"></i> 加入购物车</a>
-            <a class="product-btn-cart" href="javascript:;" onclick="buyProduct('#(product.id ??)')"> <i class="fa fa-credit-card-alt"></i> 立即购买</a>
-        </div>
+        #if(product.price!=null)
+            <div class="product-btn">
+                <a class="product-btn-buy" href="javascript:;" onclick="addProductToCart('#(product.id ??)')"> <i class="fa fa-shopping-cart"></i> 加入购物车</a>
+                <a class="product-btn-cart" href="javascript:;" onclick="buyProduct('#(product.id ??)')"> <i class="fa fa-credit-card-alt"></i> 立即购买</a>
+            </div>
+        #end
+
 
         <p class="product-btn-star">
 

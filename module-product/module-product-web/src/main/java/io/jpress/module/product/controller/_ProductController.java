@@ -166,7 +166,7 @@ public class _ProductController extends AdminControllerBase {
 
     @EmptyValidate({
             @Form(name = "product.title", message = "产品标题不能为空"),
-            @Form(name = "product.price", message = "产品的销售价格不能为空")
+//            @Form(name = "product.price", message = "产品的销售价格不能为空")
     })
     public void doSave() {
         Product product = getModel(Product.class, "product");
@@ -234,7 +234,13 @@ public class _ProductController extends AdminControllerBase {
         memberPriceService.saveOrUpdateByProduct("product", product.getId(), memberGroupIds, memberGroupPrices);
 
 
-        Ret ret = id > 0 ? Ret.ok().set("id", id) : Ret.fail();
+        Ret ret;
+        if(product.getPrice() == null){
+            ret = id > 0 ? Ret.ok().set("id", id).set("message", "产品保存成功！<br/>价格为空，将不会展示价格和购买按钮") : Ret.fail();
+        }else{
+            ret = id > 0 ? Ret.ok().set("id", id) : Ret.fail();
+        }
+
         renderJson(ret);
     }
 
