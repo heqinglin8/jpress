@@ -71,6 +71,8 @@ a:hover{
 
 .navbar-light .navbar-nav .nav-item a{
     color:#666;
+    position:relative;
+    text-align:center;
 }
 
 .navbar-light .navbar-nav .nav-item a:hover{
@@ -78,13 +80,47 @@ a:hover{
     font-weight: bold;
 }
 
-.navbar-light .navbar-nav .active>.nav-link{
+.navbar-light .navbar-nav li.active .nav-link{
     color:#0094E8;
     font-weight: bold;
 }
-.nav .nav-item a.active{
-    color:#0094E8;
-    font-weight: bold;
+
+.navbar-light .navbar-nav li a span {
+    margin:auto;
+    display:inline-block;
+    position:absolute;
+    bottom:0px;
+    left:0;
+    right:0;
+    width:0px;
+    height:3px;
+    background:#0094E8;
+    transition:.5s;
+    border-radius:50px;
+}
+
+.navbar-light .navbar-nav li.active a span{
+    width:100%;
+}
+
+.navbar-light .navbar-nav li a:hover span {
+    width:100%;
+}
+
+/*.navbar-light .navbar-nav li{*/
+    /*background-color: #ffc107;*/
+/*}*/
+
+.navbar-light .navbar-nav li.active a .one{
+    border-color: rgba(0,0,0,0) rgba(0,0,0,0) #0094E8;
+    border-style: solid;
+    border-width: 5px;
+    height: 0px;
+    width: 0px;
+    position:absolute;
+    margin:auto;
+    display:inline-block;
+    bottom:2px;
 }
 
 .navbar .navbar-brand img{
