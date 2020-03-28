@@ -585,6 +585,12 @@ a.card-link:hover{
     color:#999;
     margin-bottom:0;
 }
+
+.list-number span{
+    color:#E5511D;
+    font-size: 1.2rem;
+}
+
 .price-box{
     display: flex;
     align-items: center;

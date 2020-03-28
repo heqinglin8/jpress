@@ -26,11 +26,15 @@
                     </p>
 
                     <div class="product-list-btn">
-                        <div class="price-box">
-                            <p class="list-price">¥ #number(product.price)</p>
+                        #if(product.price)
+                            <div class="price-box">
+                                <p class="list-price">¥ #number(product.price)</p>
 
-                            <p class="list-number"><span>#(product.sales_count ?? 0)</span> 人已购买</p>
-                        </div>
+                                <p class="list-number"><span>#(product.sales_count ?? 0)</span> 人已购买</p>
+                            </div>
+                          #elseif(product.salesCount)
+                            <p class="list-number"><span>#(product.salesCount ?? 0)</span> 人已洽谈</p>
+                        #end
                         <div>
                             <a class="list-more" href="#(product.url)">查看宝贝 >  </a>
                         </div>
