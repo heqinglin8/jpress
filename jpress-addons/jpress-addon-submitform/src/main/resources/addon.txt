@@ -1,0 +1,7 @@
+id=io.jpress.addon.submitform
+title=submit Form
+description=这是一个表单提交插件，用于简单的表单提交，可以自定义
+author=何清林
+authorWebsite=http://www.shufuu.com
+version=1.0.0
+versionCode=1
