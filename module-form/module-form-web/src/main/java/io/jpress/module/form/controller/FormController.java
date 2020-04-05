@@ -9,6 +9,7 @@ import io.jpress.module.form.model.FormInfo;
 import io.jpress.module.form.service.FormInfoService;
 import io.jpress.web.base.TemplateControllerBase;
 
+import java.util.Date;
 
 @RequestMapping("/form")
 public class FormController extends TemplateControllerBase {
@@ -31,58 +32,62 @@ public class FormController extends TemplateControllerBase {
 
         String name = getPara("name");
         String mobile = getPara("mobile");
-
-        int area = getParaToInt("area",0);
+        int area;
+        try {
+            area = getParaToInt("area",0);
+        }catch (Exception e){
+            area = 0;
+        }
         int roomType = getParaToInt("roomType",0);
-        String province = getPara("province");
-        String city = getPara("city");
-        String district = getPara("district");
         String address = getPara("address");
         String desc = getPara("desc");
         FormInfo form = getBean(FormInfo.class);
         if (StrUtil.isBlank(name)) {
-            renderJson(Ret.fail().set("message", "姓名不能为空").set("errorCode", 1));
+            renderJson(Ret.fail().set("message", "姓名不能为空"));
             return;
         }
 
-        if (StrUtil.isBlank(mobile)) {
-            renderJson(Ret.fail().set("message", "联系方式不能为空").set("errorCode", 2));
+        if (StrUtil.isBlank(mobile) || mobile.length()!=11) {
+            renderJson(Ret.fail().set("message", "请填写正确的手机号"));
             return;
         }
 
         if (StrUtil.isBlank(address)) {
-            renderJson(Ret.fail().set("message", "地址不能为空").set("errorCode", 3));
+            renderJson(Ret.fail().set("message", "请选择地址"));
+            return;
+        }
+
+        String[] addressArray = address.split("/");
+
+        if(addressArray.length<2){
+            renderJson(Ret.fail().set("message", "请选择城市"));
+            return;
+        }
+
+        if(addressArray.length<3){
+            renderJson(Ret.fail().set("message", "请选择县/区"));
             return;
         }
 
         if (area <= 0) {
-            renderJson(Ret.fail().set("message", "请填写面积").set("errorCode", 4));
+            renderJson(Ret.fail().set("message", "面积请填写数字"));
             return;
         }
 
         if (roomType <= 0) {
-            renderJson(Ret.fail().set("message", "请选择你的房间类型").set("errorCode", 5));
+            renderJson(Ret.fail().set("message", "请选择你的房间类型"));
             return;
         }
 
         form.setName(name);
         form.setMobile(mobile);
         form.setArea(area);
-
         form.setHousetype(roomType);
-        form.setProvince(province);
-        form.setCity(city);
-        form.setDistrict(district);
         form.setAddress(address);
         form.setDesc(desc);
-
+        form.setTime(new Date());
         formInfoService.save(form);
-
         renderOkJson();
-    }
-
-    public void showResult() {
-        renderJson("表单保存成功");
     }
 
 }

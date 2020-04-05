@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="#(CPATH)/static/components/bootstrap/css/bootstrap.min.css">
     <link href="/static/commons/form.css" rel="stylesheet">
+    <link href="/static/commons/city/css/city-picker.css" rel="stylesheet" type="text/css" />
     <title> 舒服智家-获取报价 </title>
 </head>
 <body>
@@ -29,26 +30,7 @@
                           action="#(CPATH)/form/doAdd"
                           id = "jpress-info-form">
                         <div class="box-body .text-center">
-                            <h4 class="page-header" style="text-align: center">情况描述</h4>
-                            <div class="col-sm-offset-4">
-                                <div class="form-group">
-                                        <div class="col-sm-3">
-                                            <input type="input" class="form-control" placeholder="面积:xx平方米"
-                                                   name="area">
-                                        </div>
-
-                                        <div class="col-sm-3">
-                                            <select class="form-control" name="roomType">
-                                                <option value="0" selected>选择房型</option>
-                                                <option value="1">一室一厅</option>
-                                                <option value="2">两室两厅</option>
-                                                <option value="3">三室一厅</option>
-                                                <option value="4">三室两厅</option>
-                                            </select>
-                                        </div>
-                                </div>
-                            </div>
-                                <h4 class="page-header" style="text-align: center">联系信息</h4>
+                            <h4 class="page-header" style="text-align: center">联系信息</h4>
                             <div class="col-sm-offset-4">
                                 <div class="form-group">
                                     <div class="col-sm-3">
@@ -56,28 +38,41 @@
                                                name="name">
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="input" class="form-control" placeholder="手机..."
+                                        <input type="text" class="form-control" placeholder="请填写手机号"
                                                name="mobile">
                                     </div>
-                                    </div>
-                                <div class="form-group">
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" placeholder="省份" name="province">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="input" class="form-control" placeholder="市" name="city">
-                                    </div>
                                 </div>
+
                                 <div class="form-group">
-                                    <div class="col-sm-3">
-                                        <input type="input" class="form-control" placeholder="区/县" name="district">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="input" class="form-control" placeholder="街道" name="address">
+                                    <div class="col-sm-6" style="position: relative;">
+                                        <input id="city-picker3" class="form-control" readonly type="text" value="广东省/广州市/天河区" data-toggle="city-picker" name="address">
                                     </div>
                                 </div>
                             </div>
-                                <h4 class="page-header" style="text-align: center">其他</h4>
+                            <!--<br/>-->
+                            <h4 class="page-header" style="text-align: center">情况描述</h4>
+                            <div class="col-sm-offset-4">
+                                <div class="form-group">
+                                    <div class="col-sm-3">
+                                        <input type="text"
+                                               class="form-control"
+                                               placeholder="面积:xx平方米"
+                                               name="area"
+                                        >
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <select class="form-control" name="roomType">
+                                            <option value="0" selected>选择房型</option>
+                                            <option value="1">一室一厅</option>
+                                            <option value="2">两室两厅</option>
+                                            <option value="3">三室一厅</option>
+                                            <option value="4">三室两厅</option>
+                                            <option value="5">大厦/小区/商超</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-sm-offset-4">
                                 <div class="form-group">
                                     <div class="col-sm-6">
@@ -105,5 +100,11 @@
 <script src="/static/components/jquery/jquery.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="/static/commons/form.js"> </script>
+<script src="/static/components/jquery/jquery.form.min.js"></script>
+
+<!-- 选择城市相关js -->
+<script src="/static/commons/city/js/city-picker.data.js"></script>
+<script src="/static/commons/city/js/city-picker.js"></script>
+<script src="/static/commons/city/js/main.js"></script>
 </body>
 </html>

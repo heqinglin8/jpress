@@ -4,15 +4,14 @@ function initInfoComponent() {
         $(this).ajaxSubmit({
             type: "post",
             success: function (data) {
-                alert('111111');
                 if (data.state == "ok") {
 
-                    alert('提交成功，将很快给你回复！');
+                    alert('提交成功，我们将很快跟您联系，免费根据你的需求报价！');
                     location.reload();
                 }
                 //评论失败
                 else {
-                    alert('提交失败，' + data.message);
+                    alert('提交失败：' + data.message);
                 }
             },
             error: function () {
@@ -23,6 +22,7 @@ function initInfoComponent() {
     });
 
 }
+
 
 
 $(document).ready(function(){

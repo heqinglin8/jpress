@@ -35,30 +35,6 @@ public abstract class BaseFormInfo<M extends BaseFormInfo<M>> extends JbootModel
 		return getStr("mobile");
 	}
 
-	public void setProvince(java.lang.String province) {
-		set("province", province);
-	}
-
-	public java.lang.String getProvince() {
-		return getStr("province");
-	}
-
-	public void setCity(java.lang.String city) {
-		set("city", city);
-	}
-
-	public java.lang.String getCity() {
-		return getStr("city");
-	}
-
-	public void setDistrict(java.lang.String district) {
-		set("district", district);
-	}
-
-	public java.lang.String getDistrict() {
-		return getStr("district");
-	}
-
     /**
      * 详细地址
      */
@@ -118,14 +94,14 @@ public abstract class BaseFormInfo<M extends BaseFormInfo<M>> extends JbootModel
     /**
      * 提交的时间
      */
-	public void setTime(java.sql.Time time) {
+	public void setTime(java.util.Date time) {
 		set("time", time);
 	}
 
     /**
      * 提交的时间
      */
-	public java.sql.Time getTime() {
+	public java.util.Date getTime() {
 		return get("time");
 	}
 
