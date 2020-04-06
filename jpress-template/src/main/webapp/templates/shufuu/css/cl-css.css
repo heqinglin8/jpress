@@ -648,6 +648,61 @@ a.card-link:hover{
     padding-bottom: 0.5rem;
 }
 
+.right-card-top-box{
+    height: 6rem;
+    background-color: #66BBB8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-card-top-title{
+    font-size:1rem;
+    color:#FFF;
+    font-weight: 500;
+}
+
+.right-card-top-desc{
+    font-size:0.8rem;
+    color:#FFF;
+}
+
+.cl-submit{
+    width: 100%;
+    margin: 0 auto;
+    padding:0 0 10px 0;
+}
+
+.box-body{
+    padding-top: 10px;
+}
+
+.box-body .input-text{
+      /*color: #DDD;*/
+      font-size: 0.8rem;
+}
+
+.comment-vcode .vcode-img {
+    height: 2.3rem;
+    margin-top: -3px;
+    cursor: pointer;
+}
+
+.comment-vcode input {
+    padding: 0 0.5rem;
+    height: 2.6rem;
+    border: solid 1px #f5f5f5;
+    border-radius: 0.22rem;
+    background-color: #f5f5f5;
+    outline: none;
+}
+
+.comment-vcode input:focus {
+    background-color: #f5f5f5bb;
+    border: solid 1px #ddd;
+}
+
 @media (max-width: 768px){
     .recommend-right{
         padding: 0px 0px 0px 0rem;

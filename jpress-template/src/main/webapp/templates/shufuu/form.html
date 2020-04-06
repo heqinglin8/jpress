@@ -49,14 +49,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--<br/>-->
                             <h4 class="page-header" style="text-align: center">情况描述</h4>
                             <div class="col-sm-offset-4">
                                 <div class="form-group">
                                     <div class="col-sm-3">
                                         <input type="text"
                                                class="form-control"
-                                               placeholder="面积:xx平方米"
+                                               placeholder="房屋面积:xx平方米"
                                                name="area"
                                         >
                                     </div>
@@ -69,6 +68,7 @@
                                             <option value="3">三室一厅</option>
                                             <option value="4">三室两厅</option>
                                             <option value="5">大厦/小区/商超</option>
+                                            <option value="6">其他</option>
                                         </select>
                                     </div>
                                 </div>
@@ -79,6 +79,16 @@
                                         <textarea rows="5" class="form-control" placeholder="请你写下你的其他要求..."
                                                   name="desc"></textarea>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-offset-4">
+                                <div class="comment-vcode">
+                                    #if(option("page_comment_vcode_enable","true"))
+                                    <input placeholder="请输入验证码" name="captcha" id="comment-captcha">
+                                    <img class="vcode-img" src="#(CPATH)/commons/captcha"
+                                         onclick="this.src='#(CPATH)/commons/captcha?d='+Math.random();" cdn-exclude id="comment-vcode">
+                                    #end
                                 </div>
                             </div>
                         </div>

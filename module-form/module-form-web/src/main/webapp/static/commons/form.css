@@ -9,3 +9,26 @@
 .content-header h1{
     color: #FFF;
 }
+
+.comment-vcode{
+    margin-bottom: 1rem;
+}
+.comment-vcode .vcode-img {
+    height: 2.3rem;
+    margin-top: -3px;
+    cursor: pointer;
+}
+
+.comment-vcode input {
+    padding: 0 0.5rem;
+    height: 2.6rem;
+    border: solid 1px #f5f5f5;
+    border-radius: 0.22rem;
+    background-color: #f5f5f5;
+    outline: none;
+}
+
+.comment-vcode input:focus {
+    background-color: #f5f5f5bb;
+    border: solid 1px #ddd;
+}

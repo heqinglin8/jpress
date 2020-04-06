@@ -8,7 +8,81 @@
 <div class="right-card">
 
     <div class="right-card-main">
-        <div class="right-card-title">个人微信号</div>
+        <div class="right-card-top-box">
+            <div class="right-card-top-title">马上抢 免费名额</div>
+            <div class="right-card-top-desc">目前已有 163321 人申请成功 </div>
+        </div>
+        <div class="cl-submit">
+            <form
+                class="form-horizontal"
+                autocomplete="off"
+                method="post"
+                data-ok-href="#(CPATH)/form"
+                action="#(CPATH)/form/doAdd"
+                id = "jpress-info-form">
+                <div class="box-body .text-center">
+                    <div class="form-group col-sm-12">
+                        <input type="text" class="form-control input-text" placeholder="你的姓名"
+                               name="name">
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <input type="text" class="form-control input-text" placeholder="请填写手机号"
+                               name="mobile">
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <div style="position: relative;">
+                            <input id="city-picker3" class="form-control" readonly type="text" value="广东省/广州市/天河区" data-toggle="city-picker" name="address" size="50">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12 row" style="margin-left: 0">
+                        <div style="padding: 0;width: 47%">
+                            <input type="text"
+                                   class="form-control input-text"
+                                   placeholder="房屋面积:xx平方米"
+                                   name="area"
+                            >
+                        </div>
+
+                        <div style="padding: 0;width: 47%;margin-left: 6%">
+                            <select class="form-control input-text" name="roomType">
+                                <option value="0" selected>选择房型</option>
+                                <option value="1">一室一厅</option>
+                                <option value="2">两室两厅</option>
+                                <option value="3">三室一厅</option>
+                                <option value="4">三室两厅</option>
+                                <option value="5">大厦/小区/商超</option>
+                                <option value="6">其他</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <div class="comment-vcode">
+                            #if(option("page_comment_vcode_enable","true"))
+                            <input placeholder="请输入验证码" name="captcha" id="comment-captcha">
+                            <img class="vcode-img" src="#(CPATH)/commons/captcha"
+                                 onclick="this.src='#(CPATH)/commons/captcha?d='+Math.random();" cdn-exclude id="comment-vcode">
+                            #end
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="box-submit" style="text-align: center">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="right-card">
+
+    <div class="right-card-main">
+        <div class="right-card-title">官方微信号</div>
         <div class="cl-code">
             <img src="#option('calmlog_qrcode','img/code.jpg')" class="img-fluid" alt="">
             <p>#option('calmlog_qrcode_text')</p>
