@@ -679,7 +679,7 @@ a.card-link:hover{
 }
 
 .box-body .input-text{
-      /*color: #DDD;*/
+      background-color: #ffc107;
       font-size: 0.8rem;
 }
 

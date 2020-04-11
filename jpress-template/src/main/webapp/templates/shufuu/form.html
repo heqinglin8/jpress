@@ -80,15 +80,16 @@
                                                   name="desc"></textarea>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="form-group">
 
-                            <div class="col-sm-offset-4">
-                                <div class="comment-vcode">
-                                    #if(option("page_comment_vcode_enable","true"))
-                                    <input placeholder="请输入验证码" name="captcha" id="comment-captcha">
-                                    <img class="vcode-img" src="#(CPATH)/commons/captcha"
-                                         onclick="this.src='#(CPATH)/commons/captcha?d='+Math.random();" cdn-exclude id="comment-vcode">
-                                    #end
+                                    <div class="comment-vcode col-sm-6">
+                                        #if(option("page_comment_vcode_enable","true"))
+                                        <input placeholder="请输入验证码" name="captcha" id="comment-captcha">
+                                        <img class="vcode-img" src="#(CPATH)/commons/captcha"
+                                             onclick="this.src='#(CPATH)/commons/captcha?d='+Math.random();" cdn-exclude id="comment-vcode">
+                                        #end
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
