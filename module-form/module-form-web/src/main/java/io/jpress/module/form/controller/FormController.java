@@ -4,6 +4,7 @@ import com.jfinal.aop.Inject;
 import com.jfinal.kit.Ret;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
+import io.jpress.JPressConsts;
 import io.jpress.JPressOptions;
 import io.jpress.module.form.model.FormInfo;
 import io.jpress.module.form.service.FormInfoService;
@@ -11,7 +12,7 @@ import io.jpress.web.base.TemplateControllerBase;
 
 import java.util.Date;
 
-@RequestMapping("/form")
+@RequestMapping(value = "/form")
 public class FormController extends TemplateControllerBase {
 
     @Inject
@@ -20,8 +21,9 @@ public class FormController extends TemplateControllerBase {
     public void index() {
         String formView = StrUtil.isBlank(JPressOptions.getIndexStyle())
                 ? "form.html"
-                : "index_" + JPressOptions.getIndexStyle() + ".html";
+                : "form_" + JPressOptions.getIndexStyle() + ".html";
         //渲染 模板下的 form.html
+//        '/WEB-INF/views/commons/page/defaultPageCommentItem.html'
         render(formView);
     }
 
