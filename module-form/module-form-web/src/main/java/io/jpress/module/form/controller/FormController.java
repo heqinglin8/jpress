@@ -43,15 +43,6 @@ public class FormController extends TemplateControllerBase {
         String desc = getPara("desc");
         FormInfo form = getBean(FormInfo.class);
 
-        //是否对用户输入验证码进行验证
-        Boolean vCodeEnable = JPressOptions.isTrueOrEmpty("page_comment_vcode_enable");
-        if (vCodeEnable != null && vCodeEnable == true) {
-            if (validateCaptcha("captcha") == false) {
-                renderJson(Ret.fail().set("message", "验证码错误").set("errorCode", 2));
-                return;
-            }
-        }
-
         if (StrUtil.isBlank(name)) {
             renderJson(Ret.fail().set("message", "姓名不能为空"));
             return;
@@ -87,6 +78,15 @@ public class FormController extends TemplateControllerBase {
         if (roomType <= 0) {
             renderJson(Ret.fail().set("message", "请选择你的房间类型"));
             return;
+        }
+
+        //是否对用户输入验证码进行验证
+        Boolean vCodeEnable = JPressOptions.isTrueOrEmpty("page_comment_vcode_enable");
+        if (vCodeEnable != null && vCodeEnable == true) {
+            if (validateCaptcha("captcha") == false) {
+                renderJson(Ret.fail().set("message", "验证码错误").set("errorCode", 2));
+                return;
+            }
         }
 
         form.setName(name);

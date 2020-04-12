@@ -23,10 +23,22 @@ function initInfoComponent() {
 
 }
 
+function initSubmitCount() {
+
+    var str = '2020-04-12'.replace(/-/g,'/'); // 将-替换成/，因为下面这个构造函数只支持/分隔的日期字符串
+    var date = new Date(str); // 构造一个日期型数据，值为传入的字符串
+    var dateCount = Math.floor((new Date().getTime() - date.getTime())/1000/3600/24);
+    var count =  dateCount * 8 + 1000;  //一天新增8单
+    document.getElementById('jpress-submit-text').innerHTML = '目前已有 <span style="font-size: 1.4rem;color: #eea236;font-weight: 600">'+count+'</span> 人申请成功'
+
+}
+
 
 
 $(document).ready(function(){
 
     initInfoComponent();
+
+    initSubmitCount()
 
 });
