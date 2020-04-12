@@ -649,7 +649,7 @@ a.card-link:hover{
 }
 
 .right-card-top-box{
-    height: 6rem;
+    height: 5rem;
     background-color: #66BBB8;
     display: flex;
     flex-direction: column;
@@ -658,7 +658,7 @@ a.card-link:hover{
 }
 
 .right-card-top-title{
-    font-size:1rem;
+    font-size:1.2rem;
     color:#FFF;
     font-weight: 500;
 }
