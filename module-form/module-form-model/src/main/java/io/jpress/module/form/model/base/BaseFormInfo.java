@@ -19,18 +19,30 @@ public abstract class BaseFormInfo<M extends BaseFormInfo<M>> extends JbootModel
 		return getLong("id");
 	}
 
+    /**
+     * 姓名
+     */
 	public void setName(java.lang.String name) {
 		set("name", name);
 	}
 
+    /**
+     * 姓名
+     */
 	public java.lang.String getName() {
 		return getStr("name");
 	}
 
+    /**
+     * 电话
+     */
 	public void setMobile(java.lang.String mobile) {
 		set("mobile", mobile);
 	}
 
+    /**
+     * 电话
+     */
 	public java.lang.String getMobile() {
 		return getStr("mobile");
 	}
@@ -78,14 +90,14 @@ public abstract class BaseFormInfo<M extends BaseFormInfo<M>> extends JbootModel
 	}
 
     /**
-     * 而外的需求描述
+     * 额外的需求描述
      */
 	public void setDesc(java.lang.String desc) {
 		set("desc", desc);
 	}
 
     /**
-     * 而外的需求描述
+     * 额外的需求描述
      */
 	public java.lang.String getDesc() {
 		return getStr("desc");
