@@ -5,13 +5,19 @@
     <link rel="stylesheet" href="#(CPATH)/static/components/bootstrap/css/bootstrap.min.css">
     <link href="/static/commons/form.css" rel="stylesheet">
     <link href="/static/commons/city/css/city-picker.css" rel="stylesheet" type="text/css" />
-    <title> 舒服智家-获取报价 </title>
+    <title>#(SEO_TITLE ?? (WEB_TITLE + '-' + WEB_SUBTITLE))-获取报价</title>
+    <meta name="keywords" content="#(SEO_KEYWORDS)">
+    <meta name="description" content="#(SEO_DESCRIPTION)">
 </head>
 <body>
 <div class="content-wrapper">
 
     <section class="content-header">
-        <h1>填写信息咨询，快速获取报价</h1>
+        <div class="header-title">填写信息咨询，快速获取报价</div>
+        <a class="back" href="#(WEB_DOMAIN ?? '/')">
+            回到首页
+        </a>
+
     </section>
 
     <section class="content">
@@ -74,7 +80,8 @@
                                             <option value="9">别墅</option>
                                             <option value="10">大平层</option>
                                             <option value="11">大厦/小区/商超</option>
-                                            <option value="12">其他</option>
+                                            <option value="12">酒店/宾馆</option>
+                                            <option value="13">其他</option>
                                         </select>
                                     </div>
                                 </div>
