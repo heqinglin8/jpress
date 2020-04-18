@@ -139,6 +139,12 @@
 
         <dependency>
             <groupId>io.jpress</groupId>
+            <artifactId>module-form-web</artifactId>
+            <version>3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jpress</groupId>
             <artifactId>module-article-service-provider</artifactId>
             <version>3.0</version>
         </dependency>
@@ -146,6 +152,12 @@
         <dependency>
             <groupId>io.jpress</groupId>
             <artifactId>module-page-service-provider</artifactId>
+            <version>3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jpress</groupId>
+            <artifactId>module-form-service-provider</artifactId>
             <version>3.0</version>
         </dependency>
 
@@ -239,6 +251,9 @@
                                 </resource>
                                 <resource>
                                     <directory>${basedir}/../module-product/module-product-web/src/main/webapp</directory>
+                                </resource>
+                                <resource>
+                                    <directory>${basedir}/../module-form/module-form-web/src/main/webapp</directory>
                                 </resource>
                             </resources>
                         </configuration>
