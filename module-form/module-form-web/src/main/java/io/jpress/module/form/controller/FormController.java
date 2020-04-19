@@ -20,8 +20,8 @@ public class FormController extends TemplateControllerBase {
 
     public void index() {
         String formView = StrUtil.isBlank(JPressOptions.getIndexStyle())
-                ? "form.html"
-                : "form_" + JPressOptions.getIndexStyle() + ".html";
+                ? "ask_form.html"
+                : "ask_form_" + JPressOptions.getIndexStyle() + ".html";
         //渲染 模板下的 form.html
 //        '/WEB-INF/views/commons/page/defaultPageCommentItem.html'
         render(formView);
