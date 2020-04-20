@@ -73,4 +73,28 @@ public class _FormController extends AdminControllerBase {
         render(fis.batchDeleteByIds(idsSet.toArray()) ? OK : FAIL);
     }
 
+    public void doTrash() {
+        Long id = getIdPara();
+        FormInfo model = new FormInfo();
+        model.setId(id);
+        model.setStatus(2);
+        render(fis.update(model) ? OK : FAIL);
+    }
+
+    public void doProcessed() {
+        Long id = getIdPara();
+        FormInfo model = new FormInfo();
+        model.setId(id);
+        model.setStatus(1);
+        render(fis.update(model) ? OK : FAIL);
+    }
+
+    public void doNormal() {
+        Long id = getIdPara();
+        FormInfo model = new FormInfo();
+        model.setId(id);
+        model.setStatus(0);
+        render(fis.update(model) ? OK : FAIL);
+    }
+
 }

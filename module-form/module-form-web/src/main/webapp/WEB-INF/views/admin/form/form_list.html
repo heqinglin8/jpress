@@ -16,11 +16,18 @@
         ajaxGet("#(CPATH)/admin/form/doNormal/" + id);
     }
 
-    function del(id) {
-        if (confirm("确定要删除该页面吗？删除后不可恢复")) {
-            ajaxGet("#(CPATH)/admin/page/doDel/" + id);
+
+    function onChangeFormStatus(select,id) {
+        var selecteValue = select.value
+        if(selecteValue == "1"){
+            processed(id)
+        }else if(selecteValue == "2"){
+            trash(id)
+        }else{
+            normal(id)
         }
     }
+
 
     $("#batchDel").click(function () {
         var ids = getSelectedIds();
@@ -61,6 +68,8 @@
         var selecteValue = document.getElementById("columnType").value;
         doColumnType(selecteValue)
     });
+
+
 
 </script>
 
@@ -179,10 +188,10 @@
                                 <td>#(sp.desc ??)</td>
                                 <td>#(sp.time ??)</td>
                                 <td>
-                                    <select class="form-control" name="status">
-                                        <option value="0" #if(sp.status == 0) selected #else   #end>未处理</option>
-                                        <option value="1" #if(sp.status == 1) selected #else   #end>已处理</option>
-                                        <option value="2" #if(sp.status == 2) selected #else   #end>已废弃</option>
+                                    <select class="form-control" name="status" id="status_select" onchange=onChangeFormStatus(this,'#(sp.id??)')>
+                                        <option value="0" #selectedIf(sp.status == 0)>未处理0</option>
+                                        <option value="1" #selectedIf(sp.status == 1)>已处理1</option>
+                                        <option value="2" #selectedIf(sp.status == 2)>已废弃2</option>
                                     </select>
                                 </td>
                             </tr>

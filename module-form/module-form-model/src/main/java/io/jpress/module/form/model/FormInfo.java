@@ -39,6 +39,8 @@ public class FormInfo extends BaseFormInfo<FormInfo> {
         map.put(13,"其他");
     }
 
+
+
     public String getHouseTypeDesc() {
         return map.get(getHousetype());
     }
