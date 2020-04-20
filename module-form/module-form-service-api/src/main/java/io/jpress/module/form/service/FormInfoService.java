@@ -174,5 +174,9 @@ public interface FormInfoService  {
      */
     public Page<FormInfo> paginateByColumns(int page, int pageSize, Columns columns, String orderBy);
 
+    public Page<FormInfo> _paginateByStatus(int page, int pagesize, String title, String status);
+
+
+    public Page<FormInfo> _paginateWithoutStatus(int page, int pagesize, String title);
 
 }

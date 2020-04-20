@@ -1,5 +1,43 @@
 #@layout()
 
+#define script()
+<script>
+
+    function trash(id) {
+        ajaxGet("#(CPATH)/admin/page/doTrash/" + id);
+    }
+
+
+    function draft(id) {
+        ajaxGet("#(CPATH)/admin/page/doDraft/" + id);
+    }
+
+    function normal(id) {
+        ajaxGet("#(CPATH)/admin/page/doNormal/" + id);
+    }
+
+    function del(id) {
+        if (confirm("确定要删除该页面吗？删除后不可恢复")) {
+            ajaxGet("#(CPATH)/admin/page/doDel/" + id);
+        }
+    }
+
+    $("#batchDel").click(function () {
+        var ids = getSelectedIds();
+        if (ids == "") {
+            alert('您未选择任何内容');
+            return
+        }
+        if (confirm("确定要删除选中页面吗？删除后不可恢复")) {
+            ajaxGet("#(CPATH)/admin/form/doDelByIds?ids=" + ids);
+        }
+    })
+
+</script>
+
+#end
+
+
 #define content()
 <div class="content-wrapper">
 
@@ -27,9 +65,9 @@
                             <input type="hidden" name="status" value="#para('status')">
                             <div class="row">
                                 <div class="form-group col-lg-4">
-                                    <label class="col-sm-3 control-label">标题</label>
+                                    <label class="col-sm-3 control-label">姓名</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="title" value="#para('title')">
+                                        <input type="text" class="form-control" name="name" value="#para('name')">
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-8">
@@ -43,8 +81,6 @@
 
                         <div class="row actionPanel">
                             <div class="col-xs-12">
-                                <a href="#(CPATH)/admin/page/write" class="btn btn-primary "> <i
-                                        class="fa fa-fw fa-plus"></i> 新建</a>
                                 <button type="button" id="batchDel" class="btn btn-default checkAction"> 批量删除</button>
                             </div>
                         </div>
@@ -59,16 +95,16 @@
                                 <th style="width: 10px">
                                     <input name="dataItem" onchange="checkAll(this)" type="checkbox" value="0"/>
                                 </th>
-                                <th style="width: 100px">姓名</th>
+                                <th style="width: 80px">姓名</th>
                                 <th>电话</th>
                                 <th>地址</th>
                                 <th>面积</th>
                                 <th>类型</th>
-                                <th>描述</th>
+                                <th style="width: 180px">描述</th>
                                 <th style="width: 100px">时间</th>
                             </tr>
 
-                            #for(sp : forms)
+                            #for(sp : page.list)
                             <tr class="jp-actiontr">
                                 <td><input class="dataItem" type="checkbox" value="#(sp.id)" />
                                 </td>

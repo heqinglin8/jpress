@@ -18,15 +18,17 @@ import com.jfinal.aop.Inject;
 import com.jfinal.plugin.activerecord.Page;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
+import io.jboot.web.validate.EmptyValidate;
+import io.jboot.web.validate.Form;
 import io.jpress.JPressConsts;
 import io.jpress.core.menu.annotation.AdminMenu;
 import io.jpress.module.form.model.FormInfo;
-import io.jpress.module.form.model.FormInfoExt;
 import io.jpress.module.form.service.FormInfoService;
 import io.jpress.web.base.AdminControllerBase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
@@ -42,16 +44,15 @@ public class _FormController extends AdminControllerBase {
     @AdminMenu(text = "表单管理", groupId = "form", order = 1)
     public void index() {
 
+        String status = getPara("status");
+        String name = getPara("name");
 
-        List<FormInfo> pages = fis.findAll();
-        List<FormInfoExt> forms = new ArrayList<>();
-        if(pages!=null && !pages.isEmpty()){
-            for(int i=0;i<pages.size();i++){
-                FormInfo formInfo = pages.get(i);
-                forms.add(new FormInfoExt(formInfo));
-            }
-        }
-        setAttr("forms", forms);
+        Page<FormInfo> page =
+                StrUtil.isBlank(status)
+                        ? fis._paginateWithoutStatus(getPagePara(), 10, name)
+                        : fis._paginateByStatus(getPagePara(), 10, name, status);
+
+        setAttr("page", page);
 
 //        int draftCount = sps.findCountByStatus(SinglePage.STATUS_DRAFT);
 //        int trashCount = sps.findCountByStatus(SinglePage.STATUS_TRASH);
@@ -65,5 +66,10 @@ public class _FormController extends AdminControllerBase {
         render("form/form_list.html");
     }
 
+    @EmptyValidate(@Form(name = "ids"))
+    public void doDelByIds() {
+        Set<String> idsSet = getParaSet("ids");
+        render(fis.batchDeleteByIds(idsSet.toArray()) ? OK : FAIL);
+    }
 
 }
