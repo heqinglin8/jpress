@@ -13,19 +13,19 @@ import io.jpress.module.form.service.FormInfoService;
 public class FormInfoServiceProvider extends JbootServiceBase<FormInfo> implements FormInfoService {
 
     @Override
-    public Page<FormInfo> _paginateByStatus(int page, int pagesize, String name, String status) {
+    public Page<FormInfo> _paginateByStatus(int page, int pagesize, String name, String value, String status) {
         Columns columns = Columns.create("status", status);
-        if (StrUtil.isNotBlank(name)) {
-            columns.like("name", "%" + name + "%");
+        if (StrUtil.isNotBlank(value)) {
+            columns.like(name, "%" + value + "%");
         }
         return paginateByColumns(page,pagesize,columns);
     }
 
     @Override
-    public Page<FormInfo> _paginateWithoutStatus(int page, int pagesize, String name) {
+    public Page<FormInfo> _paginateWithoutStatus(int page, int pagesize,String name, String value) {
         Columns columns = Columns.create();
-        if (StrUtil.isNotBlank(name)) {
-            columns.like("name", "%" + name + "%");
+        if (StrUtil.isNotBlank(value)) {
+            columns.like(name, "%" + value + "%");
         }
         return paginateByColumns(page,pagesize,columns);
     }

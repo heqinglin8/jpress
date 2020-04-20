@@ -16,6 +16,11 @@ public class FormInfo extends BaseFormInfo<FormInfo> {
     public static final String STATUS_NORMAL = "0";  //未处理的
     public static final String STATUS_PROCESSED = "1";  //已处理的
     public static final String STATUS_TRASH = "2";   //废弃的
+    public static final String COLUMN_TYPE_NAME = "name";   //名字
+    public static final String COLUMN_TYPE_MOBILE = "mibile";   //电话
+    public static final String COLUMN_TYPE_ADDRESS = "address";   //地址
+    public static final String COLUMN_TYPE_DESC = "desc";   //描述
+
 
     public FormInfo() {
         map.put(0,"选择房型");

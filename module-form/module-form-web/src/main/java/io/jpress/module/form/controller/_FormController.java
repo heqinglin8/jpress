@@ -45,13 +45,13 @@ public class _FormController extends AdminControllerBase {
     public void index() {
 
         String status = getPara("status");
-        String name = getPara("name");
-        String columnType = getPara("columnType");
+        String keyword = getPara("keyword");
+        String columnType = getPara("columnType",FormInfo.COLUMN_TYPE_NAME);
 
         Page<FormInfo> page =
                 StrUtil.isBlank(status)
-                        ? fis._paginateWithoutStatus(getPagePara(), 10, name)
-                        : fis._paginateByStatus(getPagePara(), 10, name, status);
+                        ? fis._paginateWithoutStatus(getPagePara(), 10,columnType, keyword)
+                        : fis._paginateByStatus(getPagePara(), 10,columnType, keyword, status);
 
         setAttr("page", page);
 

@@ -33,6 +33,35 @@
         }
     })
 
+    function doColumnType(selecteValue){
+        var val = document.getElementById("filterInput");
+        if(selecteValue == "housetype"){
+            val.innerHTML="<select class=\"form-control\" name=\"keyword\">\n" +
+                "                        <option value=\"0\" selected>选择房型</option>\n" +
+                "                        <option value=\"1\">一室一厅</option>\n" +
+                "                        <option value=\"2\">两室两厅</option>\n" +
+                "                        <option value=\"3\">三室一厅</option>\n" +
+                "                        <option value=\"4\">三室两厅</option>\n" +
+                "                        <option value=\"5\">四室两厅</option>\n" +
+                "                        <option value=\"6\">四室三厅</option>\n" +
+                "                        <option value=\"7\">五室两厅</option>\n" +
+                "                        <option value=\"8\">五室三厅</option>\n" +
+                "                        <option value=\"9\">别墅</option>\n" +
+                "                        <option value=\"10\">大平层</option>\n" +
+                "                        <option value=\"11\">大厦/小区/商超</option>\n" +
+                "                        <option value=\"12\">酒店/宾馆</option>\n" +
+                "                        <option value=\"13\">其他</option>\n" +
+                "                    </select>"
+        }else {
+            val.innerHTML="<input type=\"text\" class=\"form-control\" name=\"keyword\" value=\"\">"
+        }
+    }
+
+    $("#columnType").change(function(){
+        var selecteValue = document.getElementById("columnType").value;
+        doColumnType(selecteValue)
+    });
+
 </script>
 
 #end
@@ -63,23 +92,42 @@
                     <div class="box-header with-border">
                         <form class="form-horizontal actionPanel" action="#(CPATH)/admin/form" method="get">
                             <input type="hidden" name="status" value="#para('status')">
-                            <div class="row">
+                            <div class="row" style="margin-left: 2rem">
+
+                                <div class="col-lg-2">
+                                    <select class="form-control col-sm-12" id="columnType" name="columnType">
+                                        <option value="name" #selectedIf(para("columnType") == 'name')>姓名</option>
+                                        <option value="mobile" #selectedIf(para("columnType") == 'mobile')>电话</option>
+                                        <option value="address" #selectedIf(para("columnType") == 'address')>地址</option>
+                                        <option value="housetype" #selectedIf(para("columnType") == 'housetype')>类型</option>
+                                        <option value="desc" #selectedIf(para("columnType") == 'desc')>描述</option>
+                                    </select>
+                                </div>
                                 <div class="form-group col-lg-4">
-                                    <label class="col-sm-3 control-label">姓名</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="name" value="#para('name')">
-                                    </div>
-                                </div>
-                                <div class="form-group col-lg-2">
-                                    <div class="col-sm-12">
-                                        <select class="form-control" name="columnType">
-                                            <option value="0">姓名</option>
-                                            <option value="1">电话</option>
-                                            <option value="2">地址</option>
-                                            <option value="3">描述</option>
+                                    <div class="col-sm-12" id="filterInput">
+                                        #if(para('columnType') == 'housetype')
+                                        <select class="form-control" name="keyword">
+                                            <option value="0" selected>选择房型</option>
+                                            <option value="1">一室一厅</option>
+                                            <option value="2">两室两厅</option>
+                                            <option value="3">三室一厅</option>
+                                            <option value="4">三室两厅</option>
+                                            <option value="5">四室两厅</option>
+                                            <option value="6">四室三厅</option>
+                                            <option value="7">五室两厅</option>
+                                            <option value="8">五室三厅</option>
+                                            <option value="9">别墅</option>
+                                            <option value="10">大平层</option>
+                                            <option value="11">大厦/小区/商超</option>
+                                            <option value="12">酒店/宾馆</option>
+                                            <option value="13">其他</option>
                                         </select>
+                                        #else
+                                        <input type="text" class="form-control" name="keyword" value="#para('keyword')">
+                                        #end
                                     </div>
                                 </div>
+
                                 <div class="form-group col-lg-6">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-primary ">查询</button>
