@@ -117,4 +117,18 @@ public abstract class BaseFormInfo<M extends BaseFormInfo<M>> extends JbootModel
 		return get("time");
 	}
 
+    /**
+     * 表单状态：0、未处理 1、已查看 2、已废弃
+     */
+	public void setStatus(java.lang.Integer status) {
+		set("status", status);
+	}
+
+    /**
+     * 表单状态：0、未处理 1、已查看 2、已废弃
+     */
+	public java.lang.Integer getStatus() {
+		return getInt("status");
+	}
+
 }

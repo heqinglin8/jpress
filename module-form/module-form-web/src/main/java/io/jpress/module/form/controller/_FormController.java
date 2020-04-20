@@ -46,6 +46,7 @@ public class _FormController extends AdminControllerBase {
 
         String status = getPara("status");
         String name = getPara("name");
+        String columnType = getPara("columnType");
 
         Page<FormInfo> page =
                 StrUtil.isBlank(status)
@@ -54,14 +55,14 @@ public class _FormController extends AdminControllerBase {
 
         setAttr("page", page);
 
-//        int draftCount = sps.findCountByStatus(SinglePage.STATUS_DRAFT);
-//        int trashCount = sps.findCountByStatus(SinglePage.STATUS_TRASH);
-//        int normalCount = sps.findCountByStatus(SinglePage.STATUS_NORMAL);
-//
-//        setAttr("draftCount", draftCount);
-//        setAttr("trashCount", trashCount);
-//        setAttr("normalCount", normalCount);
-//        setAttr("totalCount", draftCount + trashCount + normalCount);
+        long normalCount = fis.findCountByStatus(FormInfo.STATUS_NORMAL);
+        long processedCount = fis.findCountByStatus(FormInfo.STATUS_PROCESSED);
+        long trashCount = fis.findCountByStatus(FormInfo.STATUS_TRASH);
+
+        setAttr("processedCount", processedCount);
+        setAttr("normalCount", normalCount);
+        setAttr("trashCount", trashCount);
+        setAttr("totalCount", processedCount + trashCount + normalCount);
 
         render("form/form_list.html");
     }

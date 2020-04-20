@@ -179,4 +179,6 @@ public interface FormInfoService  {
 
     public Page<FormInfo> _paginateWithoutStatus(int page, int pagesize, String title);
 
+    public long findCountByStatus(String status);
+
 }

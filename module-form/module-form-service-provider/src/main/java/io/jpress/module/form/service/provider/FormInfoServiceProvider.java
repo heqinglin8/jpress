@@ -1,5 +1,6 @@
 package io.jpress.module.form.service.provider;
 
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import io.jboot.aop.annotation.Bean;
 import io.jboot.db.model.Columns;
@@ -27,6 +28,12 @@ public class FormInfoServiceProvider extends JbootServiceBase<FormInfo> implemen
             columns.like("name", "%" + name + "%");
         }
         return paginateByColumns(page,pagesize,columns);
+    }
+
+    @Override
+    public long findCountByStatus(String status) {
+        Columns columns = Columns.create("status",status!=null ? status : FormInfo.STATUS_NORMAL);
+        return findCountByColumns(columns);
     }
 
 }

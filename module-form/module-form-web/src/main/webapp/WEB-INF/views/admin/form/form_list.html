@@ -4,16 +4,16 @@
 <script>
 
     function trash(id) {
-        ajaxGet("#(CPATH)/admin/page/doTrash/" + id);
+        ajaxGet("#(CPATH)/admin/form/doTrash/" + id);
     }
 
 
-    function draft(id) {
-        ajaxGet("#(CPATH)/admin/page/doDraft/" + id);
+    function processed(id) {
+        ajaxGet("#(CPATH)/admin/form/doProcessed/" + id);
     }
 
     function normal(id) {
-        ajaxGet("#(CPATH)/admin/page/doNormal/" + id);
+        ajaxGet("#(CPATH)/admin/form/doNormal/" + id);
     }
 
     function del(id) {
@@ -49,10 +49,10 @@
     </section>
 
     <section class="content-header text-tap">
-        <a href="#(CPATH)/admin/page">全部 (#(totalCount ??))</a> |
-        <a href="?status=normal">已发布 (#(normalCount ??))</a> |
-        <a href="?status=draft">草稿 (#(draftCount ?? 0))</a> |
-        <a href="?status=trash" style="color: #a00">垃圾箱 (#(trashCount ?? 0))</a>
+        <a href="#(CPATH)/admin/form">全部 (#(totalCount ??))</a> |
+        <a href="?status=0">未处理 (#(normalCount ??))</a> |
+        <a href="?status=1">已处理 (#(processedCount ?? 0))</a> |
+        <a href="?status=2" style="color: #a00">已废弃 (#(trashCount ?? 0))</a>
     </section>
 
     <section class="content">
@@ -70,7 +70,17 @@
                                         <input type="text" class="form-control" name="name" value="#para('name')">
                                     </div>
                                 </div>
-                                <div class="form-group col-lg-8">
+                                <div class="form-group col-lg-2">
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="columnType">
+                                            <option value="0">姓名</option>
+                                            <option value="1">电话</option>
+                                            <option value="2">地址</option>
+                                            <option value="3">描述</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-primary ">查询</button>
                                     </div>
@@ -95,13 +105,14 @@
                                 <th style="width: 10px">
                                     <input name="dataItem" onchange="checkAll(this)" type="checkbox" value="0"/>
                                 </th>
-                                <th style="width: 80px">姓名</th>
+                                <th>姓名</th>
                                 <th>电话</th>
-                                <th>地址</th>
+                                <th style="width: 150px">地址</th>
                                 <th>面积</th>
                                 <th>类型</th>
-                                <th style="width: 180px">描述</th>
+                                <th style="width: 260px">描述</th>
                                 <th style="width: 100px">时间</th>
+                                <th>状态</th>
                             </tr>
 
                             #for(sp : page.list)
@@ -119,6 +130,13 @@
                                 <td>#(sp.houseTypeDesc ??)</td>
                                 <td>#(sp.desc ??)</td>
                                 <td>#(sp.time ??)</td>
+                                <td>
+                                    <select class="form-control" name="status">
+                                        <option value="0" #if(sp.status == 0) selected #else   #end>未处理</option>
+                                        <option value="1" #if(sp.status == 1) selected #else   #end>已处理</option>
+                                        <option value="2" #if(sp.status == 2) selected #else   #end>已废弃</option>
+                                    </select>
+                                </td>
                             </tr>
                             #end
 

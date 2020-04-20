@@ -13,9 +13,9 @@ public class FormInfo extends BaseFormInfo<FormInfo> {
 
     private static final long serialVersionUID = 1L;
     private static HashMap<Integer,String> map = new HashMap();
-    public static final String STATUS_NORMAL = "normal";
-    public static final String STATUS_DRAFT = "draft";
-    public static final String STATUS_TRASH = "trash";
+    public static final String STATUS_NORMAL = "0";  //未处理的
+    public static final String STATUS_PROCESSED = "1";  //已处理的
+    public static final String STATUS_TRASH = "2";   //废弃的
 
     public FormInfo() {
         map.put(0,"选择房型");
