@@ -19,6 +19,7 @@ import com.jfinal.aop.Inject;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Page;
 import io.jboot.db.model.Columns;
+import io.jboot.utils.ArrayUtil;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
 import io.jboot.web.cors.EnableCORS;
@@ -69,10 +70,11 @@ public class SFArticleApiController extends SFApiControllerBase {
      * 文章详情的api
      * 可以传 id 获取文章详情，也可以通过 slug 来获取文章详情
      * 例如：
-     * http://127.0.0.1:8080/api/article?id=123
+     * http://127.0.0.1:8080/sf/api/article?id=123
      * 或者
-     * http://127.0.0.1:8080/api/article?slug=myslug
+     * http://127.0.0.1:8080/sf/api/article?slug=myslug
      */
+    @EnableCORS
     public void index() {
         Long id = getParaToLong("id");
         String slug = getPara("slug");

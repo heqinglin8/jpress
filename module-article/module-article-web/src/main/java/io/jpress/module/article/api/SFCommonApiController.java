@@ -14,26 +14,16 @@
  * limitations under the License.
  */
 package io.jpress.module.article.api;
-
+import com.alibaba.fastjson.JSON;
 import com.jfinal.aop.Aop;
 import com.jfinal.aop.Inject;
+import com.jfinal.json.FastJson;
 import com.jfinal.kit.Ret;
 import com.jfinal.log.Log;
-import com.jfinal.plugin.activerecord.Page;
-import io.jboot.db.model.Columns;
-import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
 import io.jboot.web.cors.EnableCORS;
-import io.jpress.JPressOptions;
-import io.jpress.commons.dfa.DFAUtil;
-import io.jpress.commons.layer.SortKit;
-import io.jpress.commons.oauth2.OauthConnector;
+import io.jpress.commons.bean.RenderList;
 import io.jpress.model.Menu;
-import io.jpress.model.User;
-import io.jpress.module.article.kit.ArticleNotifyKit;
-import io.jpress.module.article.model.Article;
-import io.jpress.module.article.model.ArticleCategory;
-import io.jpress.module.article.model.ArticleComment;
 import io.jpress.module.article.service.ArticleCategoryService;
 import io.jpress.module.article.service.ArticleCommentService;
 import io.jpress.module.article.service.ArticleService;
@@ -41,10 +31,14 @@ import io.jpress.service.MenuService;
 import io.jpress.service.OptionService;
 import io.jpress.service.UserService;
 import io.jpress.web.base.SFApiControllerBase;
+import io.jpress.web.functions.JPressCoreFunctions;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 /**
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
@@ -96,8 +90,72 @@ public class SFCommonApiController extends SFApiControllerBase {
         }
         LOGGER.info("navList:"+navList);
         LOGGER.info("secondaryMenus:"+secondaryMenus);
-//        SortKit.toTree(secondaryMenus);
         renderJson(Ret.ok("tabs", navList));
+    }
+
+    /**
+     * 获取首页信息
+     * http://127.0.0.1:8080/sf/api/common/home
+     */
+    @EnableCORS
+    public void home() {
+        List<RenderList> slides = JPressCoreFunctions.linesOption("calmlog_slides","\\|");
+        renderJson(Ret.ok("slides", slides).set("funs",getFunList()));
+    }
+
+
+    private List<Map<String,Object>> getFunList(){
+
+        List<Map<String,Object>> funs = new ArrayList<>();
+        HashMap<String,Object> jb = new HashMap<>();
+        jb.put("icon","https://mued3.jia.com/image/mobile/m_sygb/first_page/icon_list_znbj.png");
+        jb.put("text","智能报价");
+        jb.put("type",1);
+        funs.add(jb);
+
+        HashMap<String,Object> jb2 = new HashMap<>();
+        jb2.put("icon","https://mued3.jia.com/image/mobile/m_sygb/first_page/icon_list_mfsj.png");
+        jb2.put("text","免费设计");
+        jb2.put("type",2);
+        funs.add(jb2);
+
+        HashMap<String,Object> jb3 = new HashMap<>();
+        jb3.put("icon","https://mued3.jia.com/image/mobile/m_sygb/first_page/icon_list_vrqj.png");
+        jb3.put("text","全景家装");
+        jb3.put("type",3);
+        funs.add(jb3);
+
+        HashMap<String,Object> jb4 = new HashMap<>();
+        jb4.put("icon","https://mued3.jia.com/image/mobile/m_sygb/first_page/icon_list_kbwp.png");
+        jb4.put("text","空调安装");
+        jb4.put("type",4);
+        funs.add(jb4);
+
+        HashMap<String,Object> jb5 = new HashMap<>();
+        jb5.put("icon","https://mued3.jia.com/image/mobile/m_sygb/first_page/icon_list_zxal.png");
+        jb5.put("text","空调维修");
+        jb5.put("type",5);
+        funs.add(jb5);
+
+        HashMap<String,Object> jb6 = new HashMap<>();
+        jb6.put("icon","https://mued3.jia.com/image/mobile/m_sygb/first_page/icon_list_znbj.png");
+        jb6.put("text","工程案例");
+        jb6.put("type",6);
+        funs.add(jb6);
+
+        HashMap<String,Object> jb7 = new HashMap<>();
+        jb7.put("icon","https://mued3.jia.com/image/mobile/m_sygb/first_page/icon_list_lt.png");
+        jb7.put("text","智家论坛");
+        jb7.put("type",7);
+        funs.add(jb7);
+
+        HashMap<String,Object> jb8 = new HashMap<>();
+        jb8.put("icon","https://mued3.jia.com/image/mobile/wxStore/ppg-icon.png");
+        jb8.put("text","空调知识");
+        jb8.put("type",8);
+        funs.add(jb8);
+
+        return funs;
     }
 
 

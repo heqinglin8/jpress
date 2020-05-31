@@ -40,7 +40,6 @@ public class Article extends BaseArticle<Article> {
     public static final String STATUS_DRAFT = "draft";
     public static final String STATUS_TRASH = "trash";
 
-
     public boolean isNormal() {
         return STATUS_NORMAL.equals(getStatus());
     }
@@ -204,6 +203,5 @@ public class Article extends BaseArticle<Article> {
     public PingData toPingData() {
         return PingData.create(getTitle(), getUrl());
     }
-
 
 }
