@@ -15,6 +15,7 @@
  */
 package io.jpress.module.article.api;
 
+import com.jfinal.aop.Aop;
 import com.jfinal.aop.Inject;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Page;
@@ -26,6 +27,7 @@ import io.jboot.web.cors.EnableCORS;
 import io.jpress.JPressOptions;
 import io.jpress.commons.dfa.DFAUtil;
 import io.jpress.commons.layer.SortKit;
+import io.jpress.model.Menu;
 import io.jpress.model.User;
 import io.jpress.module.article.kit.ArticleNotifyKit;
 import io.jpress.module.article.model.Article;
@@ -34,6 +36,7 @@ import io.jpress.module.article.model.ArticleComment;
 import io.jpress.module.article.service.ArticleCategoryService;
 import io.jpress.module.article.service.ArticleCommentService;
 import io.jpress.module.article.service.ArticleService;
+import io.jpress.service.MenuService;
 import io.jpress.service.OptionService;
 import io.jpress.service.UserService;
 import io.jpress.web.base.ApiControllerBase;
@@ -163,9 +166,19 @@ public class SFArticleApiController extends SFApiControllerBase {
         String orderBy = getPara("orderBy");
         int pageNumber = getParaToInt("pageNumber", 1);
 
+
         Page<Article> page = categoryId == null
                 ? articleService.paginateInNormal(pageNumber, 10, orderBy)
                 : articleService.paginateByCategoryIdInNormal(pageNumber, 10, categoryId, orderBy);
+        MenuService menuService = Aop.get(MenuService.class);
+        List<Article> list = page.getList();
+        for(int i=0;i<list.size();i++){
+            Article article = list.get(i);
+            Menu m = menuService.findFirstByRelatives("article_category", categoryId);
+            if(m != null && categoryId != null){
+                article.setRemarks(m.getText());
+            }
+        }
         renderJson(Ret.ok().set("page", page));
     }
 
