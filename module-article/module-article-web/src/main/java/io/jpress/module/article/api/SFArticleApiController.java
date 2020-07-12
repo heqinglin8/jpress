@@ -174,8 +174,9 @@ public class SFArticleApiController extends SFApiControllerBase {
         List<Article> list = page.getList();
         for(int i=0;i<list.size();i++){
             Article article = list.get(i);
-            Menu m = menuService.findFirstByRelatives("article_category", categoryId);
-            if(m != null && categoryId != null){
+            Long category_id = article.get("category_id");
+            Menu m = menuService.findFirstByRelatives("article_category", category_id);
+            if(m != null && category_id != null){
                 article.setRemarks(m.getText());
             }
         }
