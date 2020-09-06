@@ -20,17 +20,6 @@ a:hover{
     /*line-height: 80px;*/
     box-shadow:0 5px 15px rgba(153, 153, 153, 0.1)
 }
-.nav-box{
-    background-color: #fff;
-    padding-bottom: 0.3rem;
-}
-
-.cl-nav {
-    background-color: #fff;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
-    box-shadow:0 0px 4px rgba(203, 203, 203, 0.2)
-}
 
 .header-content{
     position: relative;
@@ -69,66 +58,6 @@ a:hover{
     padding:0;
 }
 
-.navbar-light .navbar-nav .nav-item a{
-    color:#666;
-    position:relative;
-    text-align:center;
-}
-
-.navbar-light .navbar-nav .nav-item a:hover{
-    color:#0094E8;
-    font-weight: bold;
-}
-
-.navbar-light .navbar-nav li.active .nav-link{
-    color:#0094E8;
-    font-weight: bold;
-}
-
-.navbar-light .navbar-nav li a span {
-    margin:auto;
-    display:inline-block;
-    position:absolute;
-    bottom:0px;
-    left:0;
-    right:0;
-    width:0px;
-    height:3px;
-    background:#0094E8;
-    transition:.5s;
-    border-radius:50px;
-}
-
-.navbar-light .navbar-nav li a:hover span {
-    width:100%;
-}
-
-.navbar-light .navbar-nav li.active a span{
-    width:100%;
-}
-
-.navbar-light .navbar-nav li .up_arrow{
-    height: 0px;
-    position:absolute;
-    margin:auto;
-    left:0; right:0;
-    bottom:2px;
-    width: 0px;
-    transition:.5s;
-    border: 0px solid rgba(0, 0, 0, 0);
-    border-bottom-color: #0094E8;
-}
-
-.navbar-light .navbar-nav li a:hover .up_arrow{
-    border: 5px solid rgba(0, 0, 0, 0);
-    border-bottom-color: #0094E8;
-}
-
-.navbar-light .navbar-nav li.active a .up_arrow{
-    border: 5px solid rgba(0, 0, 0, 0);
-    border-bottom-color: #0094E8;
-}
-
 .navbar .navbar-brand img{
     max-width: 100%;
     max-height: 100%;
@@ -165,53 +94,67 @@ a:hover{
 }
 /*left*/
 .cl-left{
-    margin-top: 20px;
+    margin-top: 16px;
     padding:0;
+    background-color: #fff;
 }
 
 .cl-center{
-    text-align: center;
+    margin-top: 1rem;
 }
 .recommend-right{
-    padding: 0px 0px 0px 1rem;
+    padding: 0px 0px 0px 0rem;
 }
 
 .recommend-left{
     display: flex;
     justify-content: flex-start;
-    flex-direction: column;
-    padding-left: 0;
-    padding-right: 0;
+    flex-direction: row;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 1rem;
+    background-color: #FFF;
 }
 .recommend-item{
     width: 100%;
-    height: 150px;
+    height: 160px;
     padding-left: 0;
     padding-right: 0;
     overflow: hidden;
     position: relative;
 }
 
-.recommend-item-marginTop-1rem{
-    margin-top: 20px;
-    margin-left: 0;
+.recommend-item-marginLeft-1rem{
+    margin-top: 0;
+    margin-left: 1rem;
 }
 
 .recommend-item-bottom{
     position: absolute;
-    top:110px;
+    top:96px;
     height: 40px;
     line-height: 40px;
     padding:0 10px;
     overflow: hidden;
     left:0;
     width: 100%;
-
     color:#fff;
     background-image: -webkit-gradient(linear,left top,left bottom,from(transparent),color-stop(97%,rgba(0,0,0,.65)));
     background-image: linear-gradient(-180deg,transparent,rgba(0,0,0,.65) 97%);
     font-size: 0.8rem;
 }
+
+.recommend-item-detail{
+    position: absolute;
+    top:140px;
+    padding:0 5px;
+    overflow: hidden;
+    left:4px;
+    width: 100%;
+    color:#CCC;
+    font-size: 0.5rem;
+}
+
 .cl-artical-content,.recommend-panel{
     background-color: #fff;
     padding:0 20px 20px 20px;
@@ -226,20 +169,20 @@ a:hover{
 .cl-card .cl-card-image{
     border:1px solid #eaeaea;
     overflow: hidden;
-    height: 150px;
+    height: 100px;
     padding:0;
 }
 
 .cl-card .cl-card-image img{
     width: 100%;
     max-width: 100%;
-    min-height: 150px;
+    min-height: 100px;
 }
 .cl-card .cl-card-more{
     margin:0;
 }
 .cl-card .cl-card-more{
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 300;
     opacity: 0.8;
 }
@@ -299,8 +242,8 @@ a.card-link:hover{
 }
 /*right*/
 .cl-right{
-    margin:20px 0;
-    padding-right:0;
+    margin-top: 16px;
+    padding:0;
 }
 .right-card-main{
     background-color: #fff;
@@ -530,7 +473,7 @@ a.card-link:hover{
         margin-top:1rem;
     }
     .cl-card .cl-card-image{
-        height: 200px;
+        height: 80px;
     }
     .carousel-inner{
         height:16rem;
@@ -544,10 +487,10 @@ a.card-link:hover{
         font-size: 0.8rem;
     }
     .recommend-item{
-        height: 120px;
+        height: 160px;
     }
     .recommend-item image{
-        min-height: 120px;
+        min-height: 80px;
     }
     .recommend-item-bottom{
         top:80px;
@@ -721,13 +664,10 @@ a.card-link:hover{
         display: flex;
         justify-content: flex-start;
         flex-direction: row;
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    .recommend-item-marginTop-1rem{
-        margin-left: 20px;
-        margin-top: 0;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        margin-top: 1rem;
+        background-color: #FFF;
     }
 }
 
@@ -753,4 +693,55 @@ a.card-link:hover{
     background-image: linear-gradient(-180deg,transparent,rgba(0,0,0,.65) 97%);
 }
 
+/*.cl-left .cl-nav{*/
+  /*background-color: #b21f2d;*/
+/*}*/
 
+.cl-left .navbar-nav .nav-item{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 40px;
+    background-color:#FFF;
+    align-items: center;
+    padding-left: 2rem;
+}
+
+.cl-left .navbar-nav .active{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 40px;
+    background-color:#FD4E51;
+    align-items: center;
+}
+
+.cl-left .navbar-nav .nav-item:hover {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 40px;
+    background-color:#FD4E51;
+    align-items: center;
+}
+
+.cl-left .navbar-nav .nav-item img{
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-right: 4px;
+}
+
+.cl-left .navbar-nav .nav-item a{
+    color: #333333;
+    font-size:0.9rem;
+}
+
+.cl-left .navbar-nav .active a{
+    color: #fff;
+    font-size:0.9rem;
+}
+
+.cl-left .navbar-nav .nav-item a:hover{
+    color: #fff;
+    font-size:0.9rem;
+}
