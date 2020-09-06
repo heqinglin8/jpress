@@ -8,18 +8,72 @@
 <div class="right-card">
 
     <div class="right-card-main">
+        <div class="right-card-title">最新文章</div>
+        <div class="right-recommended">
+            <a href="#">
+                <img src="#option('calmlog_ad','img/list-right.jpg')" class="img-fluid" alt="">
+            </a>
+        </div>
+        <ul class="right-recommended-list">
+            #articles()
+            #for(article : articles)
+                <div class="right-recommended-item">
+                    <div class="right-recommended-content">
+                        <a href="#(article.url)">
+                            <div class="title">#(article.title ??)</div>
+                            <div class="time">#date(article.created)</div>
+                        </a>
+                    </div>
+                    <img src="#option('calmlog_ad','img/list-right.jpg')" class="img-fluid" alt="">
+                </div>
+            #end
+            #end
+
+        </ul>
+    </div>
+</div>
+
+<div class="right-card">
+
+    <div class="right-card-main">
+        <div class="right-card-title">热门标签</div>
+        <ul class="label">
+            #tags()
+            #for(tag : tags)
+            <li><a href="#(tag.url)">#(tag.title)</a></li>
+            #end
+            #end
+        </ul>
+    </div>
+</div>
+
+<div class="right-card">
+
+    <div class="right-card-main">
+        <div class="right-card-title">联系方式</div>
+        <div class="cl-code">
+            <img src="#option('calmlog_qrcode','img/code.jpg')" class="img-fluid" alt="">
+            <p>#option('calmlog_qrcode_text')</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="right-card">
+
+    <div class="right-card-main">
         <div class="right-card-top-box">
             <div class="right-card-top-title">马上抢 免费名额</div>
             <div id="jpress-submit-text" class="right-card-top-desc">目前已有 1008 人申请成功 </div>
         </div>
         <div class="cl-submit">
             <form
-                class="form-horizontal"
-                autocomplete="off"
-                method="post"
-                data-ok-href="#(CPATH)/form"
-                action="#(CPATH)/form/doAdd"
-                id = "jpress-info-form">
+                    class="form-horizontal"
+                    autocomplete="off"
+                    method="post"
+                    data-ok-href="#(CPATH)/form"
+                    action="#(CPATH)/form/doAdd"
+                    id = "jpress-info-form">
                 <div class="box-body .text-center">
                     <div class="form-group col-sm-12">
                         <input type="text" class="form-control input-text" placeholder="你的姓名"
@@ -84,56 +138,5 @@
 
         </div>
     </div>
-</div>
 
-<div class="right-card">
-
-    <div class="right-card-main">
-        <div class="right-card-title">联系方式</div>
-        <div class="cl-code">
-            <img src="#option('calmlog_qrcode','img/code.jpg')" class="img-fluid" alt="">
-            <p>#option('calmlog_qrcode_text')</p>
-        </div>
-
-    </div>
-</div>
-
-<div class="right-card">
-
-    <div class="right-card-main">
-        <div class="right-card-title">最新文章</div>
-        <div class="right-recommended">
-            <a href="#">
-                <img src="#option('calmlog_ad','img/list-right.jpg')" class="img-fluid" alt="">
-            </a>
-        </div>
-        <ul class="right-recommended-list">
-            #articles()
-            #for(article : articles)
-            <li>
-                <a href="#(article.url)">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    #(article.title ??)
-                </a>
-            </li>
-            #end
-            #end
-
-        </ul>
-    </div>
-</div>
-
-
-<div class="right-card">
-
-    <div class="right-card-main">
-        <div class="right-card-title">热门标签</div>
-        <ul class="label">
-            #tags()
-            #for(tag : tags)
-            <li><a href="#(tag.url)">#(tag.title)</a></li>
-            #end
-            #end
-        </ul>
-    </div>
 </div>

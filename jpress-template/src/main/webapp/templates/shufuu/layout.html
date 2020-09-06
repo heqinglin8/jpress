@@ -16,31 +16,6 @@
     #@css?()
 </head>
 <body>
-<div class="cl-header container-fluid">
-    <div class="header-content container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#(WEB_DOMAIN ?? '/')">
-                <img src="#option('calmlog_logo','img/logo.png')" width="144" alt="">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-
-                    #for(menu : MENUS)
-                    <li class="nav-item #(menu.isActive ? 'active' : '')">
-                        <a class="nav-link" href="#(menu.url)">
-                            #(menu.text)
-                            <!--<span class="sr-only">(current)</span>-->
-                        </a>
-                    </li>
-                    #end
-                </ul>
-            </div>
-        </nav>
-    </div>
-</div>
 
 <div class="cl-cantainer container">
     <div class="row">
