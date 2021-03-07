@@ -93,6 +93,7 @@ public class TemplateInterceptor implements Interceptor, JPressOptions.OptionCha
         List<Menu> menus = menuService.findListByType(Menu.TYPE_MAIN);
         SortKit.toTree(menus);
         controller.setAttr(JPressConsts.ATTR_MENUS, menus);
+        System.out.println("menus:"+(menus !=null ? menus.toString():menus));
 
         //设置二级菜单
         List<Menu> secondaryMenus = menuService.findListByType(Menu.TYPE_SECOND);
