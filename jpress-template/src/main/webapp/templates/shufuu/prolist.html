@@ -3,71 +3,202 @@
 
 
 #define content()
-<div class="col-md-8 cl-left">
+      <!-- banner -->
+      <div class="inner-ban">
+        <div></div>
+      </div>
 
-
-
-    #productPage()
-    #for(product : productPage.list)
-    <div class="cl-card">
-
-            <div class="row" style="margin:0;padding:1rem;">
-                <div class="col-lg-3 col-md-4 col-sm-12 cl-card-image">
-                    <img src="#(product.showImage)" class="img-fluid" >
-                </div>
-
-                <div class="col-lg-9 col-md-8 col-sm-12 cl-card-main">
-                    <h3 class="cl-card-main-title">
-                       <a href="#(product.url)">#(product.title ??)</a>
-                    </h3>
-
-                    <p class="cl-card-main-info">
-                        #maxLength(product.text,100)
-                    </p>
-
-                    <div class="product-list-btn">
-                        #if(product.price)
-                            <div class="price-box">
-                                <p class="list-price">¥ #number(product.price)</p>
-
-                                <p class="list-number"><span>#(product.sales_count ?? 0)</span> 人已购买</p>
-                            </div>
-                          #elseif(product.salesCount)
-                            <p class="list-number"><span>#(product.salesCount ?? 0)</span> 人已洽谈</p>
-                        #end
-                        <div>
-                            <a class="list-more" href="#(product.url)">查看宝贝 >  </a>
-                        </div>
-
-                    </div>
-
-                </div>
+      <!-- 搜索 -->
+            <div class="index-search">
+        <div class="container">
+          <div class="sear-key">热门服务：<a href="http://www.zyktservice.com/qingxifw/">中央空调清洗</a><a href="http://www.zyktservice.com/weixiufw/">中央空调维修</a><a href="http://www.zyktservice.com/weibaofw/">中央空调维保</a><a href="http://www.zyktservice.com/anzhuangfw/">中央空调安装</a><a href="http://www.zyktservice.com/gaizaofw/">中央空调改造</a>
+          </div>
+          <div class="sear-form">
+            <form class="searchform" name="formsearch" action="/plus/search.php" method="post">
+              <!-- <input type="text" name="q" value="0">-->
+                <input type="text" name="q" placeholder="请输入搜索内容" class="serinp">
+                <ul class="se-keys se-ul">
+                  <li><b>热门服务：</b></li>
+                  <li><a href="http://www.zyktservice.com/qingxifw/">中央空调清洗</a></li>
+                  <li><a href="http://www.zyktservice.com/weixiufw/">中央空调维修</a></li>
+                  <li><a href="http://www.zyktservice.com/weibaofw/">中央空调维保</a></li>
+                  <li><a href="http://www.zyktservice.com/anzhuangfw/">中央空调安装</a></li>
+                  <li><a href="http://www.zyktservice.com/gaizaofw/">中央空调改造</a></li>
+                </ul>
+                <input type="submit" name="submit" value="搜索" class="searbtn">
+            </form>
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript" src="prolist_files/searchdown.js"></script>
+      
+      <!-- 当前位置 -->
+      <div class="container">
+        <div class="in-location">
+          <p>当前位置：<a href="http://www.zyktservice.com/">主页</a> &gt; <a href="http://www.zyktservice.com/yewu/">业务范围</a> &gt; </p>
+        </div>
+      </div>
+      <!-- 九宫格 -->
+      <div class="container inner-cases">
+        <div class="row">
+           <!-- 1 -->
+          <div class="col-md-4 col-xs-6 case-img">
+            <div class="casebor" style="border-style:none;">
+              <a href="http://www.zyktservice.com/weixiufw/" class="thumb">
+                <img src="images/1-5.jpg" alt="中央空调维修">
+                <div class="desc">明细化服务环节快速解决空调问题...</div>
+              </a>
+              <center><a href="http://www.zyktservice.com/qingxifw/" class="title" style="font-size: 16px;">中央空调维修</a></center>
             </div>
+          </div>
+           <!-- 2 -->
+          <div class="col-md-4 col-xs-6 case-img">
+            <div class="casebor" style="border-style:none">
+              <a href="http://www.zyktservice.com/qingxifw/" class="thumb">
+                <img src="images/1-6.jpg" alt="中央空调清洗">
+                <div class="desc">突破传统行业设备壁垒，清洗更彻底...</div>
+              </a>
+              <center><a href="http://www.zyktservice.com/qingxifw/" class="title" style="font-size: 16px;">中央空调清洗</a></center>
+            </div>
+          </div>
+           <!-- 3 -->
+          <div class="col-md-4 col-xs-6 case-img">
+            <div class="casebor" style="border-style:none">
+              <a href="http://www.zyktservice.com/gaizaofw/" class="thumb">
+                <img src="images/1-7.jpg" alt="中央空调改造">
+                <div class="desc">量身定制整体解决方案 节能效果更全面...</div>
+              </a>
+              <center><a href="http://www.zyktservice.com/gaizaofw/]" class="title" style="font-size: 16px;">中央空调改造</a></center>
+            </div>
+          </div>
+           <!-- 4 -->
+          <div class="col-md-4 col-xs-6 case-img">
+            <div class="casebor" style="border-style:none">
+              <a href="http://www.zyktservice.com/weibaofw/" class="thumb">
+                <img src="images/1-8.jpg" alt="中央空调维保">
+                <div class="desc">产品+技术+服务多维度打造空调维保行业品质...</div>
+              </a>
+              <center><a href="http://www.zyktservice.com/weibaofw/" class="title" style="font-size: 16px;">中央空调维保</a></center>
+            </div>
+          </div>
+           <!-- 5 -->
+          <div class="col-md-4 col-xs-6 case-img">
+            <div class="casebor" style="border-style:none">
+              <a href="http://www.zyktservice.com/anzhuangfw/" class="thumb">
+                <img src="images/1-9.jpg" alt="中央空调安装">
+                <div class="desc">“三分产品，七分安装”中央空调怎么安装？...</div>
+              </a>
+              <center><a href="http://www.zyktservice.com/anzhuangfw/" class="title" style="font-size: 16px;">中央空调安装</a></center>
+            </div>
+          </div>
+           <!-- 6 -->
+          <div class="col-md-4 col-xs-6 case-img">
+            <div class="casebor" style="border-style:none">
+              <a href="http://www.zyktservice.com/news/438.html" class="thumb">
+                <img src="images/1-10.jpg" alt="中央空调水处理">
+                <div class="desc">中央空调循环采暖水、冷冻水处理...</div>
+              </a>
+              <center><a href="http://www.zyktservice.com/news/438.html" class="title" style="font-size: 16px;">中央空调水处理</a></center>
+            </div>
+          </div>
+		  
+        </div>
+      </div>
+<!-- 9宫格结束 -->
+<style>
+.inner-cases .casebor6{
+	transition: 0.3s;
+	overflow: hidden;
+    height: 280px;
+}
+.casebor6 .p{
+	font-size: 16px;;
+}
+.casebor6 .thumb6{
+	display: block;
+	height: 280px;
+	overflow: hidden;
+	position: relative;
+}
+.casebor6 .thumb6 img{
+	display: block;
+	width: 100%;
+	min-height: 100%;
+	transition: all 1.2s linear 0s;
+}
+.casebor6 .thumb6 img:hover{
+     transform: scale(1.4);
+}
+.desc6{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,108,177,0.7);
+	color: #fff;
+	text-align: justify;
+	-webkit-display: flex;
+	-moz-display: flex;
+	-ms-display: flex;
+	-o-display: flex;
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	box-sizing: border-box;
+	opacity: 0;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-ms-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+.casebor6 .title{
+	display: block;
+	padding: 0 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 10px 0;
+	font-size: 16px;
+}
+.casebor6 p{
+	padding: 0 10px;
+	margin-bottom: 10px;
+}
+.casebor6 p em{
+	display: inline-block;
+	background: url(images/icon_view.png) no-repeat left center;
+	padding-left: 20px;
+	color: #999;
+	font-style: normal;
+}
+.casebor6 p a{
+	display: inline-block;
+	float: right;
+	padding: 0 10px;
+	border-radius: 50px;
+	line-height: 24px;
+	background-color: #ccc;
+	color: #fff;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-ms-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+.casebor6:hover .desc{
+	opacity: 1;
+}
+.casebor6:hover a.link{
+	background-color: #0193de;
+}
+.casebor6:hover{
+	border-color: #0193de;
+}
+.casebor6:hover a.title{
+	color: #0193de;
+}
+</style>
 
-    </div>
-    #end
-
-
-
-    #productPaginate()
-    <nav aria-label="">
-        <ul class="pagination justify-content-center">
-            #for(page : pages)
-            <li class="page-item #(page.style)"><a class="page-link" href="#(page.url ??)">#(page.text)</a></li>
-            #end
-        </ul>
-    </nav>
-    #end
-    #end
-
-
-</div>
-
-
-
-<div class="col-md-4 cl-right">
-
-    #include("./_rightbar.html")
-
-</div>
 #end
