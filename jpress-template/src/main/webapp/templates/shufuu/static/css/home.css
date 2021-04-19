@@ -75,6 +75,7 @@ a:hover{
 	border-bottom: 1px solid #e9e9e9;
 	padding: 14px 0;
 	font-size: 15px;
+	height: 60px;
 }
 .index-search .sear-key{
 	float: left;
@@ -1488,7 +1489,7 @@ a:hover{
 	padding: 10px 0;
 }
 .in-location p{
-	background-image: url(../images/icon_locat.png);
+	background-image: url(../../images/icon_locat.png);
 	background-repeat: no-repeat;
 	background-position: left 2px;
 	padding-left: 25px;
