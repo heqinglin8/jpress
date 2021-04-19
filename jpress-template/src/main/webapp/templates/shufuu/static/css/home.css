@@ -1767,7 +1767,7 @@ a:hover{
 	color: #fff;
 	text-align: center;
 	line-height: 100px;
-	background: url(../images/bg_pagetit.png) no-repeat center;
+	background: url(../../images/bg_pagetit.png) no-repeat center;
 	background-size: 100% 100%;
 	margin: 0;
 }
@@ -1785,13 +1785,13 @@ a:hover{
 	background-color: #f2f2f2;
 }
 .left-son li a:hover,.left-son .current a{
-	background-image: url(../images/icon_sonarr.png);
+	background-image: url(../../images/icon_sonarr.png);
 	color: #0193de;
 }
 
 .left-tit{
 	background-color: #f2f2f2;
-	background-image: url(../images/bg_title.png);
+	background-image: url(../../images/bg_title.png);
 	background-repeat: no-repeat;
 	background-position: left center;
 }
@@ -1853,7 +1853,7 @@ a:hover{
 }
 .left-hot ul li a{
 	display: block;
-	background: url(../images/icon_circle.png) no-repeat left center;
+	background: url(../../images/icon_circle.png) no-repeat left center;
 	padding-left: 15px;
 	font-size: 15px;
 	white-space: nowrap;
@@ -1872,7 +1872,7 @@ a:hover{
 	width: 100%;
 }
 .left-contact .tel{
-	background: url(../images/icon_bluetel.png) no-repeat left center;
+	background: url(../../images/icon_bluetel.png) no-repeat left center;
 	font-size: 24px;
 	color: #0193de;
 	padding-left: 30px;
@@ -1927,16 +1927,16 @@ a:hover{
 	color: #999;
 }
 .icon_art .time{
-	background-image: url(../images/icon_time.png);
+	background-image: url(../../images/icon_time.png);
 }
 .icon_art .view{
-	background-image: url(../images/icon_view.png);
+	background-image: url(../../images/icon_view.png);
 }
 .icon_art .edi{
-	background-image: url(../images/icon_edi.png);
+	background-image: url(../../images/icon_edi.png);
 }
 .icon_art .keys{
-	background-image: url(../images/icon_keys.png);
+	background-image: url(../../images/icon_keys.png);
 }
 .icon_art .keys a{
 	display: inline-block;
@@ -1959,7 +1959,7 @@ a:hover{
 }
 .art-infos .art-tel p{
 	display: inline-block;
-	background: url(../images/icon_tel.png) no-repeat left center;
+	background: url(../../images/icon_tel.png) no-repeat left center;
 	background-size: contain;
 	padding-left: 60px;
 }
@@ -2052,7 +2052,7 @@ a:hover{
 	display: inline-block;
 	width: 20px;
 	height: 20px;
-	background: url(../images/icon_more.png) no-repeat center;
+	background: url(../../images/icon_more.png) no-repeat center;
 	float: right;
 }
 
