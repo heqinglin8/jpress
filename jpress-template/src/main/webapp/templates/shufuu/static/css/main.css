@@ -1817,6 +1817,7 @@ div.doctor-departments a:hover {
 
 .isotope-item {
 	z-index: 2;
+	width: 20%;
 }
 
 .isotope-hidden.isotope-item {
