@@ -501,28 +501,7 @@ blockquote p {
 .pagination {
 	display: block;
 	text-align: center;
-	margin-left: -8px;
-}
-
-.pagination a,.pagination span {
-	background-color: #fff;
-	font-size: 16px;
-	color: #3a3c41;
-	display: inline-block;
-	margin: 0 0 8px 8px;
-	font-weight: 700;
-	padding: 10px 20px;
-	text-decoration: none;
-}
-
-.pagination a:hover,.pagination span:hover {
-	background-color: #66c9e0;
-	color: #fff;
-}
-
-.pagination span.current {
-	background-color: #66c9e0;
-	color: #fff;
+	margin-top: 20px;
 }
 
 .social-icon ul {
