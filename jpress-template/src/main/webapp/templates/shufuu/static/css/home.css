@@ -1598,70 +1598,6 @@ a:hover{
 	color: #0193de;
 }
 
-
-/*分页*/
-.pageturn{
-	margin-top: 50px;
-}
-
-.pageturn ul {
-	padding: 0;
-	display: table;
-	margin: 0 auto;
-}
-
-.pageturn ul li {
-	background: none repeat scroll 0 0 #fff;
-	border: 1px solid #ccc;
-	color: #333;
-	display: block;
-	float: left;
-	margin: 0 1px 5px;
-	line-height: 26px;
-}
-
-.pageturn ul li a {
-	color: #333;
-	display: block;
-	padding: 0 10px;
-}
-
-.pageturn ul li:hover {
-	background-color: #0193de;
-}
-.pageturn ul li:hover a{
-	color: #fff;
-}
-
-.pageturn ul li.thisclass, .pageturn ul li.thisclass a,.pageturn ul li.thisclass a:hover {
-	background: none repeat scroll 0 0 #ccc;
-	color: #fff;
-	text-decoration: none;
-	background-color: #0193de;
-}
-.pageturn ul li:hover{
-	color: #fff;
-}
-.pageturn ul li.thisclass{
-	padding: 0 10px;
-	border-color: #0193de;
-}
-.pageturn li select{
-	height: 26px;
-	color: #282828;
-	border: none;
-	background: #fff;
-}
-.pageturn ul li:first-child{
-	padding: 0 10px;
-}
-.pageturn ul li:last-child{
-	padding: 0 10px;
-	background-color: #0193de;
-	color: #fff;
-}
-
-
 @media (max-width : 1024px) {
 	.inner-ban > div{
 		height: 280px;
@@ -1713,9 +1649,6 @@ a:hover{
 	}
 	.casebor > p a{
 		font-size: 12px;
-	}
-	.pageturn{
-		margin-top: 30px;
 	}
 	.inner-cases{
 		margin-bottom: 40px;
