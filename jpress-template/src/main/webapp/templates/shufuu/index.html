@@ -88,143 +88,27 @@
           <p class="desc">品质保证，诚信服务，京乐企服为您提供全国范围内中央空调一站式解决方案</p>
         </div>
         <div class="row">
-          <div class="col-md-3 col-sm-6 col-xs-6 text-center iport-item ">
-            <div class="common-doctor animated fadeInUp clearfix text-hover ae-animation-fadeInUp">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/weixiufw/" title="中央空调维修">
-                  <img src="images/11.jpg" alt="中央空调维修"></a>
-              </figure>
-              <div class="text-content">
-                <h5 class="iport-title" title="中央空调维修">
-                  <a href="http://www.zyktservice.com/weixiufw/">中央空调维修</a>
-                </h5>
-                <span class="index_pro_desc" style="display: none;">
-                  <a
-                    href="http://www.zyktservice.com/weixiufw/">京乐企服提供专业的中央空调维修服务十七年，包括各类主机、压缩机、冷却塔等，以专业求发展，以质量求生存...</a></span>
-                <div class="for-border"></div>
+          #products(hasThumbnail=true,count=8)
+            #for(product : products)
+            <div class="col-md-3 col-sm-6 col-xs-6 text-center iport-item ">
+              <div class="common-doctor animated fadeInUp clearfix text-hover ae-animation-fadeInUp">
+                <figure style="border-radius: 10px">
+                  <a href="#(product.url)" title="#(product.title ??)">
+                    <img src="#(product.showImage)" alt="#(product.title ??)"></a>
+                </figure>
+                <div class="text-content">
+                  <h5 class="iport-title" title="#(product.title ??)">
+                    <a href="#(product.url)/">#(product.title ??)</a>
+                  </h5>
+                  <span class="index_pro_desc" style="display: none;">
+                    <a
+                      href="#(product.url)">#maxLength(product.text,100)...</a></span>
+                  <div class="for-border"></div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-6 text-center iport-item  ">
-            <div class="common-doctor animated fadeInUp clearfix text-hover ae-animation-fadeInUp">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/gaizaofw/" title="中央空调改造">
-                  <img src="images/22.jpg" alt="中央空调改造"></a>
-              </figure>
-              <div class="text-content">
-                <h5 class="iport-title" title="中央空调改造">
-                  <a href="http://www.zyktservice.com/gaizaofw/">中央空调改造</a>
-                </h5>
-                <span class="index_pro_desc" style="display: none;">
-                  <a
-                    href="http://www.zyktservice.com/gaizaofw/">京乐企服提供中央空调节能改造服务，包括工厂、办公楼、商场、图书馆等大型场所的中央空调节能改造，末端改造...</a></span>
-                <div class="for-border"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-6 text-center iport-item  ">
-            <div class="common-doctor animated fadeInUp clearfix text-hover ae-animation-fadeInUp">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/qingxifw/" title="中央空调清洗">
-                  <img src="images/33.jpg" alt="中央空调清洗"></a>
-              </figure>
-              <div class="text-content">
-                <h5 class="iport-title" title="中央空调清洗">
-                  <a href="http://www.zyktservice.com/qingxifw/">中央空调清洗</a>
-                </h5>
-                <span class="index_pro_desc" style="display: none;">
-                  <a
-                    href="http://www.zyktservice.com/qingxi/">京乐企服提供中央空调清洗服务，包括冷却塔、冷凝器、蒸发器等，提供全面、深度、专业的清洗服务，改善运行环境...</a></span>
-                <div class="for-border"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-6 text-center iport-item ">
-            <div class="common-doctor animated fadeInUp clearfix text-hover ae-animation-fadeInUp">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/weibaofw/" title="中央空调保养">
-                  <img src="images/44.jpg" alt="中央空调保养"></a>
-              </figure>
-              <div class="text-content">
-                <h5 class="iport-title" title="中央空调保养">
-                  <a href="http://www.zyktservice.com/weibaofw/">中央空调保养</a>
-                </h5>
-
-                <span class="index_pro_desc" style="display: none;">
-                  <a
-                    href="http://www.zyktservice.com/weibaofw/">京乐企服提供专业的中央空调保养服务，完善的保养方案，为您的中央空调提供全方位的保养服务，延长使用体验及寿命...</a></span>
-                <div class="for-border"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-6 text-center iport-item  ">
-            <div class="common-doctor animated fadeInUp clearfix text-hover ae-animation-fadeInUp">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/anzhuangfw/" title="中央空调安装">
-                  <img src="images/55.jpg" alt="中央空调安装"></a>
-              </figure>
-              <div class="text-content">
-                <h5 class="iport-title" title="中央空调安装">
-                  <a href="http://www.zyktservice.com/anzhuangfw/">中央空调安装</a>
-                </h5>
-                <span class="index_pro_desc" style="display: none;">
-                  <a
-                    href="http://www.zyktservice.com/anzhuangfw/">京乐企服提供中央空调安装服务，合理的方案，完善的售后，专业的安装师傅，知名的产品品牌，保证安装后的使用效果...</a></span>
-                <div class="for-border"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-6 text-center iport-item ">
-            <div class="common-doctor animated fadeInUp clearfix text-hover ae-animation-fadeInUp">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/xiaoshou/" title="中央空调报价">
-                  <img src="images/66.png" alt="中央空调报价"></a>
-              </figure>
-              <div class="text-content">
-                <h5 class="iport-title" title="中央空调报价">
-                  <a href="http://www.zyktservice.com/xiaoshou/">中央空调报价</a>
-                </h5>
-                <span class="index_pro_desc" style="display: none;">
-                  <a
-                    href="http://www.zyktservice.com/xiaoshou/">中央空调的维修报价需要根据具体的情况而定，京乐企服透明的报价制度，能保障用户的利益，放心的享受京乐服务...</a></span>
-                <div class="for-border"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-6 text-center iport-item  ">
-            <div class="common-doctor animated fadeInUp clearfix text-hover ae-animation-fadeInUp">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/news/438.html" title="中央空调水处理">
-                  <img src="images/77.jpg" alt="中央空调水处理"></a>
-              </figure>
-              <div class="text-content">
-                <h5 class="iport-title" title="中央空调水处理">
-                  <a href="http://www.zyktservice.com/news/438.html">中央空调水处理</a>
-                </h5>
-                <span class="index_pro_desc" style="display: none;">
-                  <a
-                    href="http://www.zyktservice.com/news/438.html">中央空调水处理是极为重要的一项，京乐企服专业的水处理，能保证您的循环水系统正常的运转，减少不必要的能源浪费...</a></span>
-                <div class="for-border"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-6 text-center iport-item  ">
-            <div class="common-doctor animated fadeInUp clearfix text-hover ae-animation-fadeInUp">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/xiaoshou/" title="中央空调销售">
-                  <img src="images/88.jpg" alt="中央空调销售"></a>
-              </figure>
-              <div class="text-content">
-                <h5 class="iport-title" title="中央空调销售">
-                  <a href="http://www.zyktservice.com/xiaoshou/">中央空调销售</a>
-                </h5>
-                <span class="index_pro_desc" style="display: none;">
-                  <a
-                    href="http://www.zyktservice.com/xiaoshou/">京乐企服提供国内外知名品牌的中央空调销售业务，提供详尽的安装方案，完善的售后服务，保证买的放心，用的舒心...</a></span>
-                <div class="for-border"></div>
-              </div>
-            </div>
-          </div>
+            #end
+          #end
         </div>
       </div>
       <div class="container">
@@ -426,90 +310,31 @@
           <p class="desc">中央空调行业维修、清洗、保养、安装、改造一手资料讯息平台</p>
         </div>
         <div class="row" style="margin-bottom: 8px;">
+        #articles(hasThumbnail=true,count=4)
+          #for(article : articles)
           <div class="col-md-3 col-sm-6 col-xs-6 iblog-item">
             <article class="common-blog-post animated fadeInRight clearfix">
               <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/news/6752.html" title="中央空调水系统维保报价">
-                  <img src="images/sy1.jpg" alt="中央空调水系统维保报价"></a>
+                <a href="#(article.url)" title="#(article.title)">
+                  <img src="#(article.thumbnail ?? 'img/default-img.jpg')" alt="#(article.title)"></a>
               </figure>
               <div class="text-content clearfix">
                 <h5>
-                  <a href="http://www.zyktservice.com/news/6752.html" title="中央空调水系统维保报价">中央空调水系统维保报价</a>
+                  <a href="#(article.url)" title="中央空调水系统维保报价">#(article.title)</a>
                 </h5>
                 <div class="entry-meta">
                   <time>
-                    <i class="fa fa-calendar"></i>2021-01-15 15:30:36</time>
+                    <i class="fa fa-calendar"></i>#date(article.created)
+                  </time>
                 </div>
                 <div class="for-border"></div>
-                <p class="desc">现在我们的生活质量提高了，人们为了改善自己的生活，无论是在公共场所，还是商场宾馆酒店都会安装上中央空调，虽然价...</p>
+                <p class="desc">#maxLength(article.text,30)...</p>
               </div>
             </article>
-            <a class="read-more" href="http://www.zyktservice.com/news/6752.html">阅读更多</a>
+            <a class="read-more" href="#(article.url)">阅读更多</a>
           </div>
-
-          <div class="col-md-3 col-sm-6 col-xs-6 iblog-item">
-            <article class="common-blog-post animated fadeInRight clearfix">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/news/6751.html" title="中央空调不制热维修">
-                  <img src="images/sy2.jpg" alt="中央空调不制热维修"></a>
-              </figure>
-              <div class="text-content clearfix">
-                <h5>
-                  <a href="http://www.zyktservice.com/news/6751.html" title="中央空调不制热维修">中央空调不制热维修</a>
-                </h5>
-                <div class="entry-meta">
-                  <time>
-                    <i class="fa fa-calendar"></i>2021-01-15 15:27:26</time>
-                </div>
-                <div class="for-border"></div>
-                <p class="desc">中央空调的功能就是制冷和制热，专门调节空气热冷的设备，一般情况就是夏天制冷，冬天制热，让然不是所有的中央空调都...</p>
-              </div>
-            </article>
-            <a class="read-more" href="http://www.zyktservice.com/news/6751.html">阅读更多</a>
-          </div>
-
-          <div class="col-md-3 col-sm-6 col-xs-6 iblog-item">
-            <article class="common-blog-post animated fadeInRight clearfix">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/news/6471.html" title="中央空调冷却塔停机清洗">
-                  <img src="images/sy3.jpg" alt="中央空调冷却塔停机清洗"></a>
-              </figure>
-              <div class="text-content clearfix">
-                <h5>
-                  <a href="http://www.zyktservice.com/news/6471.html" title="中央空调冷却塔停机清洗">中央空调冷却塔停机清洗</a>
-                </h5>
-                <div class="entry-meta">
-                  <time>
-                    <i class="fa fa-calendar"></i>2020-11-18 11:15:37</time>
-                </div>
-                <div class="for-border"></div>
-                <p class="desc">冷却塔长时间运行会使冷却塔慢慢的降低散热能力，布水器出水孔很容易堵塞，泥沙及污垢也很容易进入冷却水系统中去，将...</p>
-              </div>
-            </article>
-            <a class="read-more" href="http://www.zyktservice.com/news/6471.html">阅读更多</a>
-          </div>
-
-          <div class="col-md-3 col-sm-6 col-xs-6 iblog-item">
-            <article class="common-blog-post animated fadeInRight clearfix">
-              <figure style="border-radius: 10px">
-                <a href="http://www.zyktservice.com/news/6472.html" title="制冷空调出现低压告警分">
-                  <img src="images/sy4.jpg" alt="制冷空调出现低压告警分"></a>
-              </figure>
-              <div class="text-content clearfix">
-                <h5>
-                  <a href="http://www.zyktservice.com/news/6472.html" title="制冷空调出现低压告警分">制冷空调出现低压告警分</a>
-                </h5>
-                <div class="entry-meta">
-                  <time>
-                    <i class="fa fa-calendar"></i>2020-11-18 13:46:50</time>
-                </div>
-                <div class="for-border"></div>
-                <p class="desc">制冷空调出现低压告警 分析： 一、空调制冷系统铜管管道过长： 在调试过程中，有些空调出厂设置的低压告警时间比较低...</p>
-              </div>
-            </article>
-            <a class="read-more" href="http://www.zyktservice.com/news/6472.html">阅读更多</a>
-          </div>
-
+          #end
+        #end
         </div>
       </div>
     </div>
