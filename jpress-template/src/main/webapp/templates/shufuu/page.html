@@ -50,7 +50,10 @@
 
           <div class="in-location">
 
-          <p>当前位置：<a href="http://www.zyktservice.com/">中央空调清洗</a> &gt; <a href="http://www.zyktservice.com/jianjie/">关于我们</a> &gt; <a href="http://www.zyktservice.com/lianxi/pinpai/">品牌起源</a></p>
+          <p>当前位置：
+              <a href="#(WEB_DOMAIN ??)">主页</a> &gt;
+              <a href="#(page.url ??)">#(page.title ??)</a>
+          </p>
 
         </div>
 
@@ -117,18 +120,16 @@
 
             
 
-                         <section class="left-hot">
+             <section class="left-hot">
               <div class="left-tit">
                 <h2>资讯推荐</h2>
               </div>
               <ul>
-                <li><a href="http://www.zyktservice.com/news/13658.html"><span>[2021-04-28]</span>约克中央空调维护保养</a></li>
-<li><a href="http://www.zyktservice.com/news/13656.html"><span>[2021-04-28]</span>商用中央空调保养</a></li>
-<li><a href="http://www.zyktservice.com/news/13654.html"><span>[2021-04-28]</span>家用中央空调安装流程</a></li>
-<li><a href="http://www.zyktservice.com/news/13652.html"><span>[2021-04-28]</span>大金中央空调外机清洗</a></li>
-<li><a href="http://www.zyktservice.com/news/13639.html"><span>[2021-04-27]</span>中央空调维修保养费用</a></li>
-<li><a href="http://www.zyktservice.com/news/13637.html"><span>[2021-04-27]</span>中央空调出风口怎样清洗</a></li>
-
+              #articles(orderBy="view_count",count=6)
+                #for(article : articles)
+                <li><a href="#(article.url)"><span>[#date(article.created ??,'yyyy-MM-dd')]</span>#(article.title)</a></li>
+                  #end
+              #end
               </ul>
             </section>
             <section class="left-year">
@@ -141,7 +142,11 @@
               </div>
               <ul class="all">
 
-                <li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaoweixiu_2_1.html">中央空调维修</a></li><li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaoshuichuli_1064_1.html">中央空调水处理</a></li><li><a href="http://www.zyktservice.com/tag/telingzhongyangkongdiaoanjianshuoming_2296_1.html">特灵中央空调按键说明</a></li><li><a href="http://www.zyktservice.com/tag/fenglingrebengjizu_2344_1.html">风冷热泵机组</a></li><li><a href="http://www.zyktservice.com/tag/sanlingzhongyangkongdiao_206_1.html">三菱中央空调</a></li><li><a href="http://www.zyktservice.com/tag/fengguanjianzhuang_233_1.html">风管机安装</a></li><li><a href="http://www.zyktservice.com/tag/telingluoganlingningqiqingxi_2250_1.html">特灵螺杆冷凝器清洗</a></li><li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaoqingxiyibanduoshaoqian_2306_1.html">中央空调清洗一般多少钱</a></li><li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaobaoyang_40_1.html">中央空调保养</a></li><li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaoguzhang_69_1.html">中央空调故障</a></li><li><a href="http://www.zyktservice.com/tag/anzhuangzhongyangkongdiao_92_1.html">安装中央空调</a></li><li><a href="http://www.zyktservice.com/tag/duolianjijiage_190_1.html">多联机价格</a></li><li><a href="http://www.zyktservice.com/tag/telingkongdiaoweixiu_262_1.html">特灵空调维修</a></li><li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaoyiji_413_1.html">中央空调移机</a></li><li><a href="http://www.zyktservice.com/tag/xinfengxitonganzhuang_553_1.html">新风系统安装</a></li><li><a href="http://www.zyktservice.com/tag/haierjiayongkongdiao_1070_1.html">海尔家用空调</a></li><li><a href="http://www.zyktservice.com/tag/banjizhongshizhongyangkongdiao_2074_1.html">半集中式中央空调</a></li><li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaogaizaoshijian_2273_1.html">中央空调改造时间</a></li><li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaoguzhangjiance_2282_1.html">中央空调故障检测</a></li><li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaoxitonganzhuang_2283_1.html">中央空调系统安装</a></li><li><a href="http://www.zyktservice.com/tag/shangyongzhongyangkongdiaoxuangou_2325_1.html">商用中央空调选购</a></li><li><a href="http://www.zyktservice.com/tag/zhongyangkongdiaolingdongshuixitong_2402_1.html">中央空调冷冻水系统</a></li><li><a href="http://www.zyktservice.com/tag/shanghaizhongyangkongdiao_42_1.html">上海中央空调</a></li><li><a href="http://www.zyktservice.com/tag/lvwangqingxi_52_1.html">滤网清洗</a></li>		
+                  #tags()
+                      #for(tag : tags)
+                      <li><a href="#(tag.url)">#(tag.title)</a></li>
+                      #end
+                  #end
 
               </ul>
             </section>
@@ -150,7 +155,7 @@
                 <h2>欢迎咨询</h2>
               </div>
               <h4 class="tel">400-898-1819</h4>
-              <p>北京永安昌盛电子制冷技术有限公司</p>
+              <p>深圳华诺科技电子制冷技术有限公司</p>
               <p>传真：+010-59797778</p>
               <p>邮箱：YACS@JLJGDJ.COM</p>
             </section>

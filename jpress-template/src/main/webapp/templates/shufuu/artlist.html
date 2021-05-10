@@ -159,7 +159,10 @@
                 </ul>
               </section>
           <!-- 面包 -->
-          <p style="margin-top: 30px;font-size: 16px;">当前位置：<a href="http://www.zyktservice.com/">主页</a> &gt; <a href="http://www.zyktservice.com/xinwen/">新闻资讯</a> &gt; </p>
+          <p style="margin-top: 30px;font-size: 16px;">当前位置：
+              <a href="#(WEB_DOMAIN ??)">主页</a> &gt;
+              <a href="#(category.url ??)">#(category.title ??)</a>
+          </p>
           #articlePage()
               <div class="newslists">
               #for(article : articlePage.list)
