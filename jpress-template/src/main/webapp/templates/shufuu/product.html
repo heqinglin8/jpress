@@ -58,8 +58,8 @@
                 </div>
                 <ul class="clearfix">
                     <!--3个专题推荐-->
-                    #relevantProducts(product)
-                        #for(product : relevantProducts)
+                    #products(hasThumbnail=true,count=3,orderBy="modified")
+                        #for(product : products)
                             <li style="width: 26%;margin-right: 3%;margin-left: 4%;">
                                <a href="#(product.url)" class="img">
                                    <img src="#(product.showImage ??)">
