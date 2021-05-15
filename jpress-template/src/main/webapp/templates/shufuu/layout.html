@@ -279,7 +279,10 @@
       <div class="header-logo container">
         <div class="row">
           <div class="col-md-6 logo clearfix">
-            <a href="#(WEB_DOMAIN ??)"><img src="images/logo.png" alt="舒服智家Logo"></a>
+            <a href="#(WEB_DOMAIN ??)">
+              <img src="#option('calmlog_logo','img/logo.png')" width="144" alt="">
+              <!--<img src="images/logo.png" alt="舒服智家Logo">-->
+            </a>
             <h2>专注中央空调服务18年</h2>
             <p>中央空调维修/销售安装/清洗改造一站式服务商</p>
           </div>
@@ -343,10 +346,11 @@
     <!-- links -->
     <div class="index-links">
       <div class="container">
-        友情链接：<a href="http://www.zyktservice.com/" target="_blank">中央空调维修</a><a
-          href="http://www.zyktservice.com/mianyang.html">绵阳中央空调清洗</a>
-        <a href="http://www.zyktservice.com/xinzhou.html">忻州中央空调维修</a>
-        <a href="http://www.zgsxfw.com/" target="_blank" title="中央空调维修">中央空调维修</a>
+        友情链接：
+        #for(slide : linesOption('shufuu_links','\|'))
+        <a href="#(slide[0])" target="_blank">#(slide[1])</a>
+        #end
+
       </div>
     </div>
     <footer class="footerbox">
