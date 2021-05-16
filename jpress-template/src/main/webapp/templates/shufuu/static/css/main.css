@@ -3995,14 +3995,14 @@ p.message .close:focus {
 	font-size: 14px;
 	line-height: 28px;
 }
-.foot-fengongsi{
-	text-align: center;
-	color: #fff;
-	padding: 18px 0;
-	margin-top: 20px;
-	font-size: 14px;
-}
-.foot-fengongsi ul li{float: left;width: 33.33%;line-height: 40px;text-align: center;}
+/*.foot-fengongsi{*/
+	/*text-align: center;*/
+	/*color: #fff;*/
+	/*padding: 18px 0;*/
+	/*margin-top: 20px;*/
+	/*font-size: 14px;*/
+/*}*/
+/*.foot-fengongsi ul li{float: left;width: 33.33%;line-height: 40px;text-align: center;}*/
 
 .footerbox a:hover{
 	color: #bbb;
@@ -4071,14 +4071,14 @@ p.message .close:focus {
 @media (max-width : 360px) {
 
 }
-@media screen and (max-width: 998px){
-.foot-fengongsi ul li {
-    float: none;
-    width: 100%;
-    line-height: 40px;
-    text-align: center;
-}
-}
+/*@media screen and (max-width: 998px){*/
+/*.foot-fengongsi ul li {*/
+    /*float: none;*/
+    /*width: 100%;*/
+    /*line-height: 40px;*/
+    /*text-align: center;*/
+/*}*/
+/*}*/
 
 .top .sf-logo{
     position: absolute;

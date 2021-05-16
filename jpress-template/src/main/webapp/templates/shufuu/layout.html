@@ -21,7 +21,8 @@
   <link rel="stylesheet" href="static/css/home.css" type="text/css" media="all">
   <!--五大优势轮播-->
   <link rel="stylesheet" href="static/css/swiper.css">
-  
+  #@css?()
+
   <script src="static/js/scrollReveal.js" type="text/javascript"></script>
   <script src="static/js/nsw.js" type="text/javascript"></script>
   <link rel="stylesheet" href="static/css/bootstrap.css" type="text/css" media="all">
@@ -358,15 +359,14 @@
         <div class="row">
           <div class="col-md-6 col-xs-12 foot-l">
             <div class="foot-wx">
-              <img src="images/qrcode.jpg" alt="官方微信公众号">
-              <p>官方微信公众号</p>
+              <img src="#option('calmlog_qrcode','img/code.jpg')" class="img-fluid" alt="官方微信公众号">
+              <p>#option('calmlog_qrcode_text')</p>
             </div>
             <div class="foot-contus">
               <span>全国服务热线</span>
               <h4>400-898-1819</h4>
               <a onclick="doyoo.util.openChat('g=10085214');return false;" href="javascript:;" rel="nofollow">咨询客服</a>
-              <a href="https://weibo.com/6033169261/profile?topnav=1&amp;wvr=6&amp;is_all=1" target="_blank"
-                rel="nofollow">官方微博</a>
+              <a href="#" target="_blank" rel="nofollow">官方微博</a>
             </div>
           </div>
 
@@ -374,22 +374,21 @@
             <div class="foot-city">
               <b>城市分站</b>
               <p>
-                <a href="http://www.zyktservice.com/beijing">北京站</a>
-                <a href="http://www.zyktservice.com/shanghai">上海站</a>
-                <a href="http://www.zyktservice.com/tianjin">天津站</a>
-                <a href="http://www.zyktservice.com/suzhou/">苏州站</a>
-                <a href="http://www.zyktservice.com/xian/">西安站</a>
-                <a href="http://www.zyktservice.com/qingdao/">青岛站</a>
-                <a href="http://www.zyktservice.com/changzhou/">常州站</a>
-                <a href="http://www.zyktservice.com/wuxi/">无锡站</a>
-                <a href="http://www.zyktservice.com/hangzhou/">杭州站</a>
-                <a href="http://www.zyktservice.com/kunshan/">昆山站</a>
-                <a href="http://www.zyktservice.com/jiaxing/">嘉兴站</a>
-                <a href="http://www.zyktservice.com/huzhou/">湖州站</a>
+                <a href="#">北京站</a>
+                <a href="#">上海站</a>
+                <a href="#">天津站</a>
+                <a href="#">苏州站</a>
+                <a href="#">西安站</a>
+                <a href="#">青岛站</a>
+                <a href="#">常州站</a>
+                <a href="#">无锡站</a>
+                <a href="#">杭州站</a>
+                <a href="#">昆山站</a>
+                <a href="#">嘉兴站</a>
+                <a href="#">湖州站</a>
               </p>
             </div>
             <ul class="foot-infos">
-              <li>传真：010-59797778</li>
               <li>邮箱：YACS@JLJGDJ.COM</li>
               <li>总部地址：北京市石景山区金融街长安中心4号楼316</li>
               <li>华东办事处：江苏省苏州市吴中区珠江南路888号（智能制造研究院）1号楼1103</li>
@@ -397,17 +396,8 @@
           </div>
         </div>
       </div>
-      <div class="foot-fengongsi">
-        <div class="container">
-          <ul>
-            <li>上海分公司：上海市松江区九亭镇沪亭北路1001弄33号</li>
-            <li>西安分公司：西安市雁塔区枫韵蓝湾22号楼1303室</li>
-            <li>青岛分公司：青岛市崂山区秦岭路18号1号楼317室</li>
-          </ul>
-        </div>
-      </div>
       <div class="foot-cp">
-        Copyright © 2002-2019 北京永安昌盛电子制冷技术有限公司 版权所有 京乐企服<br>
+        #(WEB_COPYRIGHT ? WEB_COPYRIGHT : '本设计由简.工作室荣誉出品 <br /> copyright @ 2018~2020 JPress（www.jpress.io）') 版权所有<br>
         免责声明：本网站部分内容为转载或编者观点，不代表本公司意见，不承担任何法律责任。如侵权请联系删除。
       </div>
     </footer>
@@ -415,6 +405,7 @@
     <script type="text/javascript" src="static/js/jquery-migrate-1.js"></script>
     <script type="text/javascript" src="static/js/custom.js"></script>
     <script type="text/javascript" src="static/js/5a404f2b82ced79cd814067a.js"></script>
+    #@script?()
   </div>
 
 </body>
