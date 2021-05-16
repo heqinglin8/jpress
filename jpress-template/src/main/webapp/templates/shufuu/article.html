@@ -13,10 +13,10 @@
             <div class="index-search">
         <div class="container">
           <div class="sear-key">热门服务：
-              #articleCategories(article.id,"tag")
-                  #for(category : categories)
-                  <a href="#(category.url ??)">#(category.title ??)</a>
-                  #end
+              #tags()
+              #for(tag : tags)
+              <a href="#(tag.url)">#(tag.title)</a>
+              #end
               #end
           </div>
           <div class="sear-form">
@@ -25,10 +25,10 @@
                 <input type="text" name="q" placeholder="请输入搜索内容" class="serinp">
                 <ul class="se-keys se-ul">
                   <li><b>热门服务：</b></li>
-                    #articleCategories(article.id,"tag")
-                        #for(category : categories)
-                        <li> <a href="#(category.url ??)">#(category.title ??)</a></li>
-                        #end
+                    #tags()
+                    #for(tag : tags)
+                    <li><a href="#(tag.url)">#(tag.title)</a></li>
+                    #end
                     #end
                 </ul>
                 <input type="submit" name="submit" value="搜索" class="searbtn">

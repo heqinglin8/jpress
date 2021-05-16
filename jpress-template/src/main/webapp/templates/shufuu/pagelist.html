@@ -1,0 +1,161 @@
+#include("./layout.html")
+#@layout()
+
+
+#define content()
+      <!-- banner -->
+      <div class="inner-ban">
+        <div></div>
+      </div>
+      <!-- 搜索 -->
+      <div class="index-search">
+        <div class="container">
+          <div class="sear-key">热门服务：
+
+            #tags()
+            #for(tag : tags)
+            <a href="#(tag.url)">#(tag.title)</a>
+            #end
+            #end
+
+          </div>
+          <div class="sear-form">
+            <form class="searchform" name="formsearch" action="/plus/search.php" method="post">
+              <input type="text" name="q" placeholder="请输入搜索内容">
+              <input type="submit" name="submit" class="searbtn">
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 当前位置 -->
+      <div class="container">
+        <div class="in-location">
+          <p>当前位置：
+              <a href="#(WEB_DOMAIN ??)">主页</a> &gt; 单页列表
+          </p>
+        </div>
+      </div>
+      <!-- 九宫格 -->
+<style>
+.inner-cases .casebor6{
+	transition: 0.3s;
+	overflow: hidden;
+    height: 280px;
+}
+.casebor6 .p{
+	font-size: 16px;;
+}
+.casebor6 .thumb6{
+	display: block;
+	height: 280px;
+	overflow: hidden;
+	position: relative;
+}
+.casebor6 .thumb6 img{
+	display: block;
+	width: 100%;
+	min-height: 100%;
+	transition: all 1.2s linear 0s;
+}
+.casebor6 .thumb6 img:hover{
+     transform: scale(1.4);
+}
+.desc6{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,108,177,0.7);
+	color: #fff;
+	text-align: justify;
+	-webkit-display: flex;
+	-moz-display: flex;
+	-ms-display: flex;
+	-o-display: flex;
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	box-sizing: border-box;
+	opacity: 0;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-ms-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+.casebor6 .title{
+	display: block;
+	padding: 0 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 10px 0;
+	font-size: 16px;
+}
+.casebor6 p{
+	padding: 0 10px;
+	margin-bottom: 10px;
+}
+.casebor6 p em{
+	display: inline-block;
+	background: url(images/icon_view.png) no-repeat left center;
+	padding-left: 20px;
+	color: #999;
+	font-style: normal;
+}
+.casebor6 p a{
+	display: inline-block;
+	float: right;
+	padding: 0 10px;
+	border-radius: 50px;
+	line-height: 24px;
+	background-color: #ccc;
+	color: #fff;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-ms-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+.casebor6:hover .desc{
+	opacity: 1;
+}
+.casebor6:hover a.link{
+	background-color: #0193de;
+}
+.casebor6:hover{
+	border-color: #0193de;
+}
+.casebor6:hover a.title{
+	color: #0193de;
+}
+</style>
+      <!-- 9宫格结束 -->
+<div class="container inner-cases">
+
+  <div class="row">
+    <!--#pages(hasThumbnail=true)-->
+      #for(page : pagelist)
+      <div class="col-md-4 col-xs-6 case-img">
+        <div class="casebor">
+          <a href="#(page.url)" class="thumb">
+            <img src="#(page.thumbnail)">
+            <div class="desc">#maxLength(page.text,100)...</div>
+          </a>
+          <a href="#(page.url)" class="title">#(page.title ??)</a>
+          <p class="clearfix">
+            <em>#(page.view_count ?? 0)</em>
+            <a href="#(page.url)" class="link">详情...</a>
+          </p>
+        </div>
+      </div>
+      #end
+    <!--#end-->
+  </div>
+  <!-- pages -->
+
+</div>
+
+#end
