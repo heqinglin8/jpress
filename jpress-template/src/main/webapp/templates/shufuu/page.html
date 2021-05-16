@@ -6,9 +6,10 @@
 <script src="/static/commons/page.js"></script>
 #end
 
-<!--#define css()-->
-<!--<link href="/static/commons/page.css" rel="stylesheet">-->
-<!--#end-->
+#define css()
+<link href="/static/commons/page.css" rel="stylesheet">
+#end
+
 
 #define content()
       <!-- banner -->
@@ -23,7 +24,14 @@
 
             <div class="index-search">
         <div class="container">
-          <div class="sear-key">热门服务：<a href="http://www.zyktservice.com/qingxifw/">中央空调清洗</a><a href="http://www.zyktservice.com/weixiufw/">中央空调维修</a><a href="http://www.zyktservice.com/weibaofw/">中央空调维保</a><a href="http://www.zyktservice.com/anzhuangfw/">中央空调安装</a><a href="http://www.zyktservice.com/gaizaofw/">中央空调改造</a>
+          <div class="sear-key">热门服务：
+
+              #tags()
+              #for(tag : tags)
+              <li><a href="#(tag.url)">#(tag.title)</a></li>
+              #end
+              #end
+
           </div>
           <div class="sear-form">
             <form class="searchform" name="formsearch" action="/plus/search.php" method="post">
@@ -31,11 +39,11 @@
                 <input type="text" name="q" placeholder="请输入搜索内容" class="serinp">
                 <ul class="se-keys se-ul">
                   <li><b>热门服务：</b></li>
-                  <li><a href="http://www.zyktservice.com/qingxifw/">中央空调清洗</a></li>
-                  <li><a href="http://www.zyktservice.com/weixiufw/">中央空调维修</a></li>
-                  <li><a href="http://www.zyktservice.com/weibaofw/">中央空调维保</a></li>
-                  <li><a href="http://www.zyktservice.com/anzhuangfw/">中央空调安装</a></li>
-                  <li><a href="http://www.zyktservice.com/gaizaofw/">中央空调改造</a></li>
+                    #tags()
+                    #for(tag : tags)
+                    <li><a href="#(tag.url)">#(tag.title)</a></li>
+                    #end
+                    #end
                 </ul>
                 <input type="submit" name="submit" value="搜索" class="searbtn">
             </form>
