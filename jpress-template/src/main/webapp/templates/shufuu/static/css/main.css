@@ -716,18 +716,18 @@ textarea,input {
 	letter-spacing: 1.2px;
 }
 
-.header-tel{
-       /* background-color: yellow; */
+.sear-tel{
+	height: 60px;
 }
 
-.header-tel p{
-	background: url(../images/icon_tel.png) no-repeat left center;
+.sear-tel p{
+	background: url(../../images/icon_tel.png) no-repeat left center;
 	padding: 5px 0 0 60px;
 	font-size: 15px;
 	float: right;
 	line-height: 1;
 }
-.header-tel p b{
+.sear-tel p b{
 	display: block;
 	/*font-family: Arial, Verdana, "Microsoft Yahei", 微软雅黑, 宋体, Helvetica, sans-serif;*/
 	font-size: 30px;

@@ -31,22 +31,13 @@
               #end
 
           </div>
-          <div class="sear-form">
-            <form class="searchform" name="formsearch" action="/plus/search.php" method="post">
-              <!-- <input type="text" name="q" value="0">-->
-                <input type="text" name="q" placeholder="请输入搜索内容" class="serinp">
-                <ul class="se-keys se-ul">
-                  <li><b>热门服务：</b></li>
-                    #tags()
-                    #for(tag : tags)
-                    <li><a href="#(tag.url)">#(tag.title)</a></li>
-                    #end
-                    #end
+            <div class="sear-tel">
+                <p>
+                    服务热线：
+                    <b>400-898-1819</b>
+                </p>
 
-                </ul>
-                <input type="submit" name="submit" value="搜索" class="searbtn">
-            </form>
-          </div>
+            </div>
         </div>
       </div>
       <script type="text/javascript" src="images/searchdown.js"></script>
