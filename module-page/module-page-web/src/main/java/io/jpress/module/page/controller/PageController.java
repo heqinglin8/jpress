@@ -25,8 +25,10 @@ import io.jpress.commons.dfa.DFAUtil;
 import io.jpress.commons.utils.CommonsUtils;
 import io.jpress.model.User;
 import io.jpress.module.page.PageNotifyKit;
+import io.jpress.module.page.model.PageContact;
 import io.jpress.module.page.model.SinglePage;
 import io.jpress.module.page.model.SinglePageComment;
+import io.jpress.module.page.service.PageContactService;
 import io.jpress.module.page.service.SinglePageCommentService;
 import io.jpress.module.page.service.SinglePageService;
 import io.jpress.service.OptionService;
@@ -54,6 +56,8 @@ public class PageController extends TemplateControllerBase {
 
     @Inject
     private OptionService optionService;
+
+    private PageContactService pageContactService;
 
     private static final Set<String> excludePage = Sets.newHashSet("setting", "layout", "header", "footer");
 
@@ -240,6 +244,52 @@ public class PageController extends TemplateControllerBase {
         } else {
             redirect(getReferer());
         }
+    }
+
+    /**
+     * 提交联系方式
+     */
+    public void postContact() {
+        String nickname = getPara("nickname");
+        String ytel = getPara("ytel");
+        String city = getPara("city");
+        String area = getPara("area");
+        String ywork = getPara("ywork");
+
+        if (StrUtil.isBlank(nickname)) {
+            renderJson(Ret.fail().set("message", "用户名不能为空"));
+            return;
+        }
+
+        if (StrUtil.isBlank(ytel)) {
+            renderJson(Ret.fail().set("message", "电话不能为空"));
+            return;
+        }
+
+        if (StrUtil.isBlank(city)) {
+            renderJson(Ret.fail().set("message", "城市不能为空"));
+            return;
+        }
+
+        if (StrUtil.isBlank(area)) {
+            renderJson(Ret.fail().set("message", "区域不能为空"));
+            return;
+        }
+
+
+        PageContact contact = new PageContact();
+
+        contact.setName(nickname);
+        contact.setMobile(ytel);
+        contact.setCity(city);
+        contact.setArea(area);
+        contact.setService(ywork);
+
+
+        pageContactService.saveOrUpdate(contact);
+
+        renderOkJson();
+
     }
 
 }

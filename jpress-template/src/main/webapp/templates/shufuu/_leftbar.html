@@ -3,12 +3,13 @@
         <h2>留言询价</h2>
     </div>
     <img src="images/shifu.jpg">
-    <form action="/plus/diy.php" enctype="multipart/form-data" method="post" class="left-aform">
+    <!--<form action="/plus/diy.php" enctype="multipart/form-data" method="post" class="left-aform">-->
+    <form action="#(CPATH)/page/postContact" id="jpress-contact-form" method="post" autocomplete="off" class="left-aform">
         <input type="hidden" name="action" value="post">
         <input type="hidden" name="diyid" value="1">
         <input type="hidden" name="do" value="2">
 
-        <label><span>您的称呼：</span><input type="text" name="yname" id="yname" placeholder="请输入您的称呼"></label>
+        <label><span>您的称呼：</span><input type="text" name="nickname" id="nickname" placeholder="请输入您的称呼"></label>
         <label><span>您的手机：</span><input type="text" name="ytel" id="ytel" placeholder="请输入手机号码(必填)"></label>
         <label class="lab-place"><span>所在城市：</span><input type="text" name="city" id="city" placeholder="市"><input type="text" name="area" id="area" placeholder="区"></label>
         <label>

@@ -59,6 +59,29 @@ function initCommentComponent() {
         $('.comment-textarea textarea').focus();
     });
 
+    $('#jpress-contact-form').on('submit', function () {
+        // alert('提交了？');
+        $(this).ajaxSubmit({
+            type: "post",
+            success: function (data) {
+                if (data.state == "ok") {
+
+                    alert('发布评论成功');
+                    location.reload();
+
+                }
+                //评论失败
+                else {
+                    alert('评论失败：' + data.message);
+                }
+            },
+            error: function () {
+                alert("网络错误，请稍后重试");
+            }
+        });
+        return false;
+    });
+
 }
 
 
