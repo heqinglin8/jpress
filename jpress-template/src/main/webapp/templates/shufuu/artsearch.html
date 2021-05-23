@@ -3,53 +3,201 @@
 
 
 #define content()
+ 
+<!-- banner -->
+<div class="inner-ban">
+  <!--<div style="background-image: url(/templets/default/images/com_banner.jpg);"></div>-->
+  <div></div>
+</div>
+<div class="breadcrumb-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-4 bcid-cat" style="font-size: 30px;">搜索词:<font color="red">空调</font></div>
+      <div class="sear-tel col-md-9 col-sm-8">
+        <p>
+          服务热线：
+          <b>400-898-1819</b>
+        </p>
 
-<div class="col-md-8 cl-left">
-    <div class="search_tip">
-    <p class="col-12 col-xl-12 mb-0 p-0 ml-2"><small>以下是根据您搜索的关键字 <span class="text-danger">#(keyword ??)</span> ，匹配出的内容：</small></p>
+      </div>
     </div>
-    #articleSearchPage()
-    #for(article : articlePage.list)
-        <div class="cl-card">
-            <a class="card-link" href="#(article.url)">
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 col-sm-12 cl-card-image">
-                        <img src="#(article.showImage ? article.showImage  : 'img/default-img.jpg')" class="img-fluid" alt="">
+  </div>
+</div>
+<div class="page-container" id="innerpage-wrap">
+  <div class="container">
+    <div class="row">
+        <aside class="col-md-3 col-sm-12 side-left">
+            <!--form-->
+            
+<section class="left-f">
+  <div class="left-tit">
+    <h2>留言询价</h2>
+  </div>
+  <img src="images/shifu.jpg">
+  <form action="/plus/diy.php" enctype="multipart/form-data" method="post" class="left-aform">
+          <input type="hidden" name="action" value="post">
+          <input type="hidden" name="diyid" value="1">
+          <input type="hidden" name="do" value="2">               
+      
+          <label><span>您的称呼：</span><input type="text" name="yname" id="yname" placeholder="请输入您的称呼"></label>
+          <label><span>您的手机：</span><input type="text" name="ytel" id="ytel" placeholder="请输入手机号码(必填)"></label>
+          <label class="lab-place"><span>所在城市：</span><input type="text" name="city" id="city" placeholder="市"><input type="text" name="area" id="area" placeholder="区"></label>
+          <label>
+          <span>所需服务：</span>
+          <select type="select" name="ywork" id="ywork" style="border: none;">
+          <option value="中央空调维修" selected="selected">中央空调维修</option>
+          <option value="中央空调清洗">中央空调清洗</option>
+          <option value="中央空调改造">中央空调改造</option>
+          <option value="中央空调维保">中央空调维保</option>
+          <option value="中央空调安装">中央空调安装</option>
+          <option value="中央空调漏水">中央空调漏水</option>
+          <option value="其他问题">其他问题</option>
+          </select>请选择
+          </label>
+          
+          <label style="display: none;"><span>信息来源：</span><input type="text" name="service" id="service" value="http://www.zyktservice.com/gongcheng/"></label>
+          <label style="display: none;"><span><em>*</em>提交时间</span><input type="text" name="mytime" id="mytime" value="2021-5-23 15:22"></label>
+          <input type="hidden" name="dede_fields" value="yname,text;ytel,text;city,text;area,text;ywork,text;service,text;mytime,text">
+          <input type="hidden" name="dede_fieldshash" value="d41532e42b1c506e685cde53930d7f1c">
+          <input type="submit" name="submit" id="indfbtn" class="submbtn" value="提交询价">
+    </form>
+    <script type="text/javascript" src="images/serform.js"></script>
+   
+</section>
+            
+    
+            <!-- main -->
+            <section class="left-son">
+              <h2>新闻资讯</h2>
+              <ul>
+                
+              </ul>
+            </section>
+                        <section class="left-hot">
+              <div class="left-tit">
+                <h2>城市新闻</h2>
+              </div>
+              <ul>
+
+                #articles(orderBy="modified",count=6)
+                  #for(article : articles)
+                  <li>
+                    <a href="#(article.url)">
+                      <span>[#date(article.modified ??,'yyyy-MM-dd')]</span>
+                      #(article.title)
+                    </a>
+                  </li>
+                  #end
+                #end
+
+              </ul>
+            </section>
+            <section class="left-hot">
+              <div class="left-tit">
+                <h2>资讯推荐</h2>
+              </div>
+              <ul>
+
+                #articles(orderBy="view_count",count=6)
+                #for(article : articles)
+                <li><a href="#(article.url)"><span>[#date(article.created ??,'yyyy-MM-dd')]</span>#(article.title)</a></li>
+                #end
+                #end
+
+              </ul>
+            </section>
+
+            <section class="left-year">
+              <img src="images/left18.jpg" alt="京乐企服19年">
+            </section>
+<!-- tag -->
+            <section class="left-hot1">
+              <div class="left-tit">
+                <h2>相关推荐</h2>
+              </div>
+              <ul class="all">
+
+                #tags()
+                  #for(tag : tags)
+                  <li><a href="#(tag.url)">#(tag.title)</a></li>
+                  #end
+                #end
+
+              </ul>
+            </section>
+            <section class="left-contact">
+              <div class="left-tit">
+                <h2>欢迎咨询</h2>
+              </div>
+              <h4 class="tel">400-898-1819</h4>
+              <p>深圳华诺科技电子制冷技术有限公司</p>
+              <p>传真：+010-59797778</p>
+              <p>邮箱：YACS@JLJGDJ.COM</p>
+            </section>
+            <section class="left-service">
+              <a onclick="doyoo.util.openChat('g=10085214');return false;" href="javascript:;" rel="nofollow"><img src="images/bg_atten.jpg"></a>
+            </section>
+          </aside>
+        <div class="col-md-9 col-sm-12 col-xs-12 side-right right-news" role="main">
+            #articleSearchPage()
+            <article class="blog-wrap">
+              #for(article : articlePage.list)
+                <div class="blog-article hentry format-image">
+
+                    <figure>
+                      <a class="swipebox-x" href="#(article.url)">
+                        <img src="#(article.showImage ? article.showImage  : 'img/default-img.jpg')" width="120" height="" border="0">
+                      </a>
+                    </figure>
+                    <div class="entry-summary post-summary">
+                      <header class="entry-header">
+                        <h2 class="entry-title post-title">
+                          <a href="#(article.url)" title="#(article.title)">#(article.title)</a>
+                        </h2>
+                      </header>
+                      <div class="entry-meta post-meta">
+                        <ul>
+                          <li class="entry-date date">
+                            <time class="entry-date" datetime="1621671873">#date(article.modified ??,'yyyy-MM-dd')</time>
+                          </li>
+
+                         <li class="tags">
+                           #articleCategories(article.id,"category")
+                             #for(category : categories)
+                             <a href="#(category.url ??)" target="_blank">#(category.title ??)</a>&nbsp;
+                             #if(!for.last) , #end
+                             #end
+                           #end
+                         </li>
+
+                        </ul>
+                      </div>
+                      <div class="entry-content">
+                        #maxLength(article.text,60)...
+                      </div>
+                      <a href="#(article.url)" class="read-more-link">查看详细</a>
                     </div>
-
-                    <div class="col-lg-9 col-md-8 col-sm-12 cl-card-main">
-                        <h3 class="cl-card-main-title">
-                           #(article.title)
-                        </h3>
-                        <p class="cl-card-main-info">#maxLength(article.text,100)</p>
-                        <p class="cl-card-more">阅读更多...</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    #else
-        没有找到你要的内容...
-    #end
-
-
-
-
-
-    #articlePaginate(firstGotoIndex=true)
-    <nav aria-label="">
-        <ul class="pagination justify-content-center">
-            #for(page : pages)
-            <li class="page-item #(page.style)"><a class="page-link" href="#(page.url ??)">#(page.text)</a></li>
-            #end
-        </ul>
-    </nav>
-    #end
-    #end
-
+                  </div>
+              #else
+                没有找到你要的内容...
+              #end
+            </article>
+          #end
+            <div class="pagination-wrap">
+              #articlePaginate(firstGotoIndex=true)
+                <nav aria-label="">
+                  <ul class="pagination justify-content-center col-md-12">
+                    #for(page : pages)
+                    <li class="page-item #(page.style)"><a class="page-link" href="#(page.url ??)">#(page.text)</a></li>
+                    #end
+                  </ul>
+                </nav>
+              #end
+            </div>
+      </div>
+       
+    </div>
+  </div>
 </div>
 
-
-<div class="col-md-4 cl-right">
-    #include("./_rightbar.html")
-</div>
 #end

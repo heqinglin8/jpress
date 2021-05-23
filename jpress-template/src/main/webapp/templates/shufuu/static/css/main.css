@@ -588,16 +588,37 @@ form input[type="file"] {
 	color: #3a3c41;
 }
 
-form input[type="submit"] {
-	padding: 12px 25px;
-	background-color: #3a3c41;
-	font-size: 14px;
-	color: #fff;
-	font-weight: 700;
-	border: none;
-	cursor: pointer;
-	letter-spacing: 1px;
+input::-webkit-input-placeholder{
+	color:#999;
+	font-size:14px;
+	font-weight:normal
 }
+input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+	color:#999;
+	font-size:14px;
+	font-weight:normal
+}
+input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+	color:#999;
+	font-size:14px;
+	font-weight:normal
+}
+input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
+	color:#999;
+	font-size:14px;
+	font-weight:normal
+}
+
+/*form input[type="submit"] {*/
+	/*padding: 12px 25px;*/
+	/*background-color: #3a3c41;*/
+	/*font-size: 14px;*/
+	/*color: #fff;*/
+	/*font-weight: 700;*/
+	/*border: none;*/
+	/*cursor: pointer;*/
+	/*letter-spacing: 1px;*/
+/*}*/
 
 form input[type="submit"]:hover {
 	background-color: #f15b5a;

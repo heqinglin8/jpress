@@ -266,8 +266,14 @@
             </div>
             <div class="col-md-7 text-right topbar-right header-top-right">
               <div class="p1-search-1-inp">
-                <input class="p1-search-1-inp1" id="key" placeholder="请输入关键字" type="text">
-                <input class="p1-search-1-inp2" onclick="searchInfo();" type="button">
+                <!--<input class="p1-search-1-inp1" id="key" placeholder="请输入关键字" type="text">-->
+                <!--<input class="p1-search-1-inp2" onclick="searchInfo();" type="button">-->
+
+                <form id="searchform" action="#(CPATH)/article/search" class="input-group" method="GET" target="_blank">
+                  <input type="search" class="p1-search-1-inp1" name="keyword" placeholder="搜索你要的空调资讯" autocomplete="off">
+                  <input class="p1-search-1-inp2" type="submit" style="cursor:pointer" value=""/>
+                </form>
+
               </div>
 
               <div class="welcome">您好！欢迎来到“舒服智家”品牌官网 ！</div>
