@@ -180,6 +180,12 @@
             <version>1.2.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.jpress</groupId>
+            <artifactId>module-contact-web</artifactId>
+            <version>3.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -239,6 +245,9 @@
                                 </resource>
                                 <resource>
                                     <directory>${basedir}/../module-product/module-product-web/src/main/webapp</directory>
+                                </resource>
+                                <resource>
+                                    <directory>${basedir}/../module-contact/module-contact-web/src/main/webapp</directory>
                                 </resource>
                             </resources>
                         </configuration>

@@ -1,12 +1,12 @@
-package io.jpress.module.page.service;
+package io.jpress.module.contact.service;
 
 import com.jfinal.plugin.activerecord.Page;
+import io.jpress.module.contact.model.Contact;
 import io.jboot.db.model.Columns;
-import io.jpress.module.page.model.PageContact;
 
 import java.util.List;
 
-public interface PageContactService {
+public interface ContactService  {
 
     /**
      * 根据主键查找Model
@@ -14,7 +14,7 @@ public interface PageContactService {
      * @param id
      * @return
      */
-    public PageContact findById(Object id);
+    public Contact findById(Object id);
 
 
     /**
@@ -23,7 +23,7 @@ public interface PageContactService {
      * @param columns
      * @return
      */
-    public PageContact findFirstByColumns(Columns columns);
+    public Contact findFirstByColumns(Columns columns);
 
     /**
      * 根据 Columns 查找单条数据
@@ -32,7 +32,7 @@ public interface PageContactService {
      * @param orderBy
      * @return
      */
-    public PageContact findFirstByColumns(Columns columns, String orderBy);
+    public Contact findFirstByColumns(Columns columns, String orderBy);
 
 
     /**
@@ -40,7 +40,7 @@ public interface PageContactService {
      *
      * @return
      */
-    public List<PageContact> findAll();
+    public List<Contact> findAll();
 
 
     /**
@@ -49,7 +49,7 @@ public interface PageContactService {
      * @param columns
      * @return
      */
-    public List<PageContact> findListByColumns(Columns columns);
+    public List<Contact> findListByColumns(Columns columns);
 
 
     /**
@@ -59,7 +59,7 @@ public interface PageContactService {
      * @param orderBy
      * @return
      */
-    public List<PageContact> findListByColumns(Columns columns, String orderBy);
+    public List<Contact> findListByColumns(Columns columns, String orderBy);
 
     /**
      * 根据 Columns 查找数据
@@ -68,7 +68,7 @@ public interface PageContactService {
      * @param count
      * @return
      */
-    public List<PageContact> findListByColumns(Columns columns, Integer count);
+    public List<Contact> findListByColumns(Columns columns, Integer count);
 
     /**
      * 根据 Columns 查找数据
@@ -78,7 +78,7 @@ public interface PageContactService {
      * @param count
      * @return
      */
-    public List<PageContact> findListByColumns(Columns columns, String orderBy, Integer count);
+    public List<Contact> findListByColumns(Columns columns, String orderBy, Integer count);
 
 
     /**
@@ -105,7 +105,7 @@ public interface PageContactService {
      * @param model
      * @return
      */
-    public boolean delete(PageContact model);
+    public boolean delete(Contact model);
 
 
     /**
@@ -123,7 +123,7 @@ public interface PageContactService {
      * @param model
      * @return id if success
      */
-    public Object save(PageContact model);
+    public Object save(Contact model);
 
 
     /**
@@ -132,7 +132,7 @@ public interface PageContactService {
      * @param model
      * @return id if success
      */
-    public Object saveOrUpdate(PageContact model);
+    public Object saveOrUpdate(Contact model);
 
     /**
      * 更新
@@ -140,7 +140,7 @@ public interface PageContactService {
      * @param model
      * @return
      */
-    public boolean update(PageContact model);
+    public boolean update(Contact model);
 
 
     /**
@@ -150,7 +150,7 @@ public interface PageContactService {
      * @param pageSize
      * @return
      */
-    public Page<PageContact> paginate(int page, int pageSize);
+    public Page<Contact> paginate(int page, int pageSize);
 
 
     /**
@@ -160,7 +160,7 @@ public interface PageContactService {
      * @param pageSize
      * @return
      */
-    public Page<PageContact> paginateByColumns(int page, int pageSize, Columns columns);
+    public Page<Contact> paginateByColumns(int page, int pageSize, Columns columns);
 
 
     /**
@@ -172,20 +172,7 @@ public interface PageContactService {
      * @param orderBy
      * @return
      */
-    public Page<PageContact> paginateByColumns(int page, int pageSize, Columns columns, String orderBy);
-
-    public long findCountByStatus(String status);
-
-    public Page<PageContact> _paginateByStatus(int page, int pagesize, Long articleId, String keyword, String status);
-
-    public Page<PageContact> _paginateWithoutTrash(int page, int pagesize, Long articleId, String keyword);
-
-    public Page<PageContact> paginateByPageIdInNormal(int page, int pagesize, long pageId);
-
-    public void doIncCommentReplyCount(long commentId);
+    public Page<Contact> paginateByColumns(int page, int pageSize, Columns columns, String orderBy);
 
 
-    public boolean doChangeStatus(Long id, String status);
-
-    public boolean batchChangeStatusByIds(String statusNormal, Object... toArray);
 }

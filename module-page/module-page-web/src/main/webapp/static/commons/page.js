@@ -66,13 +66,13 @@ function initCommentComponent() {
             success: function (data) {
                 if (data.state == "ok") {
 
-                    alert('发布评论成功');
+                    alert('提交成功');
                     location.reload();
 
                 }
                 //评论失败
                 else {
-                    alert('评论失败：' + data.message);
+                    alert('提交失败：' + data.message);
                 }
             },
             error: function () {
