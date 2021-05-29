@@ -1,6 +1,10 @@
 #include("./layout.html")
 #@layout()
 
+#define script()
+<script src="/static/components/jquery/jquery.form.min.js"></script>
+<script src="/static/commons/article.js"></script>
+#end
 
 #define content()
  
@@ -12,7 +16,7 @@
 <div class="breadcrumb-wrapper">
   <div class="container">
     <div class="row">
-      <div class="col-md-3 col-sm-4 bcid-cat" style="font-size: 30px;">搜索词:<font color="red">空调</font></div>
+      <div class="col-md-3 col-sm-4 bcid-cat" style="font-size: 30px;">搜索词:<font color="red">#(keyword ??)</font></div>
       <div class="sear-tel col-md-9 col-sm-8">
         <p>
           服务热线：
@@ -34,27 +38,25 @@
     <h2>留言询价</h2>
   </div>
   <img src="images/shifu.jpg">
-  <form action="/plus/diy.php" enctype="multipart/form-data" method="post" class="left-aform">
-          <input type="hidden" name="action" value="post">
-          <input type="hidden" name="diyid" value="1">
-          <input type="hidden" name="do" value="2">               
-      
-          <label><span>您的称呼：</span><input type="text" name="yname" id="yname" placeholder="请输入您的称呼"></label>
-          <label><span>您的手机：</span><input type="text" name="ytel" id="ytel" placeholder="请输入手机号码(必填)"></label>
-          <label class="lab-place"><span>所在城市：</span><input type="text" name="city" id="city" placeholder="市"><input type="text" name="area" id="area" placeholder="区"></label>
-          <label>
-          <span>所需服务：</span>
-          <select type="select" name="ywork" id="ywork" style="border: none;">
-          <option value="中央空调维修" selected="selected">中央空调维修</option>
-          <option value="中央空调清洗">中央空调清洗</option>
-          <option value="中央空调改造">中央空调改造</option>
-          <option value="中央空调维保">中央空调维保</option>
-          <option value="中央空调安装">中央空调安装</option>
-          <option value="中央空调漏水">中央空调漏水</option>
-          <option value="其他问题">其他问题</option>
-          </select>请选择
-          </label>
-          <input type="submit" name="submit" id="indfbtn" class="submbtn" value="提交询价">
+    <form action="#(CPATH)/contact/post" id="jpress-contact-form" method="post" autocomplete="off" class="left-aform">
+        <input type="hidden" name="action" value="post">
+
+        <label><span>您的称呼：</span><input type="text" name="name" id="name" placeholder="请输入您的称呼"></label>
+        <label><span>您的手机：</span><input type="text" name="phone" id="phone" placeholder="请输入手机号码(必填)"></label>
+        <label class="lab-place"><span>所在城市：</span><input type="text" name="city" id="city" placeholder="市"><input type="text" name="area" id="area" placeholder="区"></label>
+        <label>
+            <span>所需服务：</span>
+            <select type="select" name="service" id="service" style="border: none;">
+                <option value="中央空调维修" selected="selected">中央空调维修</option>
+                <option value="中央空调清洗">中央空调清洗</option>
+                <option value="中央空调改造">中央空调改造</option>
+                <option value="中央空调维保">中央空调维保</option>
+                <option value="中央空调安装">中央空调安装</option>
+                <option value="中央空调漏水">中央空调漏水</option>
+                <option value="其他问题">其他问题</option>
+            </select>请选择
+        </label>
+        <input type="submit" name="submit" id="indfbtn" class="submbtn" value="提交询价">
     </form>
     <script type="text/javascript" src="images/serform.js"></script>
    
