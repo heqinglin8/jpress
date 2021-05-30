@@ -632,7 +632,7 @@ textarea,input {
 	height: auto!important;
 }
 
-.ie8 .features-var-three .feature-icon img,.ie8 .features-var-two .single-feature img,.ie8 .home-testimonial .flexslider-three .slides img,.ie8 .appoint-page .appoint-section .top-icon img {
+.ie8 .features-var-three .feature-icon img,.ie8 .features-var-two .single-feature img,.ie8 .home-testimonial .flexslider-three .slides img,.ie8 .top-icon img {
 	width: auto!important;
 }
 
@@ -641,7 +641,8 @@ textarea,input {
 }
 
 .top{
-	background-color: fff;
+	background-color: #ffffff;
+	height: 10rem;
 }
 
 .header-top {
@@ -3737,57 +3738,6 @@ p.message .close:focus {
 	line-height: 30px;
 }
 
-.appoint-page {
-	padding: 40px 0 60px;
-}
-
-.appoint-page .entry-content {
-	margin-bottom: 40px;
-}
-
-.appoint-page .appoint-section {
-	background: #3a3c41 url("../images/appoint-form-bg.png") top center repeat-y;
-	padding: 10px 70px 70px;
-	border-radius: 5px;
-}
-
-.appoint-page .appoint-section .top-icon {
-	width: 100%;
-	text-align: center;
-	z-index: 99999;
-}
-
-.appoint-page .appoint-section .top-icon img {
-	pointer-events: none;
-}
-
-.appoint-page form {
-	background: url("../images/appoint-form-bottom.png") bottom center repeat-x #fff;
-	padding: 60px 20px;
-	margin-top: -36px;
-}
-
-.appoint-page form input[type="text"],.appoint-page form input[type="email"],.appoint-page form textarea {
-	width: 100%;
-	border: 0;
-	outline: none;
-	border-bottom: 1px solid #dcdee4;
-	padding: 5px;
-	margin-bottom: 40px;
-}
-
-.appoint-page form input[type="text"].error,.appoint-page form input[type="email"].error,.appoint-page form textarea.error {
-	border-color: red;
-}
-
-.appoint-page form #appointment-loader {
-	margin: 0 20px;
-}
-
-.appoint-page form #message-sent {
-	font-weight: 700;
-}
-
 #contact-loader {
 	float: right;
 	margin: 17px 0 0 0;
@@ -3888,6 +3838,11 @@ p.message .close:focus {
 	}
 	#header .m-logo {
 	    display: block;
+	}
+
+	.header-logo .header-nav{
+		padding-left: 0;
+		padding-right: 0;
 	}
 
 }
