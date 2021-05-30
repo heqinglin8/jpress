@@ -136,7 +136,8 @@
             </section>
           </aside>
         <div class="col-md-9 col-sm-12 col-xs-12 side-right right-news" role="main">
-            #articleSearchPage()
+        #articleSearchPage()
+            #if(articlePage && articlePage.list.size() > 0)
             <article class="blog-wrap">
               #for(article : articlePage.list)
                 <div class="blog-article hentry format-image">
@@ -175,11 +176,8 @@
                       <a href="#(article.url)" class="read-more-link">查看详细</a>
                     </div>
                   </div>
-              #else
-                没有找到你要的内容...
               #end
             </article>
-          #end
             <div class="pagination-wrap">
               #articlePaginate(firstGotoIndex=true)
                 <nav aria-label="">
@@ -191,6 +189,10 @@
                 </nav>
               #end
             </div>
+            #else
+            没有找到你要的内容...
+            #end
+        #end
       </div>
        
     </div>
