@@ -680,6 +680,11 @@ textarea,input {
 .header-logo{
 	padding: 1.2rem 0;
 }
+
+.header-logo .logo {
+	padding-left:8rem;
+}
+
 .header-logo .logo a{
 	display: inline-block;
 	float: left;
@@ -697,6 +702,12 @@ textarea,input {
 	font-size: 14px;
 	color: #666;
 	letter-spacing: 1.2px;
+}
+
+.header-logo .header-nav{
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-top: 0.4rem;
 }
 
 .sear-tel{
@@ -3840,11 +3851,6 @@ p.message .close:focus {
 	    display: block;
 	}
 
-	.header-logo .header-nav{
-		padding-left: 0;
-		padding-right: 0;
-	}
-
 }
 
 
@@ -4002,10 +4008,10 @@ p.message .close:focus {
 
 .top .sf-logo{
     position: absolute;
-    width: 153px;
-    height: 148px;
+    width: 10rem;
+    height: 10rem;
     top: 12px;
-    left: 2rem;
+    left: 3rem;
 }
 
 .header-top .header-top-right{
