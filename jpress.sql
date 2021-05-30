@@ -1104,6 +1104,20 @@ CREATE TABLE `wechat_reply` (
   UNIQUE KEY `keyword` (`keyword`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户自定义关键字回复表';
 
+# Dump of table contact
+# ------------------------------------------------------------
+CREATE TABLE `contact` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL COMMENT '姓名',
+  `mobile` varchar(32) DEFAULT NULL COMMENT '电话',
+  `city` varchar(256) DEFAULT NULL COMMENT '城市',
+  `area` varchar(11) DEFAULT NULL COMMENT '区域',
+  `service` varchar(512) DEFAULT NULL COMMENT '服务',
+  `created` datetime DEFAULT NULL COMMENT '提交的时间',
+  `status` int(2) DEFAULT '0' COMMENT '表单状态：0、未处理 1、已查看 2、已废弃',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
 
 
 
