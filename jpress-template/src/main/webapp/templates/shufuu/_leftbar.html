@@ -5,6 +5,7 @@
     <img src="images/shifu.jpg">
     <form action="#(CPATH)/contact/post" id="jpress-contact-form" method="post" autocomplete="off" class="left-aform">
         <input type="hidden" name="action" value="post">
+        <input type="hidden" name="pid" id="contact-pid">
 
         <label><span>您的称呼：</span><input type="text" name="name" id="name" placeholder="请输入您的称呼"></label>
         <label><span>您的手机：</span><input type="text" name="phone" id="phone" placeholder="请输入手机号码(必填)"></label>
@@ -21,6 +22,11 @@
                 <option value="其他问题">其他问题</option>
             </select>请选择
         </label>
+        <div class="contact-vcode">
+            <input placeholder="请输入验证码" name="captcha" id="contact-captcha">
+            <img class="vcode-img" src="#(CPATH)/commons/captcha"
+                 onclick="this.src='#(CPATH)/commons/captcha?d='+Math.random();" cdn-exclude id="contact-vcode">
+        </div>
         <input type="submit" name="submit" id="indfbtn" class="submbtn" value="提交询价">
     </form>
     <script type="text/javascript" src="page_files/serform.js"></script>

@@ -58,6 +58,9 @@ function initCommentComponent() {
             type: "post",
             success: function (data) {
                 if (data.state == "ok") {
+                    $('#contact-pid').val("");
+                    $('#contact-captcha').val("");
+                    $('#contact-vcode').click();
 
                     alert('提交成功');
                     location.reload();
@@ -66,6 +69,13 @@ function initCommentComponent() {
                 //评论失败
                 else {
                     alert('提交失败：' + data.message);
+
+                    //验证码错误
+                    if (data.errorCode == 2){
+                        $('#contact-vcode').click();
+                        $('#contact-captcha').val("");
+                        $('#contact-captcha').focus();
+                    }
                 }
             },
             error: function () {

@@ -1764,7 +1764,8 @@ a:hover{
 }
 
 .left-aform .submbtn{
-	width: 100%;
+	/*width: 100%;*/
+	width: 30%;
 	outline: none;
 	border: none;
 	background-color: #f7bb47;

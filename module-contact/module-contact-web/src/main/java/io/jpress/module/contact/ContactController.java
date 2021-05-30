@@ -48,6 +48,11 @@ public class ContactController extends TemplateControllerBase {
         String area = getPara("area");
         String service = getPara("service");
 
+        if (validateCaptcha("captcha") == false) {
+            renderJson(Ret.fail().set("message", "验证码错误").set("errorCode", 2));
+            return;
+        }
+
         if (StrUtil.isBlank(name)) {
             renderJson(Ret.fail().set("message", "用户名不能为空"));
             return;

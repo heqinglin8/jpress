@@ -6,6 +6,10 @@
 <script src="/static/commons/article.js"></script>
 #end
 
+#define css()
+<link href="/static/commons/article.css" rel="stylesheet">
+#end
+
 #define content()
  
 <!-- banner -->
@@ -56,6 +60,11 @@
                 <option value="其他问题">其他问题</option>
             </select>请选择
         </label>
+        <div class="contact-vcode">
+            <input placeholder="请输入验证码" name="captcha" id="contact-captcha">
+            <img class="vcode-img" src="#(CPATH)/commons/captcha"
+                 onclick="this.src='#(CPATH)/commons/captcha?d='+Math.random();" cdn-exclude id="contact-vcode">
+        </div>
         <input type="submit" name="submit" id="indfbtn" class="submbtn" value="提交询价">
     </form>
     <script type="text/javascript" src="images/serform.js"></script>
