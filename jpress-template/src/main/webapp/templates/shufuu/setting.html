@@ -70,10 +70,8 @@
 
 
                             <h4 class="page-header">广告位</h4>
-
-
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">右边栏广告位</label>
+                                <label class="col-sm-2 control-label">左边栏广告位</label>
                                 <div class="col-sm-6">
                                     <button type="button"
                                             for-src="calmlog_ad"
@@ -88,7 +86,22 @@
                                            value="#option('calmlog_ad')">
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">二级栏目广告位</label>
+                                <div class="col-sm-6">
+                                    <button type="button"
+                                            for-src="shufuu_category_ad"
+                                            for-input="shufuu_category_ad_input"
+                                            class="btn-image-browser btn btn-flat btn-default btn-xs">
+                                        <i class="fa fa-fw fa-image"></i> 选择图片
+                                    </button>
+                                    <br/>
+                                    <img src="#(CPATH)#option('shufuu_category_ad','/static/commons/img/nothumbnail.jpg')"
+                                         id="shufuu_category_ad">
+                                    <input type="hidden" id="shufuu_category_ad_input" name="shufuu_category_ad"
+                                           value="#option('shufuu_category_ad')">
+                                </div>
+                            </div>
 
                             <h4 class="page-header">幻灯片设置</h4>
 
@@ -103,7 +116,7 @@
                                 </div>
                             </div>
 
-                            <h4 class="page-header">友情链接设置</h4>
+                            <h4 class="page-header">友链设置</h4>
 
 
                             <div class="form-group">
@@ -115,7 +128,6 @@
                                     <p class="help-block"> 一行一条数据。 </p>
                                 </div>
                             </div>
-
 
 
                         </div>
