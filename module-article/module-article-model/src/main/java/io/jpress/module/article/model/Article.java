@@ -15,12 +15,11 @@
  */
 package io.jpress.module.article.model;
 
-import com.jfinal.core.JFinal;
 import io.jboot.db.annotation.Table;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.JbootControllerContext;
 import io.jpress.JPressConsts;
-import io.jpress.JPressOptions;
+import io.jpress.commons.url.JPressUrlUtil;
 import io.jpress.commons.utils.CommonsUtils;
 import io.jpress.commons.utils.JsoupUtils;
 import io.jpress.commons.utils.MarkdownUtils;
@@ -73,22 +72,25 @@ public class Article extends BaseArticle<Article> {
         return currentArticle.getId().equals(getId());
     }
 
+    /**
+     * 保证模板可以通过 model.isActive 属性进行高亮判断，而非 model.isActive()
+     * @return
+     */
+    public boolean getIsActive(){
+        return isActive();
+    }
+
     public String getUrl() {
         String link = getLinkTo();
         if (StrUtil.isNotBlank(link)) {
             return link;
         }
-
-        if (StrUtil.isBlank(getSlug())) {
-            return JFinal.me().getContextPath() + "/article/" + getId() + JPressOptions.getAppUrlSuffix();
-        } else {
-            return JFinal.me().getContextPath() + "/article/" + getSlug() + JPressOptions.getAppUrlSuffix();
-        }
+        return JPressUrlUtil.getUrl("/article/", StrUtil.isNotBlank(getSlug()) ? getSlug() : getId());
     }
 
     public boolean isCommentEnable() {
         Boolean cs = getCommentStatus();
-        return cs != null && cs == true;
+        return cs != null && cs;
     }
 
     public String getText() {
@@ -110,10 +112,9 @@ public class Article extends BaseArticle<Article> {
         return JPressConsts.EDIT_MODE_MARKDOWN.equals(getEditMode());
     }
 
-    public String getOrignalContent(){
+    public String getOrignalContent() {
         return super.getContent();
     }
-
 
 
     /**

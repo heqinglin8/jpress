@@ -66,8 +66,9 @@ public class _TemplateController extends AdminControllerBase {
     @Inject
     private OptionService optionService;
 
+
     @AdminMenu(text = "所有模板", groupId = JPressConsts.SYSTEM_MENU_TEMPLATE, order = 0)
-    public void index() {
+    public void list() {
 
         String title = getPara("title");
         List<Template> templates = TemplateManager.me().getInstalledTemplates();
@@ -88,6 +89,13 @@ public class _TemplateController extends AdminControllerBase {
         setAttr("templateCount", templates == null ? 0 : templates.size());
 
         render("template/list.html");
+    }
+
+    public void doTriggerTemplateEnable(){
+        Boolean trigger = !JPressOptions.isTemplatePreviewEnable();
+        optionService.saveOrUpdate(JPressConsts.OPTION_WEB_TEMPLATE_PREVIEW_ENABLE, trigger.toString());
+        JPressOptions.set(JPressConsts.OPTION_WEB_TEMPLATE_PREVIEW_ENABLE, trigger.toString());
+        renderOkJson();
     }
 
 
@@ -208,7 +216,7 @@ public class _TemplateController extends AdminControllerBase {
         }
         setAttr("template", template);
 
-        String view = template.matchView("setting.html", false);
+        String view = template.matchView("setting_v4.html", false);
         if (view == null) {
             render("template/setting.html");
             return;
@@ -249,7 +257,7 @@ public class _TemplateController extends AdminControllerBase {
                 || JPressCoreFunctions.isImage(file.getName())
                 || file.isDirectory());
 
-        List srcFiles = new ArrayList<String>();
+        List<String > srcFiles = new ArrayList<>();
         for (File file : files) {
             if (!file.isDirectory()) {
                 srcFiles.add(file.getName());
@@ -299,27 +307,27 @@ public class _TemplateController extends AdminControllerBase {
             fileInfoList.add(new FileInfo(file));
         }
 
-        fileInfoList.sort((o1, o2) -> {
-            if (o1.isDir() && o2.isDir()) {
-                return o1.getName().compareTo(o2.getName());
+        fileInfoList.sort((file1, file2) -> {
+            if (file1.isDir() && file2.isDir()) {
+                return file1.getName().compareTo(file2.getName());
             }
 
-            if (o1.isDir() && !o2.isDir()) {
+            if (file1.isDir() && !file2.isDir()) {
                 return -1;
             }
-            if (!o1.isDir() && o2.isDir()) {
+            if (!file1.isDir() && file2.isDir()) {
                 return 1;
             }
 
-            if (o2.getName().equals("index.html")) {
+            if ("index.html".equals(file2.getName())) {
                 return 1;
             }
 
-            if (!o2.getName().endsWith(".html")) {
+            if (!file2.getName().endsWith(".html")) {
                 return -1;
             }
 
-            return o1.getName().compareTo(o2.getName());
+            return file1.getName().compareTo(file2.getName());
         });
 
         return fileInfoList;
@@ -341,7 +349,7 @@ public class _TemplateController extends AdminControllerBase {
         String fileName = getPara("f");
 
         //防止浏览非模板目录之外的其他目录
-        render404If(dirName != null && dirName.contains(".."));
+        render404If(dirName == null || dirName.contains(".."));
         render404If(fileName.contains("/") || fileName.contains(".."));
 
 
@@ -446,7 +454,7 @@ public class _TemplateController extends AdminControllerBase {
         String dirName = getPara("d").trim();
 
         //防止浏览非模板目录之外的其他目录
-        render404If(dirName != null && dirName.contains(".."));
+        render404If(dirName.contains(".."));
         render404If(fileName.contains("/") || fileName.contains(".."));
 
         Template template = TemplateManager.me().getCurrentTemplate();
@@ -476,14 +484,14 @@ public class _TemplateController extends AdminControllerBase {
         String path = getPara("path");
 
         //防止删除非模板目录之外的其他目录文件
-        render404If(path != null && path.contains(".."));
+        render404If(path == null || path.contains(".."));
 
         Template template = TemplateManager.me().getCurrentTemplate();
         render404If(template == null);
 
         File delFile = new File(template.getAbsolutePathFile(), path);
         String delFileName = delFile.getName();
-        if (delFile.isDirectory() || delFile.delete() == false) {
+        if (delFile.isDirectory() || !delFile.delete()) {
             renderFailJson();
         } else {
             if (delFileName.toLowerCase().endsWith(".html")) {
