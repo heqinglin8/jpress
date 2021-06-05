@@ -1,8 +1,8 @@
-package io.jpress.module.contact.service;
+package io.jpress.service;
 
 import com.jfinal.plugin.activerecord.Page;
-import io.jpress.module.contact.model.Contact;
 import io.jboot.db.model.Columns;
+import io.jpress.model.Contact;
 
 import java.util.List;
 
@@ -174,5 +174,7 @@ public interface ContactService  {
      */
     public Page<Contact> paginateByColumns(int page, int pageSize, Columns columns, String orderBy);
 
+
+    public boolean doChangeStatus(long id, int status);
 
 }

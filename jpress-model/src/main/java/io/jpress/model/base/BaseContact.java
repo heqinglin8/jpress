@@ -1,4 +1,4 @@
-package io.jpress.module.contact.model.base;
+package io.jpress.model.base;
 
 import io.jboot.db.model.JbootModel;
 import com.jfinal.plugin.activerecord.IBean;

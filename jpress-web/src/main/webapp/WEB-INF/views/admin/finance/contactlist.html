@@ -1,0 +1,135 @@
+#@layout()
+#define script()
+<script>
+
+    function doContacted(id) {
+        ajaxGet("#(CPATH)/admin/finance/doContacted/" + id);
+    }
+
+
+    function dotTrash(id) {
+        ajaxGet("#(CPATH)/admin/finance/doTrash/" + id);
+    }
+
+</script>
+
+#end
+
+#define content()
+<div class="content-wrapper">
+
+    <section class="content-header">
+        <h1>
+            咨询记录
+            <small>Contact List</small>
+        </h1>
+    </section>
+
+    <section class="content-header text-tap">
+        <a href="#(CPATH)/admin/finance/contactlist">全部 (#(totalCount ?? 0))</a> |
+        <a href="?status=1">未处理 (#(undealCount ?? 0))</a> |
+        <a href="?status=2">已联系 (#(contactedCount ?? 0))</a> |
+        <a href="?status=3" style="color: #a00">已废弃 (#(abandonedCount ?? 0))</a>
+    </section>
+
+    <section class="content">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <form class="form-horizontal actionPanel" action="#(CPATH)/admin/finance/contactlist" method="get">
+                            <input type="hidden" name="status" value="#para('status')">
+                            <div class="row">
+                                <div class="form-group col-lg-4">
+                                    <label class="col-sm-4 control-label">咨询服务</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="se" value="#para('se')">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <label class="col-sm-4 control-label">城 市</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="ct" value="#para('ct')">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-4">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary ">查询</button>
+                                        <button type="reset" class="btn btn-default">重置</button>
+                                        <a class="btn"> 更多<i class="fa fa-fw fa-angle-down"></i> </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                        </form>
+
+
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body ">
+
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+
+                                <th style="width: 150px">姓名</th>
+                                <th style="width: 50px">电话</th>
+                                <th style="width: 150px">咨询服务</th>
+                                <th>地址</th>
+                                <th>提交时间</th>
+                                <th style="width: 150px">支付状态</th>
+                                <th style="width: 80px">操作</th>
+                            </tr>
+
+                            #for(contact : page.list ??)
+                            <tr class="jp-actiontr">
+                                <td>
+                                    #(contact.name ??)
+                                </td>
+                                <td>
+                                    #(contact.mobile ??)
+                                </td>
+                                <td>
+                                    #(contact.service ??)
+                                </td>
+                                <td>
+                                    #(contact.city ??)/#(contact.area ??)
+                                </td>
+                                <td>
+                                    #(contact.created ??)
+                                </td>
+                                <td>
+                                    #(contact.statusText ??)
+                                </td>
+                                <td>
+                                    #if(contact.isContactUnDeal())
+                                    <a href="javascript:;" onclick="doContacted('#(contact.id)')">联系</a>
+                                    <a href="javascript:;" onclick="dotTrash('#(contact.id)')">废弃</a>
+                                    #end
+
+                                </td>
+                            </tr>
+                            #end
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                #@_paginate()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+
+    </section>
+
+
+</div>
+#end

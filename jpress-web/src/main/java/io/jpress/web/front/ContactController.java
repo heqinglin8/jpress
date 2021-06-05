@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.jpress.module.contact;
+package io.jpress.web.front;
 
 import com.jfinal.aop.Inject;
 import com.jfinal.kit.Ret;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
-import io.jpress.module.contact.model.Contact;
-import io.jpress.module.contact.service.ContactService;
+import io.jpress.model.Contact;
+import io.jpress.service.ContactService;
 import io.jpress.web.base.TemplateControllerBase;
 
 import java.util.Date;

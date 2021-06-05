@@ -24,7 +24,9 @@ import io.jboot.web.controller.annotation.RequestMapping;
 import io.jboot.web.validate.EmptyValidate;
 import io.jboot.web.validate.Form;
 import io.jpress.JPressConsts;
+import io.jpress.commons.pay.ContactStatus;
 import io.jpress.core.menu.annotation.AdminMenu;
+import io.jpress.model.Contact;
 import io.jpress.model.PaymentRecord;
 import io.jpress.model.UserAmountPayout;
 import io.jpress.model.UserAmountStatement;
@@ -50,6 +52,9 @@ public class _FinanceController extends AdminControllerBase {
 
     @Inject
     private PaymentRecordService paymentService;
+
+    @Inject
+    private ContactService contactService;
 
     @Inject
     private UserOrderItemService orderItemService;
@@ -260,6 +265,38 @@ public class _FinanceController extends AdminControllerBase {
     public void setting_notify() {
         setAttr("querierNames", ExpressQuerierFactory.getQuerierNames());
         render("finance/setting_notify.html");
+    }
+
+    @AdminMenu(text = "咨询记录", groupId = JPressConsts.SYSTEM_MENU_ORDER, order = 30)
+    public void contactlist() {
+        Columns columns = Columns.create();
+        columns.likeAppendPercent("service", getPara("se"));
+        columns.likeAppendPercent("city", getPara("ct"));
+        columns.eq("status", getPara("status"));
+
+        Page<Contact> page = contactService.paginateByColumns(getPagePara(), 20, columns);
+        setAttr("page", page);
+
+        long undealCount = contactService.findCountByColumns(Columns.create("status", ContactStatus.UNDEAL.getStatus()));
+        long contactedCount = contactService.findCountByColumns(Columns.create("status", ContactStatus.CONTACTED.getStatus()));
+        long abandonedCount = contactService.findCountByColumns(Columns.create("status", ContactStatus.ABANDONED.getStatus()));
+
+        setAttr("undealCount", undealCount);
+        setAttr("contactedCount", contactedCount);
+        setAttr("abandonedCount", abandonedCount);
+        setAttr("totalCount", undealCount + contactedCount + abandonedCount);
+
+        render("finance/contactlist.html");
+    }
+
+    public void doContacted() {
+        Long id = getIdPara();
+        render(contactService.doChangeStatus(id, ContactStatus.CONTACTED.getStatus()) ? OK : FAIL);
+    }
+
+    public void doTrash() {
+        Long id = getIdPara();
+        render(contactService.doChangeStatus(id, ContactStatus.ABANDONED.getStatus()) ? OK : FAIL);
     }
 
 
