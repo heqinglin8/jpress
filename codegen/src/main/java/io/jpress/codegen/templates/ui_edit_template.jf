@@ -29,7 +29,6 @@
 ]]#
 
 #('#')define content()
-<div class="content-wrapper">
 
     <section class="content-header">
         <h1>
@@ -46,7 +45,7 @@
                     <div class="box-header ">
                         <h3 class="box-title"></h3>
                     </div>
-                    <form class="form-horizontal form-setting" autocomplete="off"
+                    <form class=" form-setting" autocomplete="off"
                           action="#(CPATH)/admin/#(moduleName)/#(tableMeta.name)/doSave"
                           method="POST" id="form">
 
@@ -58,7 +57,7 @@
 	                                <input type="hidden" id="entryId" name="#(modelAttrName)" value="#('#(')#(modelAttrName) ??)">
 	                             #else
 		                            <div class="form-group">
-		                                <label class="col-sm-2 control-label">#(cm.remarks?? "列名称")</label>
+		                                <label class="col-sm-2 col-form-label">#(cm.remarks?? "列名称")</label>
 		                                <div class="col-sm-6">
 
 		                                #if("java.util.Date"==cm.javaType)
@@ -79,7 +78,7 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
-                            <div class="col-sm-offset-2 col-sm-10 submit-block">
+                            <div class="offset-sm-2 col-sm-10 submit-block">
                                 <div class="box-submit">
                                     <button id="submit" type="button" class="btn btn-primary">提交</button>
                                 </div>
@@ -93,5 +92,4 @@
 
     </section>
 
-</div>
 #('#')end

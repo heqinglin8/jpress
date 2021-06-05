@@ -66,6 +66,15 @@ public class PageController extends TemplateControllerBase {
                 ? pageService.findById(slugOrId)
                 : pageService.findFirstBySlug(slugOrId);
 
+        // page 评论分页
+        if (page == null && !StrUtil.isNumeric(slugOrId) && slugOrId.contains("-")) {
+            int indexOf = slugOrId.lastIndexOf('-');
+            if (StrUtil.isNumeric(slugOrId.substring(indexOf + 1))) {
+                page = pageService.findFirstBySlug(slugOrId.substring(0, indexOf));
+            }
+        }
+        
+
         if (page == null || !page.isNormal()) {
             renderTemplateView(slugOrId, target);
         } else {
@@ -229,6 +238,7 @@ public class PageController extends TemplateControllerBase {
         paras.put("page", page);
         if (user != null) {
             paras.put("user", user.keepSafe());
+            comment.put("user", user.keepSafe());
         }
 
         renderHtmltoRet("/WEB-INF/views/commons/page/defaultPageCommentItem.html", paras, ret);

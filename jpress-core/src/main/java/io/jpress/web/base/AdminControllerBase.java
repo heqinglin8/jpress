@@ -43,20 +43,12 @@ public abstract class AdminControllerBase extends ControllerBase {
         renderJson(ret);
     }
 
-    /**
-     * 获得当前页面的页码
-     *
-     * @return
-     */
-    @NotAction
-    public int getPagePara() {
-        return getParaToInt("page", 1);
-    }
 
 
-    protected boolean validateSlug(Model model) {
-        String slug = (String) model.get("slug");
-        return slug == null ? true : !slug.contains("-") && !StrUtil.isNumeric(slug);
+
+    protected boolean validateSlug(Model<?> model) {
+        String slug = model.get("slug");
+        return slug == null || !slug.contains("-") && !StrUtil.isNumeric(slug);
     }
 
 
@@ -72,6 +64,7 @@ public abstract class AdminControllerBase extends ControllerBase {
     }
 
     @Override
+    @NotAction
     public void renderError(int errorCode) {
         if (errorCode == 404) {
             renderError(errorCode, "/WEB-INF/views/admin/error/404.html");

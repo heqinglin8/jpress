@@ -20,6 +20,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.template.Engine;
 import io.jboot.core.listener.JbootAppListenerBase;
 import io.jboot.db.model.Columns;
+import io.jpress.commons.url.FlatUrlHandler;
 import io.jpress.core.menu.MenuGroup;
 import io.jpress.core.module.ModuleListener;
 import io.jpress.module.article.model.Article;
@@ -63,11 +64,12 @@ public class ArticleModuleInitializer extends JbootAppListenerBase implements Mo
         MenuGroup menuGroup = new MenuGroup();
         menuGroup.setId("article");
         menuGroup.setText("文章");
-        menuGroup.setIcon("<i class=\"fa fa-fw fa-file-text\"></i>");
+        menuGroup.setIcon("<i class=\"fas fa-edit\"></i>");
         menuGroup.setOrder(1);
 
         adminMenus.add(menuGroup);
     }
+
 
     @Override
     public void onConfigUcenterMenu(List<MenuGroup> ucenterMenus) {
@@ -75,7 +77,7 @@ public class ArticleModuleInitializer extends JbootAppListenerBase implements Mo
         MenuGroup articleMenuGroup = new MenuGroup();
         articleMenuGroup.setId("article");
         articleMenuGroup.setText("我的文章");
-        articleMenuGroup.setIcon("<i class=\"fa fa-fw fa-file-text\"></i>");
+        articleMenuGroup.setIcon("<i class=\"fas fa-edit\"></i>");
         articleMenuGroup.setOrder(1);
         ucenterMenus.add(articleMenuGroup);
 
@@ -89,5 +91,6 @@ public class ArticleModuleInitializer extends JbootAppListenerBase implements Mo
     @Override
     public void onStart() {
         ArticleSitemapManager.me().init();
+        FlatUrlHandler.addProcesser(new ArticleFlatUrlProcesser());
     }
 }
