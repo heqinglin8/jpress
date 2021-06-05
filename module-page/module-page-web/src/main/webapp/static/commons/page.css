@@ -179,32 +179,3 @@
 .comment-secondary-panel > .comment-item-content > .comment-item-content-main{
     border-bottom: none;
 }
-
-.contact-vcode {
-    float: left;
-    font-size: 1rem;
-    margin-top: 0.2rem;
-    width: 70%;
-}
-
-.contact-vcode .vcode-img {
-    height: 2.3rem;
-    margin-top: -3px;
-    cursor: pointer;
-    width: 34%
-}
-
-.contact-vcode input {
-    padding: 0 0.5rem;
-    height: 2.6rem;
-    border: solid 1px #f5f5f5;
-    border-radius: 0.22rem;
-    background-color: #f5f5f5;
-    outline: none;
-    width: 60%;
-}
-
-.contact-vcode input:focus {
-    background-color: #f5f5f5bb;
-    border: solid 1px #ddd;
-}
