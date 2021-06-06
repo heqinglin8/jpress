@@ -49,7 +49,7 @@ public class ContactController extends TemplateControllerBase {
         String service = getPara("service");
 
         if (validateCaptcha("captcha") == false) {
-            renderJson(Ret.fail().set("message", "验证码错误").set("errorCode", 2));
+            renderJson(Ret.fail().set("message", "验证码错误,请重新输入").set("errorCode", 2));
             return;
         }
 
@@ -63,7 +63,7 @@ public class ContactController extends TemplateControllerBase {
             return;
         }
 
-        if (StrUtil.isMobileNumber(phone) == false) {
+        if (!StrUtil.isMobileNumber(phone)) {
             renderJson(Ret.fail().set("message", "你输入的手机号码不正确"));
             return;
         }
