@@ -19,6 +19,7 @@ import com.jfinal.aop.Inject;
 import com.jfinal.kit.Ret;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
+import io.jpress.commons.pay.ContactStatus;
 import io.jpress.model.Contact;
 import io.jpress.service.ContactService;
 import io.jpress.web.base.TemplateControllerBase;
@@ -86,6 +87,7 @@ public class ContactController extends TemplateControllerBase {
         contact.setCity(city);
         contact.setArea(area);
         contact.setService(service);
+        contact.setStatus(ContactStatus.UNDEAL.getStatus());
         contact.setCreated(new Date());
 
 
