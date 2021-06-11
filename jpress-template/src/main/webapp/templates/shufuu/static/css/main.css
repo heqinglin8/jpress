@@ -2,9 +2,9 @@ body {
 	/*background: #f0f5f7;*/
 }
 
-h1,h2,h3,h4,h5,h6 {
-	color: #3a3c41;
-}
+/*h1,h2,h3,h4,h5,h6 {*/
+	/*color: #3a3c41;*/
+/*}*/
 
 h1 span,h2 span,h3 span,h4 span,h5 span,h6 span {
 	font-weight: 700;
