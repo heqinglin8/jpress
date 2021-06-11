@@ -15,12 +15,12 @@
   <title>#(SEO_TITLE ?? (WEB_TITLE + '-' + WEB_SUBTITLE))</title>
   <meta name="keywords" content="#(SEO_KEYWORDS ??)">
   <meta name="description" content="#(SEO_DESCRIPTION ??)">
+  <link href="#(CPATH)/static/commons/img/icon.png" type="image/x-icon" rel="shortcut icon">
   <link rel="stylesheet" href="static/css/animations.css" type="text/css" media="all">
   <link rel="stylesheet" href="static/css/bootstrap.css" type="text/css" media="all">
   <link rel="stylesheet" href="static/css/main.css" type="text/css" media="all">
   <link rel="stylesheet" href="static/css/tk.css" type="text/css" media="all">
   <link rel="stylesheet" href="static/css/home.css" type="text/css" media="all">
-  <link href="#(CPATH)/static/commons/img/icon.png" type="image/x-icon" rel="shortcut icon">
   <!--五大优势轮播-->
   <link rel="stylesheet" href="static/css/swiper.css">
   #@css?()
@@ -273,7 +273,7 @@
 
               </div>
 
-              <div class="welcome">您好！欢迎来到“舒服智家”品牌官网 ！TEL:17773562773</div>
+              <div class="welcome">您好！欢迎来到“#(WEB_NAME ?? '公司')”品牌官网 ！TEL:17773562773</div>
             </div>
           </div>
         </div>
@@ -335,7 +335,7 @@
         <h1 data-scroll-reveal="enter left over 1s and move 100px after 0.1s" data-scroll-reveal-id="1"
           style="-webkit-transform: translatex(0);transform: translatex(0);opacity: 1;-webkit-transition: -webkit-transform 1s ease-in-out 0.1s,  opacity 1s ease-in-out 0.1s;transition: transform 1s ease-in-out 0.1s, opacity 1s ease-in-out 0.1s;-webkit-perspective: 1000;-webkit-backface-visibility: hidden;"
           data-scroll-reveal-initialized="true">
-          <a href="#(WEB_DOMAIN ??)" ><img src="#option('calmlog_logo','img/logo.png')" title="舒服智家"></a>
+          <a href="#(WEB_DOMAIN ??)" ><img src="#option('calmlog_logo','img/logo.png')" title="#(WEB_NAME ??)"></a>
         </h1>
       </div>
 
