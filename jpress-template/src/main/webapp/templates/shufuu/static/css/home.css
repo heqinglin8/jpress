@@ -1,33 +1,5 @@
 ﻿@charset "utf8";
 
-/***************************   new add ---- index   ***************************/
-/*nav*/
-/*.mean-bar .fa-times{
-	background: url(../images/icon_close.png) no-repeat center;
-	background-size: contain;
-	display: block;
-	height: 100%;
-}
-
-
-@media (min-width: 1025px){
-	.main-menu{display: block !important;}
-	.mean-container{display: none !important;}
-}
-
-@media (max-width: 1024px){
-	.header-logo{
-		display: none;
-	}
-	#header{
-		background-color: #fff;
-		padding: 12px 0;
-	}
-	#header .m-logo {
-	    display: block;
-	}
-
-}*/
 
 .index-title{
 	text-align: center; 

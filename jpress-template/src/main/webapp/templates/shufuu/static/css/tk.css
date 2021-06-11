@@ -34,18 +34,6 @@ b, strong {
 	max-height: 55px;
 	margin-top: 0;
 }
-nav.main-menu {
-	/*margin-top: 8px;*/
-}
-nav.main-menu ul > li > a {
-	font-size: 15px;
-	/*padding: 8px 13px;*/
-	color: #fff;
-}
-nav.main-menu ul > li ul li a {
-	font-size: 13px;
-	padding: 8px 10px;
-}
 #index-slider .slider-item {
 	background-size: cover;
 	background-position: center center;
@@ -1380,29 +1368,7 @@ h2.post-title {
 }
 }
 
-/* responsive */
-@media (min-width:1410px) {
-.container {
-	max-width: 1170px;
-	width: 1170px;
-}
-}
-@media (min-width:1570px) {
-.container {
-	max-width: 1170px;
-	width: 1170px;
-}
-/*#menu-main-menu .Lev1{margin:0 8px;}
-	#main-footer .f-about, #main-footer .f-about p{line-height:1.8;}*/
-}
 @media (min-width:1890px) {
-.container {
-	max-width: 1370px;
-	width: 1370px;
-}
-#menu-main-menu .Lev1 {
-	/*margin: 0 10px;*/
-}
 .iwhy-text {
 	padding-top: 20px;
 }
@@ -1411,15 +1377,12 @@ h2.post-title {
 	line-height: 1.8;
 }
 }
- @media (max-width : 1024px) {
+ @media (max-width : 992px) {
 body {
 	word-break: break-all;
 	word-wrap: break-word
 }
-.container {
-	max-width: 98%;
-	width: 98%;
-}
+
 #header .logo {
 	float: left;
 	width: auto;
@@ -1432,19 +1395,7 @@ body {
 	width: auto;
 	float: right;
 }
-.mean-container .mean-nav {
-	position: absolute;
-}
-.mean-container .mean-bar {
-	padding: 0;
-}
-.mean-container .mean-bar a.meanmenu-reveal {
-	padding: 8px 10px;
-	top: -45px;
-}
-.mean-container .mean-bar .mean-nav {
-	margin-top: 12px;
-}
+
 #index-slider .slider-item, #index-slider .slider-item .slider-link {
 	min-height: 400px;
 }
@@ -1472,10 +1423,6 @@ body {
 }
 }
 @media (max-width : 990px) { /* 960 */
-.container {
-	max-width: 99%;
-	width: 99%;
-}
 #index-slider .slider-item, #index-slider .slider-item .slider-link {
 	min-height: 380px;
 }
@@ -1511,15 +1458,12 @@ margin-bottom:0;
 	font-size: 1.6em;
 	margin-bottom: 18px;
 }
-.mean-container .mean-bar {
-	min-height: 0;
-}
 }
 
 @media (max-width : 540px) { /* 向下考虑iphone的540px */
-	.p1-search-1-inp {
-		display: none;
-	}
+	/*.p1-search-1-inp {*/
+		/*display: none;*/
+	/*}*/
 }
 
 @media (max-width : 480px) {
