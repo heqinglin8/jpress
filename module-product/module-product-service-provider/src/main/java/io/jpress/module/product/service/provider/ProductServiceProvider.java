@@ -22,7 +22,7 @@ import io.jpress.module.product.service.ProductService;
 import io.jpress.module.product.service.provider.search.ProductSearcherFactory;
 import io.jpress.module.product.service.provider.task.ProductCommentsCountUpdateTask;
 import io.jpress.module.product.service.provider.task.ProductViewsCountUpdateTask;
-import io.jpress.module.product.service.search.ProductSearcher;
+import io.jpress.module.example.service.search.ProductSearcher;
 import io.jpress.service.UserService;
 import io.jpress.web.seoping.SeoManager;
 

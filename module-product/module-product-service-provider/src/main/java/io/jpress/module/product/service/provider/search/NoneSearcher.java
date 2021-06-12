@@ -17,7 +17,7 @@ package io.jpress.module.product.service.provider.search;
 
 import com.jfinal.plugin.activerecord.Page;
 import io.jpress.module.product.model.Product;
-import io.jpress.module.product.service.search.ProductSearcher;
+import io.jpress.module.example.service.search.ProductSearcher;
 
 public class NoneSearcher implements ProductSearcher {
 

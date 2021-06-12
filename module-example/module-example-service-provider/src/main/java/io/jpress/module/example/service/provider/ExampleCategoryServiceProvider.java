@@ -1,0 +1,167 @@
+package io.jpress.module.example.service.provider;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+import io.jboot.aop.annotation.Bean;
+import io.jboot.components.cache.AopCache;
+import io.jboot.components.cache.CacheTime;
+import io.jboot.components.cache.annotation.CacheEvict;
+import io.jboot.components.cache.annotation.Cacheable;
+import io.jboot.components.cache.annotation.CachesEvict;
+import io.jboot.db.model.Column;
+import io.jboot.db.model.Columns;
+import io.jboot.utils.StrUtil;
+import io.jpress.module.example.service.ExampleCategoryService;
+import io.jpress.module.example.model.ExampleCategory;
+import io.jboot.service.JbootServiceBase;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+@Bean
+public class ExampleCategoryServiceProvider extends JbootServiceBase<ExampleCategory> implements ExampleCategoryService {
+
+    @Override
+    @Cacheable(name = "exampleCategory", key = "type:#(type)", returnCopyEnable = true)
+    public List<ExampleCategory> findListByType(String type) {
+        return DAO.findListByColumns(Columns.create("type", type), "order_number asc,id desc");
+    }
+
+    @Override
+    @Cacheable(name = "exampleCategory")
+    public List<ExampleCategory> findListByType(String type, String orderBy, Integer count) {
+        return DAO.findListByColumns(Columns.create("type", type), StrUtil.isNotBlank(orderBy) ? orderBy : "id desc", count);
+    }
+
+    @Override
+    public void doUpdateProductCount(long categoryId) {
+        long productCount = Db.queryLong("select count(*) from example_category_mapping where category_id = ? ", categoryId);
+        ExampleCategory category = findById(categoryId);
+        if (category != null) {
+            category.setCount(productCount);
+            update(category);
+        }
+    }
+
+    /**
+     * @param productId
+     * @return
+     */
+    @Override
+    @Cacheable(name = "example-category", key = "#(exampleId)", liveSeconds = 2 * CacheTime.HOUR, nullCacheEnable = true)
+    public List<ExampleCategory> findListByProductId(long productId) {
+        List<Record> mappings = Db.find("select * from example_category_mapping where example_id = ?", productId);
+        if (mappings == null || mappings.isEmpty()) {
+            return null;
+        }
+
+        return mappings
+                .stream()
+                .map(record -> DAO.findById(record.get("category_id")))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ExampleCategory> findListByProductId(long productId, String type) {
+        List<ExampleCategory> categoryList = findListByProductId(productId);
+        if (categoryList == null || categoryList.isEmpty()) {
+            return null;
+        }
+        return categoryList
+                .stream()
+                .filter(category -> type.equals(category.getType()))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<ExampleCategory> findTagListByProductId(long productId) {
+        return findListByProductId(productId, ExampleCategory.TYPE_TAG);
+    }
+
+    @Override
+    public Long[] findCategoryIdsByProductId(long productId) {
+        List<Record> records = Db.find("select * from product_category_mapping where product_id = ?", productId);
+        if (records == null || records.isEmpty()) {
+            return null;
+        }
+
+        return ArrayUtils.toObject(records.stream().mapToLong(record -> record.get("category_id")).toArray());
+    }
+
+    @Override
+    public List<ExampleCategory> findOrCreateByTagString(String[] tags) {
+        if (tags == null || tags.length == 0) {
+            return null;
+        }
+
+        List<ExampleCategory> productCategories = new ArrayList<>();
+
+        boolean needClearCache = false;
+
+        for (String tag : tags) {
+
+            if (StrUtil.isBlank(tag)) {
+                continue;
+            }
+
+            //slug不能包含字符串点 " . "，否则url不能被访问
+            String slug = tag.contains(".")
+                    ? tag.replace(".", "_")
+                    : tag;
+
+            Columns columns = Columns.create("type", ExampleCategory.TYPE_TAG);
+            columns.add(Column.create("slug", slug));
+
+            ExampleCategory productCategory = DAO.findFirstByColumns(columns);
+
+            if (productCategory == null) {
+                productCategory = new ExampleCategory();
+                productCategory.setTitle(tag);
+                productCategory.setSlug(slug);
+                productCategory.setType(ExampleCategory.TYPE_TAG);
+                productCategory.save();
+                needClearCache = true;
+            }
+
+            productCategories.add(productCategory);
+        }
+
+        if (needClearCache) {
+            AopCache.removeAll("exampleCategory");
+        }
+
+        return productCategories;
+    }
+
+    @Override
+    public ExampleCategory findFirstByTypeAndSlug(String type, String slug) {
+        return DAO.findFirstByColumns(Columns.create("type", type).eq("slug", slug));
+    }
+
+    @Override
+    public List<ExampleCategory> findCategoryListByProductId(long productId) {
+        return findListByProductId(productId, ExampleCategory.TYPE_CATEGORY);
+    }
+
+    @Override
+    public Page<ExampleCategory> paginateByType(int page, int pagesize, String type) {
+        return DAO.paginateByColumn(page, pagesize, Column.create("type", type), "order_number asc,id desc");
+    }
+
+    @Override
+    @CachesEvict({
+            @CacheEvict(name = "exampleCategory", key = "*"),
+            @CacheEvict(name = "example-category", key = "*"),
+    })
+    public void shouldUpdateCache(int action, Model model, Object id) {
+        super.shouldUpdateCache(action, model, id);
+    }
+
+}
