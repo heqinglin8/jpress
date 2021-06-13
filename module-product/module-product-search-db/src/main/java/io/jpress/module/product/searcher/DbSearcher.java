@@ -13,32 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.jpress.module.example.service.provider.search;
+package io.jpress.module.product.searcher;
 
+import com.jfinal.aop.Inject;
 import com.jfinal.plugin.activerecord.Page;
-import io.jpress.module.example.model.Example;
-import io.jpress.module.product.service.search.ExampleSearcher;
+import io.jpress.module.product.model.Product;
+import io.jpress.module.product.service.ProductService;
+import io.jpress.module.product.service.search.ProductSearcher;
 
-public class NoneSearcher implements ExampleSearcher {
 
+public class DbSearcher implements ProductSearcher {
+
+
+    @Inject
+    private ProductService productService;
 
     @Override
-    public void addExample(Example example) {
-
+    public void addProduct(Product article) {
+        // do noting
     }
 
     @Override
-    public void deleteExample(Object id) {
-
+    public void deleteProduct(Object id) {
+        // do noting
     }
 
     @Override
-    public void updateExample(Example example) {
-
+    public void updateProduct(Product article) {
+        // do noting
     }
 
     @Override
-    public Page<Example> search(String keyword, int pageNum, int pageSize) {
-        return null;
+    public Page<Product> search(String keyword, int pageNum, int pageSize) {
+        return productService.searchIndb(keyword, pageNum, pageSize);
     }
 }

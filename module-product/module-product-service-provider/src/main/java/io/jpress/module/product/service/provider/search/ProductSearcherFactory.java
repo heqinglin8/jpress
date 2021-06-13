@@ -20,11 +20,11 @@ import com.jfinal.aop.Aop;
 import io.jboot.core.spi.JbootSpiLoader;
 import io.jboot.utils.StrUtil;
 import io.jpress.JPressOptions;
-import io.jpress.module.example.search.AliyunOpenSearcher;
-import io.jpress.module.example.search.ElasticSearcher;
-import io.jpress.module.example.searcher.DbSearcher;
-import io.jpress.module.example.searcher.LuceneSearcher;
-import io.jpress.module.example.service.search.ProductSearcher;
+import io.jpress.module.product.search.AliyunOpenSearcher;
+import io.jpress.module.product.search.ElasticSearcher;
+import io.jpress.module.product.searcher.DbSearcher;
+import io.jpress.module.product.searcher.LuceneSearcher;
+import io.jpress.module.product.service.search.ProductSearcher;
 
 public class ProductSearcherFactory {
 
