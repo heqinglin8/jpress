@@ -183,7 +183,7 @@ public interface ExampleCategoryService  {
 
     public List<ExampleCategory> findListByProductId(long productId, String type);
 
-    public List<ExampleCategory> findListByProductId(long productId);
+    public List<ExampleCategory> findListByProductId(long exampleId);
 
     public List<ExampleCategory> findTagListByProductId(long productId);
 

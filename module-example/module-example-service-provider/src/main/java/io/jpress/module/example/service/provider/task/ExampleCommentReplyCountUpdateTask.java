@@ -55,7 +55,7 @@ public class ExampleCommentReplyCountUpdateTask implements Runnable {
         countsMap.clear();
 
         for (Map.Entry<Long, AtomicLong> entry : articleViews.entrySet()) {
-            Db.update("update product_comment set reply_count = reply_count + "  + entry.getValue().get() + " where id = ? ", entry.getKey());
+            Db.update("update example_comment set reply_count = reply_count + "  + entry.getValue().get() + " where id = ? ", entry.getKey());
             Aop.get(ExampleCommentService.class).deleteCacheById(entry.getKey());
         }
     }

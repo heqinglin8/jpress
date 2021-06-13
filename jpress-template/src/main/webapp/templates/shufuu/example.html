@@ -1,0 +1,107 @@
+#include("./layout.html")
+#@layout()
+
+#define script()
+<script src="/static/components/jquery/jquery.form.min.js"></script>
+<script src="#(CPATH)/static/front/jpressfront.js"></script>
+#end
+
+#define css()
+<link href="#(CPATH)/static/front/jpressfront.css" rel="stylesheet">
+<link href="/static/components/swiper/swiper.min.css" rel="stylesheet">
+#end
+
+#define content()
+
+      <!-- banner -->
+      <div class="inner-ban">
+          <a href="#">
+              <img src="#option('shufuu_category_ad','images/inban_news.jpg')" class="img-fluid" alt="">
+          </a>
+      </div>
+
+      <!-- 搜索 -->
+            <div class="index-search">
+        <div class="container">
+          <div class="sear-key">热门服务：
+              #tags()
+              #for(tag : tags)
+              <a href="#(tag.url)">#(tag.title)</a>
+              #end
+              #end
+
+          </div>
+            <div class="sear-tel">
+                <p>
+                    服务热线：
+                    <b>17773562773</b>
+                </p>
+
+            </div>
+        </div>
+      </div>
+
+      <!-- inner -->
+      <div class="container in-article">
+        <div class="row">
+          <aside class="col-md-3 col-sm-12 side-left">
+
+              #include("_leftbar.html")
+
+          </aside>
+
+          <!-- right -->
+          <div class="col-md-9 col-sm-12 col-xs-12 side-right" role="main">
+
+              #@defaultExampleHeader()
+
+              #(example.content)
+
+              #@defaultExampleCommentPage()
+
+              <section class="right-hots" style="margin-bottom:35px;background-color: #f6f6f6;background-image: url(/templets/default/images/tiaowen.png);border-radius: 8px;"> 
+                <div class="right-tit clearfix">
+                  <h3 style="color:#ffa500;">最近案例</h3><a href="/yewu/"></a>
+                </div>
+                <ul class="clearfix">
+                    <!--3个专题推荐-->
+                    #examples(hasThumbnail=true,count=3,orderBy="modified")
+                        #for(example : examples)
+                            <li style="width: 26%;margin-right: 3%;margin-left: 4%;">
+                               <a href="#(example.url)" class="img">
+                                   <img src="#(example.showImage ??)">
+                               </a>
+                              <a href="#(example.url)" class="tit">
+                                  #(example.title ??)
+                              </a>
+                            </li>
+                        #end
+                    #end
+                  
+                </ul>
+              </section>
+              <section class="right-hots">
+                <div class="right-tit clearfix">
+                  <h3>服务推荐</h3><a href="/yewu/"></a>
+                </div>
+                <ul class="clearfix">
+                <!--五个专题-->
+                #relevantExamples(example)
+                    #for(example : relevantExamples)
+
+                      <li style="width: 28%;margin-right: 15px;"><a href="#(example.url)" class="img">
+                          <img alt="" src="#(example.showImage ??)" style="width: 250px; height: 200px;"></a>
+                          <a href="#(example.url)" class="tit"> #(example.title ??)</a>
+                      </li>
+                    #end
+                #end
+                </ul>
+              </section>
+
+
+          </div>
+          <!-- right end -->
+        </div>
+      </div>
+
+#end

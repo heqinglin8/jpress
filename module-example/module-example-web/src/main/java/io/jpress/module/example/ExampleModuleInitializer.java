@@ -47,7 +47,7 @@ public class ExampleModuleInitializer extends JbootAppListenerBase implements Mo
         MenuGroup menuGroup = new MenuGroup();
         menuGroup.setId("example");
         menuGroup.setText("案例");
-        menuGroup.setIcon("<i class=\"fas fa-mitten\"></i>");
+        menuGroup.setIcon("<i class=\"fas fa-radiation\"></i>");
         menuGroup.setOrder(100);
         adminMenus.add(menuGroup);
     }

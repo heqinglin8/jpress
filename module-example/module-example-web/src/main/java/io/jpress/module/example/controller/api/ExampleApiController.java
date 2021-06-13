@@ -76,8 +76,8 @@ public class ExampleApiController extends ApiControllerBase {
             }
         }
 
-        List<Example> products = exampleService.findListByColumns(columns, orderBy, count);
-        renderOkJson("products", products);
+        List<Example> examples = exampleService.findListByColumns(columns, orderBy, count);
+        renderOkJson("examples", examples);
     }
 
 
@@ -86,7 +86,7 @@ public class ExampleApiController extends ApiControllerBase {
      */
     public void relevantList() {
 
-        Long id = getParaToLong("productId");
+        Long id = getParaToLong("exampleId");
         if (id == null) {
             renderFailJson();
         }

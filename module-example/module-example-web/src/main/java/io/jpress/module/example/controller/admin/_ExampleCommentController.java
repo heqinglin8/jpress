@@ -62,7 +62,7 @@ public class _ExampleCommentController extends AdminControllerBase {
         setAttr("normalCount", normalCount);
         setAttr("totalCount", unauditedCount + trashCount + normalCount);
 
-        render("product/comment_list.html");
+        render("example/comment_list.html");
     }
 
 
@@ -70,9 +70,9 @@ public class _ExampleCommentController extends AdminControllerBase {
         int entryId = getParaToInt(0, 0);
 
         ExampleComment entry = entryId > 0 ? commentService.findById(entryId) : null;
-        setAttr("productComment", entry);
+        setAttr("exampleComment", entry);
         set("now", new Date());
-        render("product/comment_edit.html");
+        render("example/comment_edit.html");
     }
 
 
@@ -80,11 +80,11 @@ public class _ExampleCommentController extends AdminControllerBase {
         long id = getIdPara();
         ExampleComment comment = commentService.findById(id);
         setAttr("comment", comment);
-        render("product/comment_reply.html");
+        render("example/comment_reply.html");
     }
 
 
-    public void doReply(String content, Long productId, Long pid) {
+    public void doReply(String content, Long exampleId, Long pid) {
         User user = getLoginedUser();
 
         ExampleComment comment = new ExampleComment();
@@ -92,7 +92,7 @@ public class _ExampleCommentController extends AdminControllerBase {
         comment.setUserId(user.getId());
         comment.setAuthor(user.getNickname());
         comment.setStatus(ExampleComment.STATUS_NORMAL);
-        comment.setExampleId(productId);
+        comment.setExampleId(exampleId);
         comment.setPid(pid);
 
         commentService.save(comment);

@@ -39,18 +39,18 @@ public class ExampleFields {
     private void initDefaultFields() {
 
         fields.add(new SmartField("usp",
-                "产品卖点",
-                "product.usp",
+                "案例亮点",
+                "example.usp",
                 "请输入",
                 SmartField.TYPE_TEXTAREA,
                 null,
                 null,
-                "此卖点内容会显示在产品详情的价格下方",
+                "此卖点内容会显示在案例详情的下方",
                 10).addAttr("rows", 4));
 
         fields.add(new SmartField("specs",
-                "产品规格",
-                "product.specs",
+                "规格",
+                "example.specs",
                 "请输入",
                 SmartField.TYPE_TEXTAREA,
                 null,
@@ -60,7 +60,7 @@ public class ExampleFields {
 
         fields.add(new SmartField("summary",
                 "摘要",
-                "product.summary",
+                "example.summary",
                 "请输入",
                 SmartField.TYPE_TEXTAREA,
                 null,
@@ -71,7 +71,7 @@ public class ExampleFields {
 
         fields.add(new SmartField("meta_keywords",
                 "SEO关键字",
-                "product.meta_keywords",
+                "example.meta_keywords",
                 "请输入",
                 SmartField.TYPE_TEXTAREA,
                 null,
@@ -81,7 +81,7 @@ public class ExampleFields {
 
         fields.add(new SmartField("meta_description",
                 "SEO描述",
-                "product.meta_description",
+                "example.meta_description",
                 "请输入",
                 SmartField.TYPE_TEXTAREA,
                 null,
@@ -91,7 +91,7 @@ public class ExampleFields {
 
         fields.add(new SmartField("view_count",
                 "访问量",
-                "product.view_count",
+                "example.view_count",
                 "请输入",
                 SmartField.TYPE_INPUT,
                 null,
@@ -99,29 +99,9 @@ public class ExampleFields {
                 "",
                 30));
 
-        fields.add(new SmartField("sales_count",
-                "销量",
-                "product.sales_count",
-                "请输入",
-                SmartField.TYPE_INPUT,
-                null,
-                null,
-                "",
-                40));
-
-        fields.add(new SmartField("stock",
-                "剩余库存",
-                "product.stock",
-                "请输入",
-                SmartField.TYPE_INPUT,
-                null,
-                null,
-                "只是显示达到促进消费者购买欲的作用。",
-                50));
-
         fields.add(new SmartField("video",
                 "视频链接",
-                "product.video",
+                "example.video",
                 "请输入",
                 SmartField.TYPE_INPUT,
                 null,
@@ -131,7 +111,7 @@ public class ExampleFields {
 
         fields.add(new SmartField("video_cover",
                 "视频封面链接",
-                "product.video_cover",
+                "example.video_cover",
                 "请输入",
                 SmartField.TYPE_INPUT,
                 null,
@@ -141,7 +121,7 @@ public class ExampleFields {
 
         fields.add(new SmartField("comment_status",
                 "允许评论",
-                "product.comment_status",
+                "example.comment_status",
                 "请输入",
                 SmartField.TYPE_SWITCH,
                 "true",

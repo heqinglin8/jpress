@@ -517,18 +517,5 @@ public abstract class BaseProduct<M extends BaseProduct<M>> extends BaseOptionsM
 		return getStr("options");
 	}
 
-	/**
-	 * 是否启用商品功能，如果不开启，就当作图片或者案例，没有买卖功能，没有价格展示
-	 */
-	public void setProEnable(java.lang.Boolean proEnable) {
-		set("pro_enable", proEnable);
-	}
-
-	/**
-	 * 是否启用
-	 */
-	public java.lang.Boolean getProEnable() {
-		return get("pro_enable");
-	}
 
 }

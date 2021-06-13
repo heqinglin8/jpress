@@ -23,7 +23,7 @@ public class ExampleSearchController extends TemplateControllerBase {
         setAttr("keyword", getEscapeHtmlPara("keyword"));
         setAttr("page", page);
 
-        setMenuActive(menu -> menu.isUrlStartWidth("/product/search"));
+        setMenuActive(menu -> menu.isUrlStartWidth("/example/search"));
         render("examsearch.html");
     }
 

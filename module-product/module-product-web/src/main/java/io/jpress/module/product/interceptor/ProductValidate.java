@@ -59,16 +59,6 @@ public class ProductValidate implements Interceptor {
             return;
         }
 
-//        if (!product.getProEnable()) {
-//            if (RequestUtil.isAjaxRequest(c.getRequest())) {
-//                c.renderJson(Ret.fail().set("code", "2").set("message", "该商品未启用商品功能"));
-//            } else {
-//                c.renderError(404);
-//            }
-//            return;
-//        }
-
-
         User user = UserInterceptor.getThreadLocalUser();
         if (user == null) {
             if (RequestUtil.isAjaxRequest(c.getRequest())) {

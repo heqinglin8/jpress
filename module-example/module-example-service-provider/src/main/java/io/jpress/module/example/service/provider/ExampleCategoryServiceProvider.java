@@ -40,22 +40,22 @@ public class ExampleCategoryServiceProvider extends JbootServiceBase<ExampleCate
 
     @Override
     public void doUpdateProductCount(long categoryId) {
-        long productCount = Db.queryLong("select count(*) from example_category_mapping where category_id = ? ", categoryId);
+        long exampleCount = Db.queryLong("select count(*) from example_category_mapping where category_id = ? ", categoryId);
         ExampleCategory category = findById(categoryId);
         if (category != null) {
-            category.setCount(productCount);
+            category.setCount(exampleCount);
             update(category);
         }
     }
 
     /**
-     * @param productId
+     * @param exampleId
      * @return
      */
     @Override
     @Cacheable(name = "example-category", key = "#(exampleId)", liveSeconds = 2 * CacheTime.HOUR, nullCacheEnable = true)
-    public List<ExampleCategory> findListByProductId(long productId) {
-        List<Record> mappings = Db.find("select * from example_category_mapping where example_id = ?", productId);
+    public List<ExampleCategory> findListByProductId(long exampleId) {
+        List<Record> mappings = Db.find("select * from example_category_mapping where example_id = ?", exampleId);
         if (mappings == null || mappings.isEmpty()) {
             return null;
         }
@@ -68,8 +68,8 @@ public class ExampleCategoryServiceProvider extends JbootServiceBase<ExampleCate
     }
 
     @Override
-    public List<ExampleCategory> findListByProductId(long productId, String type) {
-        List<ExampleCategory> categoryList = findListByProductId(productId);
+    public List<ExampleCategory> findListByProductId(long exampleId, String type) {
+        List<ExampleCategory> categoryList = findListByProductId(exampleId);
         if (categoryList == null || categoryList.isEmpty()) {
             return null;
         }
@@ -81,13 +81,13 @@ public class ExampleCategoryServiceProvider extends JbootServiceBase<ExampleCate
 
 
     @Override
-    public List<ExampleCategory> findTagListByProductId(long productId) {
-        return findListByProductId(productId, ExampleCategory.TYPE_TAG);
+    public List<ExampleCategory> findTagListByProductId(long exampleId) {
+        return findListByProductId(exampleId, ExampleCategory.TYPE_TAG);
     }
 
     @Override
-    public Long[] findCategoryIdsByProductId(long productId) {
-        List<Record> records = Db.find("select * from product_category_mapping where product_id = ?", productId);
+    public Long[] findCategoryIdsByProductId(long exampleId) {
+        List<Record> records = Db.find("select * from example_category_mapping where example_id = ?", exampleId);
         if (records == null || records.isEmpty()) {
             return null;
         }
@@ -101,7 +101,7 @@ public class ExampleCategoryServiceProvider extends JbootServiceBase<ExampleCate
             return null;
         }
 
-        List<ExampleCategory> productCategories = new ArrayList<>();
+        List<ExampleCategory> exampleCategories = new ArrayList<>();
 
         boolean needClearCache = false;
 
@@ -119,25 +119,25 @@ public class ExampleCategoryServiceProvider extends JbootServiceBase<ExampleCate
             Columns columns = Columns.create("type", ExampleCategory.TYPE_TAG);
             columns.add(Column.create("slug", slug));
 
-            ExampleCategory productCategory = DAO.findFirstByColumns(columns);
+            ExampleCategory exampleCategory = DAO.findFirstByColumns(columns);
 
-            if (productCategory == null) {
-                productCategory = new ExampleCategory();
-                productCategory.setTitle(tag);
-                productCategory.setSlug(slug);
-                productCategory.setType(ExampleCategory.TYPE_TAG);
-                productCategory.save();
+            if (exampleCategory == null) {
+                exampleCategory = new ExampleCategory();
+                exampleCategory.setTitle(tag);
+                exampleCategory.setSlug(slug);
+                exampleCategory.setType(ExampleCategory.TYPE_TAG);
+                exampleCategory.save();
                 needClearCache = true;
             }
 
-            productCategories.add(productCategory);
+            exampleCategories.add(exampleCategory);
         }
 
         if (needClearCache) {
             AopCache.removeAll("exampleCategory");
         }
 
-        return productCategories;
+        return exampleCategories;
     }
 
     @Override
@@ -146,8 +146,8 @@ public class ExampleCategoryServiceProvider extends JbootServiceBase<ExampleCate
     }
 
     @Override
-    public List<ExampleCategory> findCategoryListByProductId(long productId) {
-        return findListByProductId(productId, ExampleCategory.TYPE_CATEGORY);
+    public List<ExampleCategory> findCategoryListByProductId(long exampleId) {
+        return findListByProductId(exampleId, ExampleCategory.TYPE_CATEGORY);
     }
 
     @Override

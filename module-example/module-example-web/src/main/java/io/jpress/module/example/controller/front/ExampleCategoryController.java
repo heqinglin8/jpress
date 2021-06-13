@@ -28,7 +28,7 @@ import io.jpress.web.base.TemplateControllerBase;
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
  * @version V1.0
  * @Title: 文章前台页面Controller
- * @Package io.jpress.module.product
+ * @Package io.jpress.module.example
  */
 @RequestMapping("/example/category")
 public class ExampleCategoryController extends TemplateControllerBase {
@@ -113,7 +113,7 @@ public class ExampleCategoryController extends TemplateControllerBase {
 
     private String getRenderView(ExampleCategory category) {
         return category == null
-                ? "prolist.html"
+                ? "examlist.html"
                 : category.getHtmlView();
     }
 

@@ -38,7 +38,7 @@ public class Example extends BaseExample<Example> {
     }
 
     public String getHtmlView() {
-        return StrUtil.isBlank(getStyle()) ? "product.html" : "product_" + getStyle().trim() + ".html";
+        return StrUtil.isBlank(getStyle()) ? "example.html" : "example_" + getStyle().trim() + ".html";
     }
 
     public String getText() {

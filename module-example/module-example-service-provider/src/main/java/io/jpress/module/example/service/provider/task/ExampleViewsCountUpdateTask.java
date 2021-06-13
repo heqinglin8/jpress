@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
  * @version V1.0
  * @Title: 用于更新商品的 访问 数量
- * @Package io.jpress.module.product.task
+ * @Package io.jpress.module.example.task
  */
 @FixedRate(period = 60, initialDelay = 60)
 public class ExampleViewsCountUpdateTask implements Runnable {
@@ -56,10 +56,10 @@ public class ExampleViewsCountUpdateTask implements Runnable {
         countsMap.clear();
 
         for (Map.Entry<Long, AtomicLong> entry : articleViews.entrySet()) {
-            Db.update("update product set real_view_count = real_view_count + "
+            Db.update("update example set real_view_count = real_view_count + "
                     + entry.getValue().get()
                     + " where id = ? ", entry.getKey());
-            Db.update("update product set view_count = view_count + "
+            Db.update("update example set view_count = view_count + "
                     + entry.getValue().get()
                     + " where id = ? ", entry.getKey());
             Aop.get(ExampleService.class).removeCacheById(entry.getKey());

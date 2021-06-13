@@ -171,11 +171,6 @@ public class _ProductController extends AdminControllerBase {
     public void doSave() {
         Product product = getModel(Product.class, "product");
 
-//        if (product.getProEnable() && product.getPrice() == null) {
-//            renderJson(Ret.fail("message", "产品的销售价格不能为空"));
-//            return;
-//        }
-
         if (!validateSlug(product)) {
             renderJson(Ret.fail("message", "slug不能全是数字且不能包含字符：- "));
             return;

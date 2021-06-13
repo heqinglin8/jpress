@@ -50,13 +50,13 @@ import java.util.Map;
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
  * @version V1.0
  * @Title: 产品前台页面Controller
- * @Package io.jpress.module.product.controller
+ * @Package io.jpress.module.example.controller
  */
 @RequestMapping("/example")
 public class ExampleController extends TemplateControllerBase {
 
     @Inject
-    private ExampleService productService;
+    private ExampleService exampleService;
 
     @Inject
     private ExampleImageService imageService;
@@ -81,78 +81,78 @@ public class ExampleController extends TemplateControllerBase {
 
 
     public void index() {
-        Example product = getProduct();
+        Example example = getProduct();
 
         //当产品处于下架等的时候，显示404
-        render404If(product == null || !product.isNormal());
+        render404If(example == null || !example.isNormal());
 
         if (getLoginedUser() == null) {
-            setAttr("productShareUrl", RequestUtil.getBaseUrl() + product.getUrl());
+            setAttr("exampleShareUrl", RequestUtil.getBaseUrl() + example.getUrl());
         }else {
-            setAttr("productShareUrl", RequestUtil.getBaseUrl() + product.getUrl() + "?did=" + getLoginedUser().getId());
+            setAttr("exampleShareUrl", RequestUtil.getBaseUrl() + example.getUrl() + "?did=" + getLoginedUser().getId());
         }
 
         //设置页面的seo信息
-        setSeoInfos(product);
+        setSeoInfos(example);
 
 
         //设置菜单高亮
-        doFlagMenuActive(product);
+        doFlagMenuActive(example);
 
         //记录当前浏览量
-        productService.doIncProductViewCount(product.getId());
+        exampleService.doIncProductViewCount(example.getId());
 
-        User productAuthor = product.getUserId() != null
-                ? userService.findById(product.getUserId())
+        User exampleAuthor = example.getUserId() != null
+                ? userService.findById(example.getUserId())
                 : null;
 
-        product.put("user", productAuthor);
-        setAttr("product", product);
+        example.put("user", exampleAuthor);
+        setAttr("example", example);
 
-        List<ExampleImage> productImages = imageService.findListByProductId(product.getId());
-        setAttr("productImages", productImages);
+        List<ExampleImage> exampleImages = imageService.findListByProductId(example.getId());
+        setAttr("exampleImages", exampleImages);
 
         String distUserId = getPara("did");
         if (StrUtil.isNotBlank(distUserId)) {
-            CookieUtil.put(this, buildDistUserCookieName(product.getId()), distUserId);
+            CookieUtil.put(this, buildDistUserCookieName(example.getId()), distUserId);
         }
 
-        render(product.getHtmlView());
+        render(example.getHtmlView());
     }
 
-    private String buildDistUserCookieName(long productId) {
-        return "did-" + productId;
+    private String buildDistUserCookieName(long exampleId) {
+        return "did-" + exampleId;
     }
 
-    private void setSeoInfos(Example product) {
-        setSeoTitle(product.getTitle());
-        setSeoKeywords(product.getMetaKeywords());
-        setSeoDescription(StrUtil.isBlank(product.getMetaDescription())
-                ? CommonsUtils.maxLength(product.getText(), 100)
-                : product.getMetaDescription());
+    private void setSeoInfos(Example example) {
+        setSeoTitle(example.getTitle());
+        setSeoKeywords(example.getMetaKeywords());
+        setSeoDescription(StrUtil.isBlank(example.getMetaDescription())
+                ? CommonsUtils.maxLength(example.getText(), 100)
+                : example.getMetaDescription());
     }
 
 
     private Example getProduct() {
         String idOrSlug = getPara(0);
         return StrUtil.isNumeric(idOrSlug)
-                ? productService.findById(idOrSlug)
-                : productService.findFirstBySlug(StrUtil.urlDecode(idOrSlug));
+                ? exampleService.findById(idOrSlug)
+                : exampleService.findFirstBySlug(StrUtil.urlDecode(idOrSlug));
     }
 
 
-    private void doFlagMenuActive(Example product) {
+    private void doFlagMenuActive(Example example) {
 
-        setMenuActive(menu -> menu.isUrlStartWidth(product.getUrl()));
+        setMenuActive(menu -> menu.isUrlStartWidth(example.getUrl()));
 
-        List<ExampleCategory> productCategories = categoryService.findCategoryListByProductId(product.getId());
-        if (productCategories == null || productCategories.isEmpty()) {
+        List<ExampleCategory> exampleCategories = categoryService.findCategoryListByProductId(example.getId());
+        if (exampleCategories == null || exampleCategories.isEmpty()) {
             return;
         }
 
         setMenuActive(menu -> {
             if ("example_category".equals(menu.getRelativeTable())) {
-                for (ExampleCategory category : productCategories) {
+                for (ExampleCategory category : exampleCategories) {
                     if (category.getId().equals(menu.getRelativeId())) {
                         return true;
                     }
@@ -169,12 +169,12 @@ public class ExampleController extends TemplateControllerBase {
      */
     public void postComment() {
 
-        Long productId = getParaToLong("exampleId");
+        Long exampleId = getParaToLong("exampleId");
         Long pid = getParaToLong("pid");
         String nickname = getPara("nickname");
         String content = getPara("content");
 
-        if (productId == null || productId <= 0) {
+        if (exampleId == null || exampleId <= 0) {
             renderFailJson();
             return;
         }
@@ -201,14 +201,14 @@ public class ExampleController extends TemplateControllerBase {
         }
 
 
-        Example product = productService.findById(productId);
-        if (product == null) {
+        Example example = exampleService.findById(exampleId);
+        if (example == null) {
             renderFailJson();
             return;
         }
 
         // 关闭了评论的功能
-        if (!product.isCommentEnable()) {
+        if (!example.isCommentEnable()) {
             renderJson(Ret.fail().set("message", "该产品的评论功能已关闭"));
             return;
         }
@@ -232,7 +232,7 @@ public class ExampleController extends TemplateControllerBase {
 
         ExampleComment comment = new ExampleComment();
 
-        comment.setExampleId(productId);
+        comment.setExampleId(exampleId);
         comment.setContent(content);
         comment.setAuthor(nickname);
         comment.setPid(pid);
@@ -256,7 +256,7 @@ public class ExampleController extends TemplateControllerBase {
         }
 
         //记录产品的评论量
-        productService.doIncProductCommentCount(productId);
+        exampleService.doIncProductCommentCount(exampleId);
 
         commentService.saveOrUpdate(comment);
 
@@ -274,7 +274,7 @@ public class ExampleController extends TemplateControllerBase {
 
         Map<String, Object> paras = new HashMap<>();
         paras.put("comment", comment);
-        paras.put("product", product);
+        paras.put("example", example);
 
         if (user != null) {
             paras.put("user", user.keepSafe());
@@ -285,7 +285,7 @@ public class ExampleController extends TemplateControllerBase {
         renderHtmltoRet("/WEB-INF/views/commons/example/defaultExampleCommentItem.html", paras, ret);
         renderJson(ret);
 
-        ExampleNotifyKit.doNotifyAdministrator(product, comment, user);
+        ExampleNotifyKit.doNotifyAdministrator(example, comment, user);
 
     }
 
@@ -293,9 +293,9 @@ public class ExampleController extends TemplateControllerBase {
 
     @Before(ExampleValidate.class)
     public void doAddFavorite() {
-        Example product = ExampleValidate.getThreadLocalProduct();
+        Example example = ExampleValidate.getThreadLocalProduct();
         User user = getLoginedUser();
-        if (favoriteService.doAddToFavorite(product.toFavorite(user.getId()))) {
+        if (favoriteService.doAddToFavorite(example.toFavorite(user.getId()))) {
             renderOkJson();
         } else {
             renderFailJson("已经收藏过了!");

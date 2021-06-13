@@ -47,7 +47,7 @@ import java.util.Set;
 public class _ExampleController extends AdminControllerBase {
 
     @Inject
-    private ExampleService productService;
+    private ExampleService exampleService;
 
     @Inject
     private ExampleCategoryService categoryService;
@@ -63,8 +63,8 @@ public class _ExampleController extends AdminControllerBase {
         Long categoryId = getParaToLong("categoryId");
 
         Page<Example> page = status == null
-                ? productService._paginateWithoutTrash(getPagePara(), 10, title, categoryId)
-                : productService._paginateByStatus(getPagePara(), 10, title, categoryId, status);
+                ? exampleService._paginateWithoutTrash(getPagePara(), 10, title, categoryId)
+                : exampleService._paginateByStatus(getPagePara(), 10, title, categoryId, status);
 
         setAttr("page", page);
 
@@ -75,9 +75,9 @@ public class _ExampleController extends AdminControllerBase {
         flagCheck(categories, categoryId);
 
 
-        long draftCount = productService.findCountByStatus(Example.STATUS_DRAFT);
-        long trashCount = productService.findCountByStatus(Example.STATUS_TRASH);
-        long normalCount = productService.findCountByStatus(Example.STATUS_NORMAL);
+        long draftCount = exampleService.findCountByStatus(Example.STATUS_DRAFT);
+        long trashCount = exampleService.findCountByStatus(Example.STATUS_TRASH);
+        long normalCount = exampleService.findCountByStatus(Example.STATUS_NORMAL);
 
         setAttr("draftCount", draftCount);
         setAttr("trashCount", trashCount);
@@ -101,7 +101,7 @@ public class _ExampleController extends AdminControllerBase {
 
         Example example = null;
         if (exampleId != null && exampleId > 0) {
-            example = productService.findById(exampleId);
+            example = exampleService.findById(exampleId);
             if (example == null) {
                 renderError(404);
                 return;
@@ -160,7 +160,7 @@ public class _ExampleController extends AdminControllerBase {
 
 
         if (StrUtil.isNotBlank(example.getSlug())) {
-            Example existModel = productService.findFirstBySlug(example.getSlug());
+            Example existModel = exampleService.findFirstBySlug(example.getSlug());
             if (existModel != null && existModel.getId().equals(example.getId()) == false) {
                 renderJson(Ret.fail("message", "该slug已经存在"));
                 return;
@@ -174,8 +174,8 @@ public class _ExampleController extends AdminControllerBase {
         if (example.getViewCount() == null){
             example.setViewCount(0L);
         }
-        long id = (long) productService.saveOrUpdate(example);
-        productService.doUpdateCommentCount(id);
+        long id = (long) exampleService.saveOrUpdate(example);
+        exampleService.doUpdateCommentCount(id);
 
         setAttr("exampleId", id);
         setAttr("example", example);
@@ -192,7 +192,7 @@ public class _ExampleController extends AdminControllerBase {
 
         Long[] updateCategoryIds = ArrayUtils.addAll(categoryIds, tagIds);
 
-        productService.doUpdateCategorys(id, updateCategoryIds);
+        exampleService.doUpdateCategorys(id, updateCategoryIds);
 
         if (updateCategoryIds != null && updateCategoryIds.length > 0) {
             for (Long categoryId : updateCategoryIds) {
@@ -229,7 +229,7 @@ public class _ExampleController extends AdminControllerBase {
 
     public void doDel() {
         Long id = getIdPara();
-        if (productService.deleteById(id)){
+        if (exampleService.deleteById(id)){
             imageService.deleteByProductId(id);
         }
 
@@ -238,23 +238,23 @@ public class _ExampleController extends AdminControllerBase {
 
     public void doTrash() {
         Long id = getIdPara();
-        render(productService.doChangeStatus(id, Example.STATUS_TRASH) ? OK : FAIL);
+        render(exampleService.doChangeStatus(id, Example.STATUS_TRASH) ? OK : FAIL);
     }
 
     public void doDraft() {
         Long id = getIdPara();
-        render(productService.doChangeStatus(id, Example.STATUS_DRAFT) ? OK : FAIL);
+        render(exampleService.doChangeStatus(id, Example.STATUS_DRAFT) ? OK : FAIL);
     }
 
     public void doNormal() {
         Long id = getIdPara();
-        render(productService.doChangeStatus(id, Example.STATUS_NORMAL) ? OK : FAIL);
+        render(exampleService.doChangeStatus(id, Example.STATUS_NORMAL) ? OK : FAIL);
     }
 
     @EmptyValidate(@Form(name = "ids"))
     public void doDelByIds() {
         Set<String> idsSet = getParaSet("ids");
-        if (productService.batchDeleteByIds(idsSet.toArray())){
+        if (exampleService.batchDeleteByIds(idsSet.toArray())){
             for (String id : idsSet){
                 imageService.deleteByProductId(Long.valueOf(id));
             }

@@ -19,11 +19,11 @@ public class ExampleCommentServiceProvider extends JbootServiceBase<ExampleComme
     private UserService userService;
 
     @Inject
-    private ExampleService productService;
+    private ExampleService exampleService;
 
     @Override
-    public long findCountByProductId(Long productId) {
-        return DAO.findCountByColumn(Column.create("example_id",productId));
+    public long findCountByProductId(Long exampleId) {
+        return DAO.findCountByColumn(Column.create("example_id",exampleId));
     }
 
     @Override
@@ -45,9 +45,9 @@ public class ExampleCommentServiceProvider extends JbootServiceBase<ExampleComme
     }
 
     @Override
-    public Page<ExampleComment> _paginateByStatus(int page, int pagesize, Long productId, String keyword, int status) {
+    public Page<ExampleComment> _paginateByStatus(int page, int pagesize, Long exampleId, String keyword, int status) {
 
-        Columns columns = Columns.create("product_id", productId)
+        Columns columns = Columns.create("example_id", exampleId)
                 .eq("status", status)
                 .likeAppendPercent("content", keyword);
 
@@ -57,15 +57,15 @@ public class ExampleCommentServiceProvider extends JbootServiceBase<ExampleComme
                 "id desc");
 
         userService.join(p, "user_id");
-        productService.join(p, "example_id");
+        exampleService.join(p, "example_id");
         return p;
     }
 
 
     @Override
-    public Page<ExampleComment> _paginateWithoutTrash(int page, int pagesize, Long productId, String keyword) {
+    public Page<ExampleComment> _paginateWithoutTrash(int page, int pagesize, Long exampleId, String keyword) {
 
-        Columns columns = Columns.create("example_id", productId)
+        Columns columns = Columns.create("example_id", exampleId)
                 .ne("status", ExampleComment.STATUS_TRASH)
                 .likeAppendPercent("content", keyword);
 
@@ -77,7 +77,7 @@ public class ExampleCommentServiceProvider extends JbootServiceBase<ExampleComme
 
 
         userService.join(p, "user_id");
-        productService.join(p, "example_id");
+        exampleService.join(p, "example_id");
         return p;
     }
 
@@ -85,13 +85,13 @@ public class ExampleCommentServiceProvider extends JbootServiceBase<ExampleComme
     public Page<ExampleComment> _paginateByUserId(int page, int pagesize, long userId) {
         Page<ExampleComment> p = DAO.paginateByColumn(page, pagesize, Column.create("user_id", userId), "id desc");
         userService.join(p, "user_id");
-        productService.join(p, "example_id");
+        exampleService.join(p, "example_id");
         return p;
     }
 
     @Override
-    public Page<ExampleComment> paginateByProductIdInNormal(int page, int pagesize, long productId) {
-        Columns columns = Columns.create("example_id", productId);
+    public Page<ExampleComment> paginateByProductIdInNormal(int page, int pagesize, long exampleId) {
+        Columns columns = Columns.create("example_id", exampleId);
         columns.eq("status", ExampleComment.STATUS_NORMAL);
 
 
@@ -121,8 +121,8 @@ public class ExampleCommentServiceProvider extends JbootServiceBase<ExampleComme
     }
 
     @Override
-    public boolean deleteByProductId(Object productId) {
-        return DAO.deleteByColumn(Column.create("example_id",productId));
+    public boolean deleteByProductId(Object exampleId) {
+        return DAO.deleteByColumn(Column.create("example_id",exampleId));
     }
 
     private void joinParentUser(Page<ExampleComment> p) {

@@ -38,19 +38,19 @@ import java.util.List;
 public class _ExampleTagController extends AdminControllerBase {
 
     @Inject
-    private ExampleCategoryService productCategoryService;
+    private ExampleCategoryService exampleCategoryService;
 
     @Inject
     private MenuService menuService;
 
     @AdminMenu(text = "标签", groupId = "example", order = 3)
     public void index() {
-        Page<ExampleCategory> page = productCategoryService.paginateByType(getPagePara(), 10, ExampleCategory.TYPE_TAG);
+        Page<ExampleCategory> page = exampleCategoryService.paginateByType(getPagePara(), 10, ExampleCategory.TYPE_TAG);
         setAttr("page", page);
 
         int id = getParaToInt(0, 0);
         if (id > 0) {
-            setAttr("category", productCategoryService.findById(id));
+            setAttr("category", exampleCategoryService.findById(id));
             setAttr("isDisplayInMenu", menuService.findFirstByRelatives("article_category", id) != null);
         }
 
@@ -81,7 +81,7 @@ public class _ExampleTagController extends AdminControllerBase {
 
         //新增 tag
         if (tag.getId() == null) {
-            ExampleCategory indbTag = productCategoryService.findFirstByTypeAndSlug(ExampleCategory.TYPE_TAG, slug);
+            ExampleCategory indbTag = exampleCategoryService.findFirstByTypeAndSlug(ExampleCategory.TYPE_TAG, slug);
             if (indbTag != null) {
                 renderJson(Ret.fail().set("message", "该标签已经存在，不能新增。"));
                 return;
@@ -99,10 +99,10 @@ public class _ExampleTagController extends AdminControllerBase {
             return;
         }
 
-        Object id = productCategoryService.saveOrUpdate(category);
-//        productCategoryService.updateCount(category.getId());
+        Object id = exampleCategoryService.saveOrUpdate(category);
+//        exampleCategoryService.updateCount(category.getId());
 
-        Menu displayMenu = menuService.findFirstByRelatives("product_category", id);
+        Menu displayMenu = menuService.findFirstByRelatives("example_category", id);
         Boolean isDisplayInMenu = getParaToBoolean("displayInMenu");
         if (isDisplayInMenu != null && isDisplayInMenu) {
             if (displayMenu == null) {
@@ -113,7 +113,7 @@ public class _ExampleTagController extends AdminControllerBase {
             displayMenu.setText(category.getTitle());
             displayMenu.setType(Menu.TYPE_MAIN);
             displayMenu.setOrderNumber(category.getOrderNumber());
-            displayMenu.setRelativeTable("product_category");
+            displayMenu.setRelativeTable("example_category");
             displayMenu.setRelativeId((Long) id);
 
             if (displayMenu.getPid() == null) {
@@ -136,6 +136,6 @@ public class _ExampleTagController extends AdminControllerBase {
 
     public void doDel() {
         Long id = getIdPara();
-        render(productCategoryService.deleteById(id) ? Ret.ok() : Ret.fail());
+        render(exampleCategoryService.deleteById(id) ? Ret.ok() : Ret.fail());
     }
 }
