@@ -516,6 +516,24 @@ function initContactComponent() {
 
 }
 
+/*
+添加案例到收藏夹
+ */
+function addExampleToFavorite(productId, ok, fail) {
+    ajaxPost(getContextPath() + '/example/doAddFavorite', {
+            id: productId
+        },
+        ok ? ok : function () {
+            alert('成功添加到收藏夹。')
+        },
+        fail ? fail : function (data) {
+            alert('添加到收藏夹失败：' + data.message)
+            if (data.gotoUrl) {
+                location.href = data.gotoUrl;
+            }
+        })
+}
+
 
 
 

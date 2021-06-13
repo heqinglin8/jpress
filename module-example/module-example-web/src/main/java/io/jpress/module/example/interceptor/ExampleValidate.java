@@ -35,11 +35,11 @@ import io.jpress.web.interceptor.UserInterceptor;
 public class ExampleValidate implements Interceptor {
 
     @Inject
-    private ExampleService productService;
-    private static final String ATTR_PRODUCT = "product";
+    private ExampleService exampleService;
+    private static final String ATTR_EXAMPLE = "example";
 
     public static Example getThreadLocalProduct() {
-        return JbootControllerContext.get().getAttr(ATTR_PRODUCT);
+        return JbootControllerContext.get().getAttr(ATTR_EXAMPLE);
     }
 
     @Override
@@ -48,11 +48,11 @@ public class ExampleValidate implements Interceptor {
         Controller c = inv.getController();
 
         Long productId = inv.getController().getLong("id");
-        Example product = productService.findById(productId);
+        Example example = exampleService.findById(productId);
 
-        if (product == null || !product.isNormal()) {
+        if (example == null || !example.isNormal()) {
             if (RequestUtil.isAjaxRequest(c.getRequest())) {
-                c.renderJson(Ret.fail().set("code", "2").set("message", "商品不存在或已下架。"));
+                c.renderJson(Ret.fail().set("code", "2").set("message", "案例不存在或已下架。"));
             } else {
                 c.renderError(404);
             }
@@ -66,14 +66,14 @@ public class ExampleValidate implements Interceptor {
                 c.renderJson(Ret.fail()
                         .set("code", 1)
                         .set("message", "用户未登录")
-                        .set("gotoUrl", JFinal.me().getContextPath() + "/user/login?gotoUrl=" + product.getUrl()));
+                        .set("gotoUrl", JFinal.me().getContextPath() + "/user/login?gotoUrl=" + example.getUrl()));
             } else {
-                c.redirect("/user/login?gotoUrl=" + product.getUrl());
+                c.redirect("/user/login?gotoUrl=" + example.getUrl());
             }
             return;
         }
 
-        c.setAttr(ATTR_PRODUCT,product);
+        c.setAttr(ATTR_EXAMPLE,example);
         inv.invoke();
     }
 }
