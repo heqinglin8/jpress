@@ -1,17 +1,17 @@
 #define defaultExampleHeader()
 <div class="row">
     <div class="col-md-6">
-        #if(productImages)
+        #if(exampleImages)
         <div class="product-swipper swiper-container gallery-top">
             <div class="swiper-wrapper">
-                #for(img : productImages)
+                #for(img : exampleImages)
                 <img class="swiper-slide" src="#(img.src ??)">
                 #end
             </div>
         </div>
         <div class="product-swipper-item swiper-container gallery-thumbs">
             <div class="swiper-wrapper">
-                #for(img : productImages)
+                #for(img : exampleImages)
                 <img class="swiper-slide" src="#(img.src ??)">
                 #end
             </div>
