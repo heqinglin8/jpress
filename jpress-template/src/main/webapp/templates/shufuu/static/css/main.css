@@ -478,6 +478,7 @@ blockquote p {
 	display: block;
 	text-align: center;
 	margin-top: 20px;
+	display: flex;
 }
 
 .social-icon ul {
