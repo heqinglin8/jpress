@@ -475,10 +475,9 @@ blockquote p {
 }
 
 .pagination {
-	display: block;
+	display: flex;
 	text-align: center;
 	margin-top: 20px;
-	display: flex;
 }
 
 .social-icon ul {
