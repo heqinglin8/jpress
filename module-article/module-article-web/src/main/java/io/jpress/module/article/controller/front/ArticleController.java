@@ -104,7 +104,7 @@ public class ArticleController extends TemplateControllerBase {
 
 
     private Article getArticle() {
-        String idOrSlug = getPara(0);
+        String idOrSlug = getIdOrSlug();
         return StrUtil.isNumeric(idOrSlug)
                 ? articleService.findById(idOrSlug)
                 : articleService.findFirstBySlug(StrUtil.urlDecode(idOrSlug));
@@ -115,7 +115,7 @@ public class ArticleController extends TemplateControllerBase {
 
         setMenuActive(menu -> menu.isUrlStartWidth(article.getUrl()));
 
-        List<ArticleCategory> articleCategories = categoryService.findCategoryListByArticleId(article.getId());
+        List<ArticleCategory> articleCategories = categoryService.findListByArticleId(article.getId());
         if (articleCategories == null || articleCategories.isEmpty()) {
             return;
         }

@@ -27,7 +27,7 @@ import io.jpress.web.base.TemplateControllerBase;
 /**
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
  * @version V1.0
- * @Title: 文章前台页面Controller
+ * @Title:  文章分类的 Controller，主要是用过 {{@link io.jpress.module.article.directive.ArticlePageDirective 来渲染的}}
  * @Package io.jpress.module.article
  */
 @RequestMapping("/article/category")
@@ -92,7 +92,7 @@ public class ArticleCategoryController extends TemplateControllerBase {
 
 
     private ArticleCategory getCategory() {
-        String idOrSlug = getPara(0);
+        String idOrSlug = getIdOrSlug();
 
         if (StrUtil.isBlank(idOrSlug)) {
             return null;
@@ -111,10 +111,9 @@ public class ArticleCategoryController extends TemplateControllerBase {
         return category;
     }
 
+
     private String getRenderView(ArticleCategory category) {
-        return category == null
-                ? "artlist.html"
-                : category.getHtmlView();
+        return category == null  ? "artlist.html" : category.getHtmlView();
     }
 
 

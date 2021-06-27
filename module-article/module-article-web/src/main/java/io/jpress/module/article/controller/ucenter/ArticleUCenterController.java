@@ -175,7 +175,7 @@ public class ArticleUCenterController extends UcenterControllerBase {
         }
 
         if (!validateSlug(article)) {
-            renderJson(Ret.fail("message", "slug不能全是数字且不能包含字符：- "));
+            renderJson(Ret.fail("message", "固定连接不能以数字结尾"));
             return;
         }
 
@@ -218,9 +218,17 @@ public class ArticleUCenterController extends UcenterControllerBase {
         renderJson(ret);
     }
 
-    private boolean validateSlug(Model model) {
-        String slug = (String) model.get("slug");
-        return slug == null ? true : !slug.contains("-");
+    private boolean validateSlug(Model<?> model) {
+        String slug = model.get("slug");
+        if (slug == null) {
+            return true;
+        }
+
+        if (!slug.contains("-")) {
+            return true;
+        }
+
+        return !StrUtil.isNumeric(slug.substring(slug.lastIndexOf("-") + 1));
     }
 
     private Long[] getTagIds(String[] tags) {
@@ -228,7 +236,7 @@ public class ArticleUCenterController extends UcenterControllerBase {
             return null;
         }
 
-        List<ArticleCategory> categories = categoryService.doNewOrFindByTagString(tags);
+        List<ArticleCategory> categories = categoryService.doCreateOrFindByTagString(tags);
         long[] ids = categories.stream().mapToLong(value -> value.getId()).toArray();
         return ArrayUtils.toObject(ids);
     }

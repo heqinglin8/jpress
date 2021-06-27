@@ -21,10 +21,10 @@ import io.jpress.web.base.TemplateControllerBase;
 /**
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
  * @version V1.0
+ * 其内容渲染使用 {{@link io.jpress.module.article.directive.ArticleSearchPageDirective }} 进行渲染
  */
 @RequestMapping("/article/search")
 public class ArticleSearchController extends TemplateControllerBase {
-
 
     public void index() {
 
