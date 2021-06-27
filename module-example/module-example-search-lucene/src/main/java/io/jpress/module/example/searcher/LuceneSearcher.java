@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.jpress.module.product.searcher;
+package io.jpress.module.example.searcher;
 
 import com.jfinal.kit.PathKit;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.Page;
 import io.jpress.commons.utils.CommonsUtils;
 import io.jpress.module.example.model.Example;
-import io.jpress.module.product.service.search.ExampleSearcher;
+import io.jpress.module.example.service.search.ExampleSearcher;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.*;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.jpress.module.product.search;
+package io.jpress.module.example.search;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -30,7 +30,7 @@ import com.google.common.collect.Lists;
 import com.jfinal.plugin.activerecord.Page;
 import io.jpress.JPressOptions;
 import io.jpress.module.example.model.Example;
-import io.jpress.module.product.service.search.ExampleSearcher;
+import io.jpress.module.example.service.search.ExampleSearcher;
 
 import java.util.ArrayList;
 import java.util.List;

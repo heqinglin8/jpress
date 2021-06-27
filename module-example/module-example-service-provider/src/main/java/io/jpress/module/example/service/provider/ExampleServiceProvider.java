@@ -22,7 +22,7 @@ import io.jboot.service.JbootServiceBase;
 import io.jpress.module.example.service.provider.search.ExampleSearcherFactory;
 import io.jpress.module.example.service.provider.task.ExampleCommentsCountUpdateTask;
 import io.jpress.module.example.service.provider.task.ExampleViewsCountUpdateTask;
-import io.jpress.module.product.service.search.ExampleSearcher;
+import io.jpress.module.example.service.search.ExampleSearcher;
 import io.jpress.service.UserService;
 import io.jpress.web.seoping.SeoManager;
 

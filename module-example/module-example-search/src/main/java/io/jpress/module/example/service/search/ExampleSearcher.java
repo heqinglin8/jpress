@@ -1,4 +1,4 @@
-package io.jpress.module.product.service.search;
+package io.jpress.module.example.service.search;
 
 import com.jfinal.plugin.activerecord.Page;
 import io.jpress.module.example.model.Example;

@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.jpress.module.product.searcher;
+package io.jpress.module.example.searcher;
 
 import com.jfinal.aop.Inject;
 import com.jfinal.plugin.activerecord.Page;
 import io.jpress.module.example.model.Example;
 import io.jpress.module.example.service.ExampleService;
-import io.jpress.module.product.service.search.ExampleSearcher;
+import io.jpress.module.example.service.search.ExampleSearcher;
 
 
 public class DbSearcher implements ExampleSearcher {
