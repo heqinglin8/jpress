@@ -18,8 +18,9 @@ package io.jpress.module.article.model;
 import io.jboot.db.annotation.Table;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.JbootControllerContext;
+import io.jboot.web.json.JsonIgnore;
 import io.jpress.JPressConsts;
-import io.jpress.commons.url.JPressUrlUtil;
+import io.jpress.commons.utils.UrlUtils;
 import io.jpress.commons.utils.CommonsUtils;
 import io.jpress.commons.utils.JsoupUtils;
 import io.jpress.commons.utils.MarkdownUtils;
@@ -40,18 +41,22 @@ public class Article extends BaseArticle<Article> {
     public static final String STATUS_TRASH = "trash";
 
 
+    @JsonIgnore
     public boolean isNormal() {
         return STATUS_NORMAL.equals(getStatus());
     }
 
+    @JsonIgnore
     public boolean isDraft() {
         return STATUS_DRAFT.equals(getStatus());
     }
 
+    @JsonIgnore
     public boolean isTrash() {
         return STATUS_TRASH.equals(getStatus());
     }
 
+    @JsonIgnore
     public String getHtmlView() {
         return StrUtil.isBlank(getStyle()) ? "article.html" : "article_" + getStyle().trim() + ".html";
     }
@@ -61,6 +66,7 @@ public class Article extends BaseArticle<Article> {
      *
      * @return
      */
+    @JsonIgnore
     public boolean isActive() {
         Article currentArticle = JbootControllerContext.get().getAttr("article");
 
@@ -74,25 +80,38 @@ public class Article extends BaseArticle<Article> {
 
     /**
      * 保证模板可以通过 model.isActive 属性进行高亮判断，而非 model.isActive()
+     *
      * @return
      */
-    public boolean getIsActive(){
+    @JsonIgnore
+    public boolean getIsActive() {
         return isActive();
     }
 
+    @JsonIgnore
     public String getUrl() {
         String link = getLinkTo();
         if (StrUtil.isNotBlank(link)) {
             return link;
         }
-        return JPressUrlUtil.getUrl("/article/", StrUtil.isNotBlank(getSlug()) ? getSlug() : getId());
+        return UrlUtils.getUrl("/article/", StrUtil.isNotBlank(getSlug()) ? getSlug() : getId());
     }
 
+
+    public String getUrlWithPageNumber(int pageNumber) {
+        if (pageNumber <= 1) {
+            return getUrl();
+        }
+        return UrlUtils.getUrl("/article/", StrUtil.isNotBlank(getSlug()) ? getSlug() : getId(), "-", pageNumber);
+    }
+
+    @JsonIgnore
     public boolean isCommentEnable() {
         Boolean cs = getCommentStatus();
         return cs != null && cs;
     }
 
+    @JsonIgnore
     public String getText() {
         return JsoupUtils.getText(getContent());
     }
@@ -112,6 +131,7 @@ public class Article extends BaseArticle<Article> {
         return JPressConsts.EDIT_MODE_MARKDOWN.equals(getEditMode());
     }
 
+    @JsonIgnore
     public String getOrignalContent() {
         return super.getContent();
     }
@@ -122,6 +142,7 @@ public class Article extends BaseArticle<Article> {
      *
      * @return
      */
+    @JsonIgnore
     public List<String> getImages() {
         return JsoupUtils.getImageSrcs(getContent());
     }
@@ -157,6 +178,7 @@ public class Article extends BaseArticle<Article> {
         return getFirstAudio() != null;
     }
 
+    @JsonIgnore
     public String getFirstImage() {
         return JsoupUtils.getFirstImageSrc(getContent());
     }
@@ -175,7 +197,8 @@ public class Article extends BaseArticle<Article> {
     }
 
     public String getHighlightContent() {
-        return getStr("highlightContent");
+        String content =  getStr("highlightContent");
+        return StrUtil.isNotBlank(content) ? content : CommonsUtils.maxLength(getText(),100,"...");
     }
 
     public void setHighlightContent(String highlightContent) {
@@ -183,7 +206,8 @@ public class Article extends BaseArticle<Article> {
     }
 
     public String getHighlightTitle() {
-        return getStr("highlightTitle");
+        String title =  getStr("highlightTitle");
+        return StrUtil.isNotBlank(title) ? title : getTitle();
     }
 
     public void setHighlightTitle(String highlightTitle) {

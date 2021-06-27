@@ -8,12 +8,12 @@
         <input type="hidden" name="pid" id="comment-pid">
 
         <div class="comment-textarea">
-            <textarea placeholder="您的留言，对我们来说非常重要...." rows="4" name="content"></textarea>
+            <textarea placeholder="对此，您有什么看法呢？" rows="4" name="content"></textarea>
         </div>
 
         <div class="comment-vcode">
             #if(option("page_comment_vcode_enable","true"))
-            <input placeholder="请输入验证码" name="captcha" id="comment-captcha">
+            <input placeholder="请输入验证码" autocomplete="off" name="captcha" id="comment-captcha">
             <img class="vcode-img" src="#(CPATH)/commons/captcha"
                  onclick="this.src='#(CPATH)/commons/captcha?d='+Math.random();" cdn-exclude id="comment-vcode">
             #end

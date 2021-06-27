@@ -133,7 +133,7 @@ public class _UserController extends AdminControllerBase {
 
         String slug = tag.getSlug();
         if (slug == null || slug.contains("-") || StrUtil.isNumeric(slug)) {
-            renderJson(Ret.fail("message", "slug不能全是数字且不能包含字符：- "));
+            renderJson(Ret.fail("message", "固定连接不能以数字结尾"));
             return;
         }
 
@@ -187,14 +187,14 @@ public class _UserController extends AdminControllerBase {
             return;
         }
 
-        User dbUser = userService.findFistByUsername(user.getUsername());
+        User dbUser = userService.findFirstByUsername(user.getUsername());
         if (dbUser != null) {
             renderJson(Ret.fail().set("message", "该用户名已经存在").set("errorCode", 10));
             return;
         }
 
         if (StrUtil.isNotBlank(user.getEmail())) {
-            dbUser = userService.findFistByEmail(user.getEmail());
+            dbUser = userService.findFirstByEmail(user.getEmail());
             if (dbUser != null) {
                 renderJson(Ret.fail().set("message", "邮箱已经存在了").set("errorCode", 11));
                 return;

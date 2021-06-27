@@ -15,12 +15,10 @@
  */
 package io.jpress.module.page.model;
 
-import com.jfinal.core.JFinal;
 import io.jboot.db.annotation.Table;
 import io.jboot.utils.StrUtil;
 import io.jpress.JPressConsts;
-import io.jpress.JPressOptions;
-import io.jpress.commons.url.JPressUrlUtil;
+import io.jpress.commons.utils.UrlUtils;
 import io.jpress.commons.utils.JsoupUtils;
 import io.jpress.commons.utils.MarkdownUtils;
 import io.jpress.module.page.model.base.BaseSinglePage;
@@ -57,7 +55,14 @@ public class SinglePage extends BaseSinglePage<SinglePage> {
     }
 
     public String getUrl() {
-        return JPressUrlUtil.getUrl("/", StrUtil.isNotBlank(getSlug()) ? getSlug() : getId());
+        return UrlUtils.getUrl("/", StrUtil.isNotBlank(getSlug()) ? getSlug() : getId());
+    }
+
+    public String getUrlWithPageNumber(int pageNumber) {
+        if (pageNumber <= 1) {
+            return getUrl();
+        }
+        return UrlUtils.getUrl("/", StrUtil.isNotBlank(getSlug()) ? getSlug() : getId(), "-", pageNumber);
     }
 
 
@@ -96,4 +101,6 @@ public class SinglePage extends BaseSinglePage<SinglePage> {
     public PingData toPingData() {
         return PingData.create(getTitle(), getUrl());
     }
+
+
 }

@@ -16,14 +16,20 @@
 package io.jpress.module.product.controller.api;
 
 import com.jfinal.aop.Inject;
+import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Page;
+import io.jboot.aop.annotation.DefaultValue;
 import io.jboot.db.model.Columns;
 import io.jboot.utils.StrUtil;
 import io.jboot.web.controller.annotation.RequestMapping;
+import io.jboot.web.json.JsonBody;
+import io.jpress.commons.Rets;
 import io.jpress.module.product.model.Product;
 import io.jpress.module.product.service.ProductService;
 import io.jpress.web.base.ApiControllerBase;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -39,33 +45,23 @@ public class ProductApiController extends ApiControllerBase {
     /**
      * 获取商品详情
      */
-    public void index(){
-        Long id = getParaToLong("id");
-        String slug = getPara("slug");
-
+    public Ret detail(Long id, String slug) {
         Product product = id != null ? productService.findById(id)
                 : (StrUtil.isNotBlank(slug) ? productService.findFirstBySlug(slug) : null);
 
         if (product == null || !product.isNormal()) {
-            renderFailJson();
-            return;
+            return Rets.FAIL;
         }
 
         productService.doIncProductViewCount(product.getId());
-        renderOkJson("product", product);
+        return Ret.ok().set("detail", product);
     }
 
 
-
     /**
-     * 获取产品列表
+     * 根据产品的 Flag 获取产品列表
      */
-    public void list(){
-        String flag = getPara("flag");
-        Boolean hasThumbnail = getParaToBoolean("hasThumbnail");
-        String orderBy = getPara("orderBy", "id desc");
-        int count = getParaToInt("count", 10);
-
+    public Ret listByFlag(String flag, Boolean hasThumbnail, String orderBy, @DefaultValue("10") int count) {
 
         Columns columns = Columns.create("flag", flag);
         if (hasThumbnail != null) {
@@ -77,39 +73,53 @@ public class ProductApiController extends ApiControllerBase {
         }
 
         List<Product> products = productService.findListByColumns(columns, orderBy, count);
-        renderOkJson("products", products);
+        return Ret.ok().set("list", products);
     }
 
 
     /**
      * 某个商品的相关商品
      */
-    public void relevantList() {
-
-        Long id = getParaToLong("productId");
-        if (id == null) {
-            renderFailJson();
-        }
-
-        int count = getParaToInt("count", 3);
-
+    public Ret listByRelevant(@NotNull @Min(1) Long id, @DefaultValue("3") int count) {
         List<Product> relevantProducts = productService.findRelevantListByProductId(id, Product.STATUS_NORMAL, count);
-        renderOkJson("products", relevantProducts);
+        return Ret.ok().set("list", relevantProducts);
     }
 
 
     /**
      * 商品搜索
      */
-    public void productSearch(String keyword){
-        int page = getParaToInt("page",1);
-        int pageSize = getParaToInt("size",10);
+    public Ret search(String keyword, @DefaultValue("1") int pageNumber, @DefaultValue("10") int pageSize) {
         Page<Product> dataPage = StrUtil.isNotBlank(keyword)
-                ? productService.search(keyword, page, pageSize)
+                ? productService.search(keyword, pageNumber, pageSize)
                 : null;
-        renderJson(dataPage);
+        return Ret.ok().set("page", dataPage);
     }
 
+
+    /**
+     * 删除商品
+     */
+    public Ret doDelete(@NotNull Long id) {
+        productService.deleteById(id);
+        return Rets.OK;
+    }
+
+    /**
+     * 新增商品
+     */
+    public Ret doCreate(@JsonBody Product product) {
+        Object id = productService.save(product);
+        return Ret.ok().set("id",id);
+    }
+
+    /**
+     * 更新商品
+     */
+    public Ret doUpdate(@JsonBody Product product) {
+        productService.update(product);
+        return Rets.OK;
+    }
 
 
 }

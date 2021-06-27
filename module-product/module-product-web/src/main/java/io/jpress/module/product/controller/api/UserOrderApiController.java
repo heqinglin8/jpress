@@ -15,52 +15,57 @@
  */
 package io.jpress.module.product.controller.api;
 
+import com.jfinal.kit.Ret;
+import io.jboot.aop.annotation.DefaultValue;
 import io.jboot.web.controller.annotation.RequestMapping;
+import io.jboot.web.json.JsonBody;
+import io.jpress.commons.Rets;
+import io.jpress.model.UserOrder;
+import io.jpress.service.UserOrderService;
 import io.jpress.web.base.ApiControllerBase;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author haicuan139 (haicuan139@163.com)
  * @Date: 2019/12/24
  */
-@RequestMapping("/api/userorder")
+@RequestMapping("/api/userOrder")
 public class UserOrderApiController extends ApiControllerBase {
+
+
+    private UserOrderService userOrderService;
 
     /**
      * 订单列表
      */
-    public void index(){
-
+    public Ret paginateByUserId(@DefaultValue("1") int pageNumber, @DefaultValue("10") int pageSize, @NotNull Long userId, String title, String ns) {
+        return Ret.ok().set("page", userOrderService.paginateByUserId(pageNumber, pageSize, userId, title, ns));
     }
 
     /**
-     * 添加到订单
+     * 删除订单
      */
-    public void doDelOrder(){
-
+    public Ret doDelete(@NotNull Long id) {
+        userOrderService.deleteById(id);
+        return Rets.OK;
     }
 
     /**
-     * 订单中删除
+     * 创建订单
      */
-    public void doCreateOrder(){
-
+    public Ret doCreate(@JsonBody UserOrder userOrder) {
+        Object id = userOrderService.save(userOrder);
+        return Ret.ok().set("id",id);
     }
 
     /**
-     * 改变订单中商品的数量
+     * 更新订单
      */
-    public void changeCount(){
-
+    public Ret doUpdate(@JsonBody UserOrder userOrder) {
+        userOrderService.update(userOrder);
+        return Rets.OK;
     }
-
-    /**
-     * 对订单进行支付
-     */
-    public void payOrder(){
-
-    }
-
-
 
 
 }

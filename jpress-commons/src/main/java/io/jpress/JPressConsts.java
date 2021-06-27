@@ -23,12 +23,12 @@ package io.jpress;
  */
 public class JPressConsts {
 
-    public static final String VERSION = "v4.0.0";
+    public static final String VERSION = "v4.0.8";
 
     //v2.x not define
     //v3.x  VERSION_CODE < 40
     //v4.x  VERSION_CODE >= 40
-    public static final String VERSION_CODE = "40";
+    public static final String VERSION_CODE = "48";
 
     /**
      * 后台系统菜单的 ID
@@ -42,6 +42,12 @@ public class JPressConsts {
     public static final String SYSTEM_MENU_FINANCE = "finance";
     public static final String SYSTEM_MENU_WECHAT_PUBULIC_ACCOUNT = "wechat_pubulic_account";
     public static final String SYSTEM_MENU_WECHAT_MINI_PROGRAM = "wechat_mini_program";
+
+    /**
+     * 用户中心的菜单ID
+     */
+    public static final String UCENTER_MENU_FINANCE_INFO ="ucenter_finance";
+    public static final String UCENTER_MENU_PERSONAL_INFO ="ucenter_Personal";
 
 
     /**
@@ -128,6 +134,8 @@ public class JPressConsts {
 
 
     public static final String JWT_USERID = "userId";
+    public static final String JWT_OPENID = "openId";
+    public static final String JWT_UNIONID = "unionId";
 
 
     public static final String DEFAULT_ADMIN_VIEW = "/WEB-INF/views/admin/";

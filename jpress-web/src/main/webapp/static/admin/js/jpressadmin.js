@@ -151,7 +151,9 @@ function _initLayerByComponent(component) {
  * 设置 tooltip 组件
  */
 function initTooltip() {
-    $('[data-toggle="tooltip"],[data-render="tooltip"]').tooltip();
+    if ($.tooltip){
+        $('[data-toggle="tooltip"],[data-render="tooltip"]').tooltip();
+    }
 }
 
 
@@ -345,18 +347,18 @@ function initAjaxSubmitForms() {
                     window.currentCKEditor.updateSourceElement();
                 }
 
-                __form = $(form);
+                var $form = $(form);
 
-                var successFun = __form.attr('data-ok-function');
-                var successGoto = __form.attr('data-ok-href');
-                var successMsg = __form.attr('data-ok-message');
+                var successFun = $form.attr('data-ok-function');
+                var successGoto = $form.attr('data-ok-href');
+                var successMsg = $form.attr('data-ok-message');
 
-                var failFun = __form.attr('data-fail-function');
-                var failMsg = __form.attr('data-fail-message');
+                var failFun = $form.attr('data-fail-function');
+                var failMsg = $form.attr('data-fail-message');
 
-                var binds = __form.attr('data-binds');
+                var binds = $form.attr('data-binds');
 
-                __form.ajaxSubmit({
+                $form.ajaxSubmit({
                     type: "post",
                     success: function (result) {
 
@@ -837,6 +839,7 @@ function initCkEdtior(selector) {
                     'italic',
                     'underline',
                     'link',
+                    'code',
                     'bulletedList',
                     'numberedList',
                     '|',
@@ -847,10 +850,9 @@ function initCkEdtior(selector) {
                     'removeFormat',
                     '|',
                     'blockQuote',
-                    'codeBlock',
                     'imageInsert',
-                    'mediaEmbed',
                     'insertTable',
+                    'codeBlock',
                     '|',
                     'undo',
                     'redo'
@@ -980,6 +982,36 @@ function initInputClearButton() {
         }).trigger('propertychange');
     });
 }
+
+var commandkeydown = false;
+
+/**
+ * 设置 ctrl+s 或者 command + s (Mac 系统) 要执行的方法
+ * @param func
+ */
+function setSaveHotKeyFunction(func) {
+    $(document).keydown(function (e) {
+        if (e.keyCode == 91 || e.keyCode == 224) {
+            commandkeydown = true;
+        }
+        if (commandkeydown && e.keyCode == 83) {
+            commandkeydown = false;
+            func();
+            return false;
+        }
+        if (e.ctrlKey == true && e.keyCode == 83) {
+            console.log('ctrl+s');
+            func();
+            return false;
+        }
+    });
+    $(document).keyup(function (e) {
+        if (e.keyCode == 91 || e.keyCode == 224) {
+            commandkeydown = false;
+        }
+    });
+}
+
 
 $(document).ready(function () {
 

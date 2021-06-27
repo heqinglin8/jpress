@@ -69,7 +69,7 @@
     }
 
 
-    // doListenerCtrlsAndCommands(doSubmit);
+    setSaveHotKeyFunction(doSubmit);
 
     $(".choseImage").on("click", function () {
         var html = $("#imageItem").html();
@@ -261,14 +261,9 @@
                                 <div class="card card-outlinecard-solid">
                                     <div class="card-header with-border">
                                         <h3 class="card-title">产品缩略图</h3>
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-card-tool" data-widget="collapse">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
                                     </div>
                                     <div class="card-body">
-                                        <div class="card-body">
+                                        <div class="card-body p-0">
 
                                             #for(image : images)
                                             <div class="img-wrapper img-hover" draggable="true" ondrop="drop(event,this)" ondragover="allowDrop(event)"  ondragstart="drag(event, this)">
@@ -294,12 +289,6 @@
                                 <div class="card card-outlinecard-solid">
                                     <div class="card-header with-border">
                                         <h3 class="card-title">价格</h3>
-
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-card-tool" data-widget="collapse">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -331,7 +320,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">限时时间</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control datetimepicker" id="limited_time"
+                                                    <input type="text" class="form-control datetime" id="limited_time"
                                                            name="product.limited_time" placeholder="" value="#(product.limited_time ??)">
                                                     <p class="text-muted">到该时间后，限时价格会自动恢复到原始价格。</p>
                                                 </div>
@@ -348,12 +337,6 @@
                                 <div class="card card-outlinecard-solid">
                                     <div class="card-header with-border">
                                         <h3 class="card-title">会员价</h3>
-
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-card-tool" data-widget="collapse">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -386,11 +369,6 @@
                                 <div class="card card-outlinecard-solid">
                                     <div class="card-header with-border">
                                         <h3 class="card-title">分销</h3>
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-card-tool" data-widget="collapse">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -423,12 +401,6 @@
                                 <div class="card card-outlinecard-solid">
                                     <div class="card-header with-border">
                                         <h3 class="card-title">其他</h3>
-
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-card-tool" data-widget="collapse">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
