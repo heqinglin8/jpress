@@ -1116,10 +1116,119 @@ CREATE TABLE `contact` (
   `created` datetime DEFAULT NULL COMMENT '提交的时间',
   `status` int(2) DEFAULT '0' COMMENT '表单状态：0、未处理 1、已查看 2、已废弃',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 
+# Dump of table example
+# ------------------------------------------------------------
+CREATE TABLE `example` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `slug` varchar(128) DEFAULT NULL COMMENT 'slug',
+  `title` varchar(256) DEFAULT '' COMMENT '标题',
+  `content` longtext COMMENT '内容',
+  `summary` text COMMENT '摘要',
+  `usp` text COMMENT '产品卖点',
+  `thumbnail` varchar(512) DEFAULT NULL COMMENT '缩略图',
+  `specs` varchar(512) DEFAULT NULL COMMENT '产品规格',
+  `video` varchar(512) DEFAULT NULL COMMENT '视频',
+  `video_cover` varchar(512) DEFAULT NULL,
+  `order_number` int(11) DEFAULT '0' COMMENT '排序编号',
+  `user_id` int(11) unsigned DEFAULT NULL COMMENT '案例的用户ID',
+  `user_divide_ratio` int(11) DEFAULT NULL COMMENT '用户分成比例',
+  `status` tinyint(2) DEFAULT NULL COMMENT '状态',
+  `comment_status` tinyint(1) DEFAULT '1' COMMENT '评论状态，默认允许评论',
+  `comment_count` int(11) unsigned DEFAULT '0' COMMENT '评论总数',
+  `comment_time` datetime DEFAULT NULL COMMENT '最后评论时间',
+  `view_count` int(11) unsigned DEFAULT '0' COMMENT '访问量',
+  `real_view_count` int(11) unsigned DEFAULT '0' COMMENT '真实访问量',
+  `created` datetime DEFAULT NULL COMMENT '创建日期',
+  `modified` datetime DEFAULT NULL COMMENT '最后更新日期',
+  `flag` varchar(256) DEFAULT NULL COMMENT '标识，通常用于对某几篇文章进行标识，从而实现单独查询',
+  `meta_keywords` varchar(512) DEFAULT NULL COMMENT 'SEO关键字',
+  `meta_description` varchar(512) DEFAULT NULL COMMENT 'SEO描述信息',
+  `remarks` text COMMENT '备注信息',
+  `options` text,
+  `style` varchar(32) DEFAULT NULL COMMENT '样式',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`),
+  KEY `user_id` (`user_id`),
+  KEY `created` (`created`),
+  KEY `view_count` (`view_count`),
+  KEY `order_number` (`order_number`),
+  KEY `status` (`status`),
+  KEY `flag` (`flag`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='商品表';
 
+
+# Dump of table example_category
+# ------------------------------------------------------------
+CREATE TABLE `example_category` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父级分类的ID',
+  `user_id` int(11) unsigned DEFAULT NULL COMMENT '分类创建的用户ID',
+  `slug` varchar(128) DEFAULT NULL COMMENT 'slug',
+  `title` varchar(512) DEFAULT NULL COMMENT '标题',
+  `content` text COMMENT '内容描述',
+  `summary` text COMMENT '摘要',
+  `style` varchar(32) DEFAULT NULL COMMENT '模板样式',
+  `type` varchar(32) DEFAULT NULL COMMENT '类型，比如：分类、tag、专题',
+  `icon` varchar(128) DEFAULT NULL COMMENT '图标',
+  `count` int(11) unsigned DEFAULT '0' COMMENT '该分类的内容数量',
+  `order_number` int(11) DEFAULT '0' COMMENT '排序编码',
+  `flag` varchar(256) DEFAULT NULL COMMENT '标识',
+  `meta_keywords` varchar(256) DEFAULT NULL COMMENT 'SEO关键字',
+  `meta_description` varchar(256) DEFAULT NULL COMMENT 'SEO描述内容',
+  `options` text,
+  `created` datetime DEFAULT NULL COMMENT '创建日期',
+  `modified` datetime DEFAULT NULL COMMENT '修改日期',
+  PRIMARY KEY (`id`),
+  KEY `typeslug` (`type`,`slug`),
+  KEY `order_number` (`order_number`),
+  KEY `pid` (`pid`),
+  KEY `flag` (`flag`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表。标签、专题、类别等都属于category。';
+
+
+# Dump of table example_category_mapping
+# ------------------------------------------------------------
+CREATE TABLE `example_category_mapping` (
+  `example_id` int(11) unsigned NOT NULL COMMENT '文章ID',
+  `category_id` int(11) unsigned NOT NULL COMMENT '分类ID',
+  PRIMARY KEY (`example_id`,`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品和分类的多对多关系表';
+
+
+# Dump of table example_comment
+# ------------------------------------------------------------
+CREATE TABLE `example_comment` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `pid` int(11) unsigned DEFAULT NULL COMMENT '回复的评论ID',
+  `example_id` int(11) unsigned DEFAULT NULL COMMENT '评论的案例ID',
+  `user_id` int(11) unsigned DEFAULT NULL COMMENT '评论的用户ID',
+  `author` varchar(128) DEFAULT NULL COMMENT '评论的作者',
+  `content` text COMMENT '评论的内容',
+  `reply_count` int(11) unsigned DEFAULT '0' COMMENT '评论的回复数量',
+  `order_number` int(11) DEFAULT '0' COMMENT '排序编号，常用语置顶等',
+  `vote_up` int(11) unsigned DEFAULT '0' COMMENT '“顶”的数量',
+  `vote_down` int(11) unsigned DEFAULT '0' COMMENT '“踩”的数量',
+  `status` tinyint(2) DEFAULT NULL COMMENT '评论的状态',
+  `created` datetime DEFAULT NULL COMMENT '评论的时间',
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`example_id`),
+  KEY `user_id` (`user_id`),
+  KEY `status` (`status`),
+  KEY `pid` (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品评论表';
+
+CREATE TABLE `example_image` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `example_id` int(11) unsigned NOT NULL,
+  `src` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `order_number` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `productid` (`example_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品图片表';
 
 
 INSERT INTO `article` (`id`, `pid`, `slug`, `title`, `content`, `edit_mode`, `summary`, `link_to`, `thumbnail`, `style`, `user_id`, `order_number`, `status`, `comment_status`, `comment_count`, `comment_time`, `view_count`, `created`, `modified`, `flag`, `meta_keywords`, `meta_description`, `remarks`)
