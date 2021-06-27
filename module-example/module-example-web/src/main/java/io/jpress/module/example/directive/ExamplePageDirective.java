@@ -26,13 +26,10 @@ import io.jboot.web.controller.JbootControllerContext;
 import io.jboot.web.directive.annotation.JFinalDirective;
 import io.jboot.web.directive.base.JbootDirectiveBase;
 import io.jboot.web.directive.base.PaginateDirectiveBase;
-import io.jpress.JPressOptions;
-import io.jpress.commons.directive.DirectveKit;
+import io.jpress.commons.utils.UrlUtils;
 import io.jpress.module.example.model.Example;
 import io.jpress.module.example.model.ExampleCategory;
 import io.jpress.module.example.service.ExampleService;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
@@ -80,23 +77,24 @@ public class ExamplePageDirective extends JbootDirectiveBase {
 
         @Override
         protected String getUrl(int pageNumber, Env env, Scope scope, Writer writer) {
-            HttpServletRequest request = JbootControllerContext.get().getRequest();
-            String url = request.getRequestURI();
-            String contextPath = JFinal.me().getContextPath();
 
-            boolean firstGotoIndex = getPara("firstGotoIndex", scope, false);
+            ExampleCategory category = JbootControllerContext.get().getAttr("category");
+            if (category != null) {
+                return category.getUrlWithPageNumber(pageNumber);
+            } else {
+                boolean firstGotoIndex = getPara("firstGotoIndex", scope, false);
 
-            if (pageNumber == 1 && firstGotoIndex) {
-                return contextPath + "/";
+                if (pageNumber == 1 && firstGotoIndex) {
+                    return JFinal.me().getContextPath() + "/";
+                }
+
+                if (pageNumber > 1) {
+                    return UrlUtils.getUrl("/example", "/", pageNumber);
+                } else {
+                    return UrlUtils.getUrl("/example");
+                }
+
             }
-
-            // 如果当前页面是首页的话
-            // 需要改变url的值，因为 上一页或下一页是通过当前的url解析出来的
-            if (url.equals(contextPath + "/")) {
-                url = contextPath + "/example/category/index" + JPressOptions.getAppUrlSuffix();
-            }
-
-            return DirectveKit.replacePageNumber(url, pageNumber);
         }
 
         @Override

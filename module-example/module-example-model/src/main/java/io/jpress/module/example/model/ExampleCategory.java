@@ -2,7 +2,7 @@ package io.jpress.module.example.model;
 
 import io.jboot.db.annotation.Table;
 import io.jboot.utils.StrUtil;
-import io.jpress.commons.url.JPressUrlUtil;
+import io.jpress.commons.utils.UrlUtils;
 import io.jpress.module.example.model.base.BaseExampleCategory;
 import io.jpress.commons.layer.SortModel;
 
@@ -131,11 +131,20 @@ public class ExampleCategory extends BaseExampleCategory<ExampleCategory> implem
 
     public String getUrl() {
         String prefix = TYPE_CATEGORY.equals(getType()) ? "/example/category/" : "/example/tag/";
-        return JPressUrlUtil.getUrl(prefix, getSlug());
+        return UrlUtils.getUrl(prefix, getSlug());
     }
 
 
     public String getHtmlView() {
         return StrUtil.isBlank(getStyle()) ? "examlist.html" : "examlist_" + getStyle().trim() + ".html";
+    }
+
+    public String getUrlWithPageNumber(int pageNumber) {
+        if (pageNumber <= 1) {
+            return getUrl();
+        }
+
+        String prefix = TYPE_CATEGORY.equals(getType()) ? "/product/category/" : "/product/tag/";
+        return UrlUtils.getUrl(prefix, getSlug(),"-",pageNumber);
     }
 }

@@ -2,8 +2,8 @@ package io.jpress.module.example.model;
 
 import io.jboot.db.annotation.Table;
 import io.jboot.utils.StrUtil;
-import io.jpress.commons.url.JPressUrlUtil;
 import io.jpress.commons.utils.JsoupUtils;
+import io.jpress.commons.utils.UrlUtils;
 import io.jpress.model.UserFavorite;
 import io.jpress.module.example.model.base.BaseExample;
 
@@ -34,7 +34,7 @@ public class Example extends BaseExample<Example> {
     }
 
     public String getUrl() {
-        return JPressUrlUtil.getUrl("/example/", StrUtil.isNotBlank(getSlug()) ? getSlug() : getId());
+        return UrlUtils.getUrl("/example/", StrUtil.isNotBlank(getSlug()) ? getSlug() : getId());
     }
 
     public String getHtmlView() {
